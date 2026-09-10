@@ -168,13 +168,13 @@ const PRODUCTS = [
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'just a tung tung tung sahur pic', priceLabel: '$100,000' },
   { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', price: 0.03 },
-  { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: 'SOURCE CODE\nLIBRARY (1-10)', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
+  { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. hoodie incl. no refunds', price: 4.20 },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', text: 'PRE-ORDER', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. Last one', price: 0.91 },
-  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', text: 'REDSTAR RECORDS', title: 'REDSTAR RECORDS. first pressing. sealed', price: 12.00, note: 'soon' },
+  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS. first pressing. sealed', price: 12.00, note: 'soon' },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'events', text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
   { id: 'redact', cat: ['custom'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
@@ -196,6 +196,7 @@ function initMarket() {
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
     grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
+    grid.querySelectorAll('.tile--source').forEach(matrixRain);
   };
   render();
 
@@ -229,6 +230,31 @@ function initMarket() {
   });
   $('srCart')?.addEventListener('click', () => flashMsg(cart ? `CART: ${cart} × LOOT.exe. CHECKOUT: NEVER.` : 'CART EMPTY. LOOT IS A MARKET.', 'is-ok'));
   document.querySelector('.sr__logout')?.addEventListener('click', (e) => { e.preventDefault(); flashMsg('THERE IS NO LOGOUT.', 'is-error'); });
+}
+
+/* Binary rain inside a tile (Matrix curtains of 0/1) */
+function matrixRain(tile) {
+  const c = document.createElement('canvas');
+  tile.innerHTML = ''; tile.appendChild(c);
+  const ctx = c.getContext('2d');
+  const size = () => { c.width = tile.clientWidth; c.height = tile.clientHeight; };
+  size();
+  const fs = 11, cols = () => Math.ceil(c.width / fs);
+  let drops = Array.from({ length: cols() }, () => Math.random() * -40);
+  const tick = () => {
+    if (!tile.isConnected) return;
+    if (c.width !== tile.clientWidth) { size(); drops = Array.from({ length: cols() }, () => Math.random() * -40); }
+    ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.font = `${fs}px "JetBrains Mono", monospace`;
+    drops.forEach((y, i) => {
+      const ch = Math.random() < 0.5 ? '0' : '1';
+      ctx.fillStyle = Math.random() < 0.08 ? '#fff' : '#00ff41';
+      ctx.fillText(ch, i * fs, y * fs);
+      drops[i] = y * fs > c.height && Math.random() > 0.975 ? 0 : y + 0.5 + Math.random() * 0.4;
+    });
+    requestAnimationFrame(tick);
+  };
+  if (!REDUCED) tick(); else { ctx.fillStyle = '#00ff41'; ctx.font = `${fs}px monospace`; for (let y = fs; y < c.height; y += fs) ctx.fillText('0101101001010100110'.slice(0, Math.ceil(c.width / 7)), 0, y); }
 }
 
 /* Show a one-off line in LOOT.exe and scroll it into view */
