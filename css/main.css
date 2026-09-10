@@ -59,7 +59,7 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 
 
 /* ─── Planet, DVD mode ─── */
-.dvd { position: fixed; top: 0; left: 0; width: 320px; height: 320px; z-index: 1; opacity: .6; pointer-events: none; will-change: transform; }
+.dvd { position: fixed; top: 0; left: 0; width: 400px; height: 400px; z-index: 1; opacity: .6; pointer-events: none; will-change: transform; }
 .dvd canvas { width: 100%; height: 100%; display: block; }
 .dvd.is-bounce { opacity: 1; }
 
@@ -76,7 +76,12 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 .cursor.is-recoil .cursor__ring { border-color: var(--red); }
 @media (hover: none) { .cursor { display: none; } body, a, button { cursor: auto; } }
 
-/* shot effects */
+/* shot effects: cracked screen glass */
+.crack { position: absolute; width: 300px; height: 300px; margin: -150px 0 0 -150px; pointer-events: none; z-index: 30; mix-blend-mode: screen; animation: crackIn .1s steps(2) both; transition: opacity 2s; }
+.crack.is-fading { opacity: 0; }
+.crack svg { display: block; filter: drop-shadow(0 0 2px rgba(255,255,255,.5)); }
+@keyframes crackIn { from { transform: scale(.5); opacity: 0 } to { transform: none; opacity: 1 } }
+
 .hole { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; pointer-events: none; z-index: 30;
   background: radial-gradient(circle, #000 0 28%, #1a1a1a 30% 45%, transparent 47%);
   filter: drop-shadow(0 0 1px rgba(255,255,255,.6)); animation: holeIn .08s steps(1) both; }
@@ -276,8 +281,8 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 /* ─── Anonymous market (Silk Road, dark, full width) ─── */
 .market { margin-top: 16vh; font-family: var(--brand); font-size: 13px; color: var(--bone); }
 .sr__head { display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: start; padding-bottom: 14px; border-bottom: 1px solid #2a2a2a; }
-.sr__brand { display: flex; align-items: center; gap: 12px; }
-.sr__brand-logo { width: 72px; height: 72px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.15); }
+.sr__brand { display: flex; align-items: center; gap: 6px; }
+.sr__brand-logo { width: 128px; height: 128px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.2); margin: -20px 0; }
 .sr__brand b { display: block; font-size: 32px; font-weight: 900; letter-spacing: -.03em; line-height: 1; color: var(--bone); }
 .sr__brand i { color: var(--ghost); font-size: 14px; }
 .sr__stats { color: var(--ghost); font-size: 12px; }
@@ -374,7 +379,7 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .callout, .division--flip .callout { padding: 0; justify-items: start; }
   .xp { top: auto; bottom: 16px; right: 4vw; left: 4vw; width: auto; }
   .xp__msg { white-space: normal; }
-  .dvd { width: 200px; height: 200px; }
+  .dvd { width: 220px; height: 220px; }
   .market { margin-top: 10vh; }
   .sr__head { grid-template-columns: 1fr; gap: 12px; }
   .sr__user { justify-items: start; text-align: left; }
@@ -388,9 +393,20 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 
 /* market tiles that would vanish on black, and unique tiles for the new divisions */
 .tile--brier, .tile--stat { background: #070707; outline: 1px solid #222; }
-.tile--sound { background: repeating-linear-gradient(90deg, #fff 0 3px, #000 3px 9px); position: relative; }
-.tile--sound span { background: #000; color: #fff; font-weight: 900; font-size: 16px; letter-spacing: .3em; padding: 6px 12px; }
 .tile--objects { background: #fff; }
 .tile--objects span { width: 44%; aspect-ratio: 1; border: 3px solid #000; display: grid; place-items: center; color: #000; font-family: var(--mono); font-size: 11px; }
 .tile--events { background: radial-gradient(circle at 50% 50%, #ff003c 0 8%, #000 9% 100%); }
 .tile--events span { color: #fff; font-family: var(--mono); font-size: 11px; letter-spacing: .3em; margin-top: 46%; }
+
+/* new tiles */
+.tile video { width: 100%; height: 100%; object-fit: cover; }
+.tile--logo { outline: 1px solid var(--brier); }
+.tile--tung { background: #111; }
+.tile--tung img { width: 100%; height: 100%; object-fit: cover; }
+.tile--tung span { color: #888; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; }
+.tile--cult { background: #000; }
+.tile--cult span { width: 0; height: 0; border-left: 46px solid transparent; border-right: 46px solid transparent; border-bottom: 80px solid #e4c96a; position: relative; }
+.tile--cult span::after { content: '◉'; position: absolute; left: -9px; top: 36px; color: #000; font-size: 18px; }
+.tile--sound { background: #000; position: relative; }
+.tile--sound::before { content: '★'; position: absolute; inset: 0; display: grid; place-items: center; color: var(--brier); font-size: 120px; line-height: 1; }
+.tile--sound span { position: relative; background: #000; color: #fff; font-weight: 900; font-size: 11px; letter-spacing: .25em; padding: 4px 8px; }

@@ -36,6 +36,18 @@ const MANIFESTO = [
   'LOOT IS RISK.',
   'LOOT IS LEVERAGE.',
   'LOOT IS THE FUTURE.',
+  'LOOT IS MOG.',
+  'LOOT IS IQMAXING.',
+  'LOOT IS BEING EARLY.',
+  'LOOT IS ILLUMINATI.',
+  'LOOT IS CORPORATE LARP.',
+  'LOOT MAYBE NOT FOR YOU.',
+  'LOOT WILL EXPLODE YOUR HEAD.',
+  'LOOT IS FOR NEETS.',
+  'LOOT IS FOR COMPETITIVE PEOPLE.',
+  'LOOT IS A PRIVATE FUND.',
+  'LOOT IS COOLER THAN A BANK.',
+  'LOOT IS A VENTURE CAPITAL.',
   'LOOT IS WHATEVER COMES NEXT.',
 ];
 
@@ -105,7 +117,7 @@ function initXP() {
   const deny = () => {
     XP.denies++;
     document.body.classList.remove('deny-flash'); void document.body.offsetWidth; document.body.classList.add('deny-flash');
-    const text = XP.denies >= 3 ? 'LOOT IS NOT FOR POORS.' : 'WRONG DECISION.';
+    const text = XP.denies >= 3 ? 'LOOT IS NOT FOR POORS.' : 'HAHAHA LOOT IS NOT FOR YOU THEN.';
     hold(text, 'is-error', 2600);
     errorCascade(XP.denies >= 3 ? 8 : 5, text);
   };
@@ -152,16 +164,17 @@ function errorCascade(n, text) {
 const PRODUCTS = [
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world' },
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS' },
-  { id: 'exe',    cat: ['software', 'manifestos'], tile: 'exe',   text: 'LOOT.exe', title: '>>SPECIAL OFFER* MANIFESTO v4.0 EXCLUSIVE', price: 0.00, note: 'free' },
+  { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', price: 1e9 },
+  { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'just a tung tung tung sahur pic', priceLabel: '$100,000' },
   { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', price: 0.03 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: 'SOURCE CODE\nLIBRARY (1-10)', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
-  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  text: 'CULT', title: 'Membership. LOOT IS A CULT. hoodie incl.', price: 4.20 },
+  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  text: '', title: 'ILLUMINATI MEMBERSHIP. hoodie incl. no refunds', price: 4.20 },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', text: 'PRE-ORDER', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. Last one', price: 0.91 },
-  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', text: 'LOOT FM', title: 'LOOT SOUND. first pressing. sealed', price: 12.00, note: 'soon' },
+  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', text: 'REDSTAR RECORDS', title: 'REDSTAR RECORDS. first pressing. sealed', price: 12.00, note: 'soon' },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'events', text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
   { id: 'redact', cat: ['custom'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
@@ -172,15 +185,17 @@ function initMarket() {
   if (!grid) return;
   let cat = 'all', q = '', cart = 0, orders = 0;
 
-  const fmt = (p) => Number.isNaN(p) ? '฿???' : p === Infinity ? '฿∞' : `฿${p.toFixed(2)}`;
+  const fmt = (p) => Number.isNaN(p) ? '฿???' : p === Infinity ? '฿∞' : p >= 1e6 ? `฿${p.toLocaleString('en-US')}` : `฿${p.toFixed(2)}`;
+  const price = (p) => p.priceLabel || fmt(p.price);
   const render = () => {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}">${p.img ? `<img src="${p.img}" alt="">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}">${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
-        <div class="sr__p-price">${fmt(p.price)}${p.note ? `<small>${p.note}</small>` : ''}</div>
+        <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
+    grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
   };
   render();
 
@@ -204,6 +219,8 @@ function initMarket() {
       cart++; orders++;
       $('srCartCount').textContent = cart; $('srOrders').textContent = orders;
       flashMsg('LOOT.exe ADDED TO CART. LOOT IS FREE.', 'is-ok');
+    } else if (p.id === 'logo') {
+      flashMsg('฿1,000,000,000. NOT FOR SALE TO YOU.', 'is-error'); errorCascade(3, 'NOT FOR SALE TO YOU.');
     } else if (Number.isNaN(p.price)) {
       flashMsg('CLASSIFIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(3, 'ACCESS DENIED.');
     } else {
@@ -247,6 +264,53 @@ function initHeadline() {
   h.addEventListener('mouseenter', () => scramble(h, original, { frames: 8, tick: 30 }));
 }
 
+/* ─── Cracked screen glass: radial fractures + concentric web ─── */
+function crackGlass(px, py) {
+  const S = 300, c = S / 2;
+  const rays = 9 + Math.floor(Math.random() * 6);
+  const angles = Array.from({ length: rays }, (_, i) => (i / rays) * Math.PI * 2 + rand(-0.25, 0.25));
+  const lens = angles.map(() => rand(70, 145));
+  let d = '';
+  // fractures: jittered polylines from the centre
+  angles.forEach((a, i) => {
+    let x = c, y = c, pts = `M${c} ${c}`;
+    const steps = 4 + Math.floor(Math.random() * 3);
+    for (let s = 1; s <= steps; s++) {
+      const r = (lens[i] / steps) * s;
+      const ja = a + rand(-0.12, 0.12);
+      x = c + Math.cos(ja) * r; y = c + Math.sin(ja) * r;
+      pts += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+    }
+    d += pts + ' ';
+  });
+  // web rings: polygon segments between neighbouring rays at a few radii
+  let web = '';
+  [0.28, 0.52, 0.78].forEach((k) => {
+    angles.forEach((a, i) => {
+      if (Math.random() < 0.25) return;
+      const b = angles[(i + 1) % rays];
+      const r1 = lens[i] * k * rand(0.9, 1.1), r2 = lens[(i + 1) % rays] * k * rand(0.9, 1.1);
+      const mid = rand(0.3, 0.7);
+      const mx = c + Math.cos(a + (b - a) * mid) * ((r1 + r2) / 2) * rand(0.92, 1.05);
+      const my = c + Math.sin(a + (b - a) * mid) * ((r1 + r2) / 2) * rand(0.92, 1.05);
+      web += `M${(c + Math.cos(a) * r1).toFixed(1)} ${(c + Math.sin(a) * r1).toFixed(1)} L${mx.toFixed(1)} ${my.toFixed(1)} L${(c + Math.cos(b) * r2).toFixed(1)} ${(c + Math.sin(b) * r2).toFixed(1)} `;
+    });
+  });
+  const el = document.createElement('div');
+  el.className = 'crack';
+  el.style.left = `${px}px`; el.style.top = `${py}px`;
+  el.innerHTML = `<svg viewBox="0 0 ${S} ${S}" width="${S}" height="${S}">
+    <defs><radialGradient id="cg"><stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="${c}" cy="${c}" r="13" fill="url(#cg)"/>
+    <path d="${web}" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"/>
+    <path d="${d}" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="${d}" fill="none" stroke="rgba(0,240,255,.35)" stroke-width="3" transform="translate(1.5 0)"/>
+    <circle cx="${c}" cy="${c}" r="6" fill="#000"/>
+  </svg>`;
+  document.body.appendChild(el);
+  return el;
+}
+
 /* ─── Cursor: weapon sight. Click = shoot. ─── */
 function initCursor() {
   const c = $('cursor');
@@ -277,13 +341,10 @@ function initCursor() {
       const f = document.createElement('div'); f.className = 'flash'; document.body.appendChild(f); setTimeout(() => f.remove(), 140);
       document.body.classList.remove('is-shake'); void document.body.offsetWidth; document.body.classList.add('is-shake');
     }
-    // bullet hole where it landed (page coords so it scrolls with content)
-    const h = document.createElement('div');
-    h.className = 'hole';
-    h.style.left = `${e.pageX}px`; h.style.top = `${e.pageY}px`;
-    h.style.setProperty('--a1', `${rand(0, 360)}deg`); h.style.setProperty('--a2', `${rand(0, 360)}deg`);
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 12000);
+    // cracked glass where it landed (page coords so it scrolls with content)
+    const h = crackGlass(e.pageX, e.pageY);
+    setTimeout(() => h.classList.add('is-fading'), 9000);
+    setTimeout(() => h.remove(), 11000);
     // what did we hit?
     for (const [sel, fn] of HITTABLE) {
       const el = e.target.closest(sel);

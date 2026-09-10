@@ -52,6 +52,7 @@
   let W = 0, H = 0, R = 0, dpr = 1;
   let rot = [-60, -20];
   let t = 0, glow = 0;
+  const STARS = Array.from({ length: 70 }, () => [Math.random(), Math.random(), Math.random()]);
 
   /* DVD position */
   let x = innerWidth * 0.6, y = innerHeight * 0.55, vx = 0.9, vy = 0.7;
@@ -60,7 +61,7 @@
     dpr = Math.min(devicePixelRatio || 1, 2);
     W = dvd.clientWidth; H = dvd.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
-    R = Math.min(W, H) * 0.44;
+    R = Math.min(W, H) * 0.36;
     projection.translate([W / 2, H / 2]).scale(R);
     x = Math.min(x, innerWidth - W); y = Math.min(y, innerHeight - H);
   }
@@ -70,9 +71,20 @@
     ctx.clearRect(0, 0, W, H);
     projection.rotate(rot);
 
-    const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.85, W / 2, H / 2, R * 1.12);
-    g.addColorStop(0, `rgba(255,42,60,${0.12 + glow * 0.3})`); g.addColorStop(1, 'rgba(255,42,60,0)');
+    // starfield
+    STARS.forEach(([sx, sy, sz], i) => {
+      const tw = 0.4 + 0.6 * Math.abs(Math.sin(t * 0.02 + i));
+      ctx.fillStyle = `rgba(255,255,255,${0.25 * tw})`;
+      ctx.fillRect(sx * W, sy * H, sz > 0.8 ? 1.5 : 1, sz > 0.8 ? 1.5 : 1);
+    });
+    // atmosphere
+    const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.9, W / 2, H / 2, R * 1.18);
+    g.addColorStop(0, `rgba(255,42,60,${0.22 + glow * 0.35})`); g.addColorStop(0.6, `rgba(255,42,60,${0.06 + glow * 0.1})`); g.addColorStop(1, 'rgba(255,42,60,0)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    // equatorial ring (orbit lane)
+    ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-0.35);
+    ctx.beginPath(); ctx.ellipse(0, 0, R * 1.32, R * 0.22, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,42,60,0.28)'; ctx.lineWidth = 0.8; ctx.stroke(); ctx.restore();
 
     ctx.beginPath(); path(sphere);
     ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fill();
@@ -84,8 +96,8 @@
     if (land) {
       ctx.beginPath(); path(land);
       ctx.fillStyle = 'rgba(255,42,60,0.08)'; ctx.fill();
-      ctx.lineWidth = 0.9; ctx.strokeStyle = RED;
-      ctx.shadowColor = RED; ctx.shadowBlur = 4 + glow * 10; ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.lineWidth = 1.1; ctx.strokeStyle = RED;
+      ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; ctx.stroke(); ctx.shadowBlur = 0;
     }
     if (borders) {
       ctx.beginPath(); path(borders);
@@ -101,11 +113,17 @@
       const front = sz > -0.15;
       const px = cx + sx * R * s.alt, py = cy + sy * R * s.alt;
       if (!front && Math.hypot(px - cx, py - cy) < R) return;
-      ctx.fillStyle = front ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)';
-      ctx.beginPath(); ctx.arc(px, py, front ? 1.3 : 0.8, 0, Math.PI * 2); ctx.fill();
+      // short trail
+      const a0 = a - 0.09;
+      let tx = Math.cos(a0), ty = Math.sin(a0) * Math.cos(s.incl), tz = Math.sin(a0) * Math.sin(s.incl);
+      [tx, tz] = [tx * cn - tz * sn, tx * sn + tz * cn];
+      ctx.strokeStyle = front ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.08)'; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(cx + tx * R * s.alt, cy + ty * R * s.alt); ctx.lineTo(px, py); ctx.stroke();
+      ctx.fillStyle = front ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.3)';
+      ctx.beginPath(); ctx.arc(px, py, front ? 1.4 : 0.8, 0, Math.PI * 2); ctx.fill();
     });
 
-    ctx.font = '7px "JetBrains Mono", monospace';
+    ctx.font = '8px "JetBrains Mono", monospace';
     ctx.textBaseline = 'middle';
     const centre = [-rot[0], -rot[1]];
     NODES.forEach(([label, lon, lat], i) => {
