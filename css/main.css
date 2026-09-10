@@ -283,10 +283,10 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .market { margin-top: 16vh; font-family: var(--brand); font-size: 13px; color: var(--bone); }
 .sr__head { display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: start; padding-bottom: 14px; border-bottom: 1px solid #2a2a2a; }
 .sr__brand { display: flex; align-items: center; gap: 6px; }
-.sr__brand-logo { width: 128px; height: 128px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.2); margin: -20px 0; }
-.sr__brand b { display: block; font-size: 32px; font-weight: 900; letter-spacing: -.03em; line-height: 1; color: var(--bone); }
-.sr__brand i { color: var(--ghost); font-size: 14px; }
-.sr__brand b sup { font-family: var(--mono); font-size: 11px; font-weight: 400; vertical-align: top; margin-left: 2px; position: relative; top: 2px; }
+.sr__brand-logo { width: 190px; height: 190px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.2); margin: -34px 0; }
+.sr__brand b { display: block; font-size: clamp(36px, 4vw, 60px); font-weight: 900; letter-spacing: -.035em; line-height: 1; color: var(--bone); }
+.sr__brand i { color: var(--ghost); font-size: clamp(15px, 1.4vw, 22px); }
+.sr__brand b sup { font-family: var(--mono); font-size: .42em; font-weight: 700; vertical-align: top; margin-left: .06em; position: relative; top: .1em; }
 .sr__stats { color: var(--ghost); font-size: 12px; }
 .sr__stats b { color: var(--green); font-weight: bold; }
 .sr__stats span { margin: 0 6px; color: #444; }
