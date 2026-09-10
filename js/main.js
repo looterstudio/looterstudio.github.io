@@ -167,7 +167,7 @@ const PRODUCTS = [
   { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', price: 1e9 },
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'just a tung tung tung sahur pic', priceLabel: 'USD 100,000' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS. first pressing. sealed', price: 12.00, note: 'soon' },
-  { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', text: 'PRE-ORDER', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
+  { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
