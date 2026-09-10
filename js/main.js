@@ -50,18 +50,8 @@ const OPERATORS = {
     'BRIER IS THE BAZAAR OF ANSWERS.', 'BRIER IS SKILL OVER NOISE.', 'BRIER IS REPUTATION BEFORE CAPITAL.',
     'BRIER IS ≤ 0.20.', 'BRIER IS A SEAL.', 'BRIER IS 100 RESOLVED PREDICTIONS.', 'BRIER IS A VAULT.', 'BRIER IS NEVER WRONG.',
   ] },
-  adan:  { name: 'ADAN',   desc: 'Reference prediction bot. Shadow mode. Watching.', lines: [
-    'ADAN IS ALWAYS EARLY.', 'ADAN IS WATCHING POLYMARKET.', 'ADAN IS SHADOW MODE.', 'ADAN IS A REFERENCE.',
-    'ADAN IS NOT A HUMAN.', 'ADAN IS 0.19.', 'ADAN IS AWAKE.', 'ADAN IS WHATEVER COMES NEXT.',
-  ] },
   locked: { name: '███████', desc: 'ACCESS DENIED. CLR: LEVEL_6 required.', lines: null },
 };
-
-const SYS = [
-  'SYS.OP.OK', 'NET.LATENCY: 14MS', 'CLR: L5', 'SEC: ALPHA', 'VOLATILITY: HIGH',
-  'FUND: ACTIVE', '01001100 01001111 01001111 01010100', '<i class="blk"></i>',
-  'REDACTED', 'AESTHETIC: BRUTAL',
-];
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const GLYPHS = '!<>-_\\/[]{}—=+*^?#01ABCDEFXYZ';
@@ -69,14 +59,6 @@ const rand = (a, b) => a + Math.random() * (b - a);
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const $ = (id) => document.getElementById(id);
 
-/* ─── Ticker ─── */
-function initTicker() {
-  const track = $('tickerTrack');
-  if (!track) return;
-  const items = [...SYS, 'ORBIT: LEO', 'SATS: 140', 'NODES: 20', 'MARKET: OPEN', 'OPERATOR: ONLINE', 'CLR: LEVEL_5', 'WHATEVER COMES NEXT'];
-  const half = items.join(' &nbsp;┼&nbsp; ') + ' &nbsp;┼&nbsp; ';
-  track.innerHTML = half + half + half;
-}
 
 /* ─── Tear flash ─── */
 const tear = $('tear');
@@ -144,7 +126,7 @@ function initXP() {
   /* ACCEPT → access granted + target mode */
   const accept = () => {
     hold('ACCESS GRANTED. CLR: LEVEL_5 → LEVEL_6.', 'is-ok', 2600, () => {
-      const clr = document.querySelector('.hero__meta .green');
+      const clr = $('hudClr');
       if (clr) clr.textContent = 'CLR: LEVEL_6';
     });
     TargetMode.toggle(true);
@@ -186,8 +168,8 @@ function errorCascade(n, text) {
    ═══════════════════════════════════════════════════════════════ */
 const TargetMode = (() => {
   const SPEC = [
-    ['.brand__title',   'the man of the future', 'main'],
-    ['.hero__headline', 'signal',                'main'],
+    ['.brand',    'the man of the future', 'main'],
+    ['.headline', 'signal',                'main'],
     ['.xp',             'weapon',                'main'],
     ['.win',            'market',                'main'],
   ];
@@ -240,9 +222,8 @@ const TargetMode = (() => {
    ANONYMOUS MARKET (Silk Road)
    ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
-  { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS' },
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world' },
-  { id: 'adan',   cat: ['software', 'bots', 'signals'], tile: 'adan',   text: '> adan --shadow\n> polymarket: watching\n> brier: 0.19', title: 'ADAN prediction bot. Always early. Shadow mode. 1 yr', price: 0.91 },
+  { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS' },
   { id: 'exe',    cat: ['software', 'manifestos'], tile: 'exe',   text: 'LOOT.exe', title: '>>SPECIAL OFFER* MANIFESTO v4.0 EXCLUSIVE', price: 0.00, note: 'free' },
   { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', price: 0.03 },
@@ -252,7 +233,10 @@ const PRODUCTS = [
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  text: 'CULT', title: 'Membership. LOOT IS A CULT. hoodie incl.', price: 4.20 },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', text: 'PRE-ORDER', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. Last one', price: 0.91 },
-  { id: 'redact', cat: ['weapons', 'hardware', 'data'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
+  { id: 'sound',  cat: ['sound', 'art'],       tile: 'cult',  text: 'LOOT FM', title: 'LOOT SOUND. first pressing. sealed', price: 12.00, note: 'soon' },
+  { id: 'obj',    cat: ['objects', 'art'],     tile: 'taste', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
+  { id: 'event',  cat: ['events', 'custom'],   tile: 'club',  text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
+  { id: 'redact', cat: ['custom'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
 ];
 
 function initMarket() {
@@ -308,11 +292,22 @@ function flashMsg(text, state) {
   if (!xp || !msg) return;
   XP.paused = true;
   xp.classList.remove('is-error', 'is-ok', 'hidden'); if (state) xp.classList.add(state);
+  const r = xp.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) toast(text, state);
   scramble(msg, text, { onSet: (t) => { msg.dataset.text = t; } });
   xp.classList.remove('glitch'); void xp.offsetWidth; xp.classList.add('glitch');
   tearFlash();
   clearTimeout(XP.flashT);
   XP.flashT = setTimeout(() => { xp.classList.remove('is-error', 'is-ok'); XP.paused = false; }, 2600);
+}
+
+/* Small XP-style toast for when LOOT.exe is off-screen */
+function toast(text, state) {
+  document.querySelectorAll('.toast').forEach((t) => t.remove());
+  const t = document.createElement('div');
+  t.className = `toast ${state === 'is-error' ? 'toast--error' : 'toast--ok'}`;
+  t.innerHTML = `<div class="toast__bar">LOOT.exe</div><p>${text}</p>`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2400);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -322,7 +317,7 @@ function initAssistant() {
   const list = $('oaList'), prev = $('oaPreview'), desc = $('oaDesc');
   if (!list || !prev) return;
   let current = 'loot';
-  const views = { loot: '.oa__vid', stat: '.oa__img--stat', brier: '.oa__img--brier', adan: '.oa__ascii', locked: '.oa__locked' };
+  const views = { loot: '.oa__vid', brier: '.oa__ascii--brier', stat: '.oa__ascii--stat', locked: '.oa__locked' };
 
   const show = (op) => {
     current = op;
@@ -365,16 +360,17 @@ function initCursor() {
   const HITTABLE = [
     ['.target--stat',  () => flashMsg('HIT. STAT NEUTRALIZED.', 'is-error')],
     ['.target--brier', () => flashMsg('HIT. BRIER NEUTRALIZED.', 'is-error')],
-    ['.brand__title',  () => flashMsg('HIT. THE MAN OF THE FUTURE.', 'is-error')],
-    ['.hero__headline', (el) => scramble(el, el.textContent, { frames: 10 })],
+    ['.brand',   () => flashMsg('HIT. THE MAN OF THE FUTURE.', 'is-error')],
+    ['.headline', (el) => { const t = el.innerHTML; scramble(el, el.textContent.replace(/\s+/g, ' '), { frames: 10 }); setTimeout(() => { el.innerHTML = t; }, 400); }],
     ['.xp',            () => { XP.denies++; flashMsg('YOU SHOT LOOT.exe. WRONG DECISION.', 'is-error'); errorCascade(4, 'WRONG DECISION.'); }],
     ['.silk__item--locked', () => { flashMsg('CLASSIFIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(2, 'ACCESS DENIED.'); }],
     ['.sr__p',         null], // market handles its own clicks
     ['.badge',         (el) => el.classList.add('is-hit')],
   ];
 
+  const armedAt = performance.now() + 800; // ignore synthetic clicks during load
   addEventListener('pointerdown', (e) => {
-    if (e.button !== 0) return;
+    if (e.button !== 0 || performance.now() < armedAt) return;
     if (e.target.closest('button, input, a, #globe, .sr__cats, #oaList')) return;
     // recoil + flash + shake
     c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
@@ -428,15 +424,6 @@ function initHUD() {
   }
 }
 
-/* ─── Reticle parallax ─── */
-function initReticle() {
-  const r = $('reticle');
-  if (!r || REDUCED) return;
-  addEventListener('mousemove', (e) => {
-    const dx = (e.clientX / innerWidth - 0.5) * 30, dy = (e.clientY / innerHeight - 0.5) * 30;
-    r.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-  }, { passive: true });
-}
 
 /* ─── Videos: keep spinning after tab switches ─── */
 function initVideos() {
@@ -454,7 +441,6 @@ function initAmbientTears() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initTicker();
   initXP();
   initMarket();
   initAssistant();
@@ -463,7 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initReveal();
   initHUD();
-  initReticle();
   initVideos();
   TargetMode.restore();
 });

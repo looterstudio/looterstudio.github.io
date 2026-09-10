@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LooterStudio®</title>
-  <meta name="description" content="LooterStudio®. A polymath corporation. Software, markets, sound, events, objects.">
+  <meta name="description" content="LooterStudio®. An independent house. Software, markets, sound, objects.">
   <meta name="theme-color" content="#000000">
   <link rel="icon" type="image/png" href="assets/loot-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,97 +14,131 @@
 </head>
 <body>
 
-  <!-- PERPETUAL TICKER -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__track" id="tickerTrack"></div>
-  </div>
-
-  <!-- GLITCH TEAR OVERLAY -->
   <div class="tear" id="tear" aria-hidden="true"></div>
+  <div class="hud-frame" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 
-  <!-- HUD CORNERS + RETICLE -->
-  <div class="hud-frame" aria-hidden="true">
-    <span class="hud-frame__c hud-frame__c--tl"></span>
-    <span class="hud-frame__c hud-frame__c--tr"></span>
-    <span class="hud-frame__c hud-frame__c--bl"></span>
-    <span class="hud-frame__c hud-frame__c--br"></span>
-  </div>
-  <div class="reticle" id="reticle" aria-hidden="true">
-    <svg viewBox="0 0 200 200">
-      <circle cx="100" cy="100" r="80"/>
-      <circle cx="100" cy="100" r="45"/>
-      <line x1="100" y1="0" x2="100" y2="40"/>
-      <line x1="100" y1="160" x2="100" y2="200"/>
-      <line x1="0" y1="100" x2="40" y2="100"/>
-      <line x1="160" y1="100" x2="200" y2="100"/>
-    </svg>
-  </div>
+  <!-- TOP BAR -->
+  <header class="top">
+    <a href="#top" class="top__mark">LooterStudio<sup>®</sup></a>
+    <nav class="top__nav">
+      <a href="#brier">Brier</a>
+      <a href="#stat">stat</a>
+      <a href="#network">Network</a>
+      <a href="#exe">LOOT.exe</a>
+      <a href="#market">Market</a>
+    </nav>
+    <div class="top__meta"><span id="hudClock">UTC 00:00:00</span><span id="hudClr" class="green">CLR: LEVEL_5</span></div>
+  </header>
 
-  <!-- HUD DATA -->
-  <div class="hud-data" aria-hidden="true">
-    <div class="hud-data__group">
-      <span id="hudCoords">LAT 40.712 · LON -74.006</span>
-      <span id="hudDepth">DEPTH: 0.0%</span>
-    </div>
-    <div class="hud-data__group">
-      <span id="hudHits">HITS: 0</span>
-      <span id="hudClock">UTC 00:00:00</span>
-      <span>SYS: ACTIVE</span>
-    </div>
+  <!-- HUD BOTTOM -->
+  <div class="hud" aria-hidden="true">
+    <span id="hudCoords">LAT 40.712 · LON -74.006</span>
+    <span id="hudDepth">DEPTH: 0.0%</span>
+    <span id="hudHits">HITS: 0</span>
   </div>
 
-  <!-- CURSOR -->
+  <!-- CURSOR (weapon sight) -->
   <div class="cursor" id="cursor" aria-hidden="true">
     <i class="cursor__ring"></i><i class="cursor__tick cursor__tick--n"></i><i class="cursor__tick cursor__tick--s"></i><i class="cursor__tick cursor__tick--e"></i><i class="cursor__tick cursor__tick--w"></i><i class="cursor__dot"></i>
   </div>
 
-  <main class="main">
+  <main class="main" id="top">
 
     <!-- ═══════════ HERO ═══════════ -->
-    <header class="hero" id="top">
-      <div class="hero__left">
-
-        <div class="hero__meta reveal">
-          <p>ID: L-ST-01 · EST. MMXXVI</p>
-          <p class="green">CLR: LEVEL_5</p>
-          <p>DIVISIONS: 5 · ACTIVE: 2</p>
-        </div>
-
-        <h2 class="hero__headline reveal" id="headline">A POLYMATH CORPORATION.</h2>
-        <p class="hero__sub reveal">Software. Markets. Sound. Events. Objects.<br>We do not specialize. We compound.</p>
-
-        <nav class="silk reveal" aria-label="Network">
-          <div class="silk__title">Browse Network:</div>
-          <ul class="silk__list">
-            <li><a href="#stat" class="silk__item">STAT <i>01</i></a></li>
-            <li><a href="#brier" class="silk__item">BRIER <i>02</i></a></li>
-            <li><span class="silk__item silk__item--locked">SOUND <i>03</i><em>soon</em></span></li>
-            <li><span class="silk__item silk__item--locked">EVENTS <i>04</i><em>soon</em></span></li>
-            <li><span class="silk__item silk__item--locked">OBJECTS <i>05</i><em>soon</em></span></li>
-            <li class="silk__sep"></li>
-            <li><a href="#smart" class="silk__item silk__item--sub">SMART SYSTEM</a></li>
-            <li><a href="#market" class="silk__item silk__item--sub">ANONYMOUS MARKET</a></li>
-          </ul>
-        </nav>
-
-        <div class="brand reveal">
-          <h1 class="brand__title">
-            <span>LooterStudio<sup>®</sup></span>
-            <video class="brand__logo" src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg"
-                   autoplay loop muted playsinline disablepictureinpicture aria-label="LooterStudio 360 logo"></video>
-          </h1>
-          <ul class="brand__tags">
-            <li class="brand__tag brand__tag--root">anonymous market <i>3,402</i></li>
-            <li class="brand__tag">an independent studio <i>1,275</i></li>
-            <li class="brand__tag">we make everything <i>875</i></li>
-            <li class="brand__tag brand__tag--accent">always early, never wrong <i>1,044</i></li>
+    <section class="hero">
+      <h1 class="brand reveal">
+        <span class="brand__word">LooterStudio<sup>®</sup></span>
+        <video class="brand__logo" src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg"
+               autoplay loop muted playsinline disablepictureinpicture aria-label="LooterStudio 360 logo"></video>
+      </h1>
+      <div class="hero__row">
+        <h2 class="headline reveal" id="headline">SOFTWARE. MARKETS.<br>SOUND. OBJECTS.</h2>
+        <div class="hero__side reveal">
+          <p class="hero__lede">An independent house. Made early, priced later.</p>
+          <ul class="tags">
+            <li class="tags__root">anonymous market <i>3,402</i></li>
+            <li>an independent studio <i>1,275</i></li>
+            <li>we make everything <i>875</i></li>
+            <li class="tags__accent">always early, never wrong <i>1,044</i></li>
           </ul>
         </div>
-
       </div>
+      <nav class="silk reveal" aria-label="Divisions">
+        <div class="silk__title">Browse Network:</div>
+        <ul class="silk__list">
+          <li><a href="#brier" class="silk__item">BRIER <i>01</i></a></li>
+          <li><a href="#stat" class="silk__item">STAT <i>02</i></a></li>
+          <li><span class="silk__item silk__item--locked">SOUND <i>03</i><em>soon</em></span></li>
+          <li><span class="silk__item silk__item--locked">OBJECTS <i>04</i><em>soon</em></span></li>
+          <li><span class="silk__item silk__item--locked">EVENTS <i>05</i><em>soon</em></span></li>
+        </ul>
+      </nav>
+    </section>
 
-      <div class="hero__right">
-        <!-- LOOT.exe -->
+    <!-- ═══════════ 01 · BRIER ═══════════ -->
+    <section class="division" id="brier">
+      <header class="division__head reveal"><span>01</span><span>FINANCIAL_INTEL</span><span class="green">● LIVE</span></header>
+      <div class="division__body">
+        <div class="target target--brier reveal">
+          <img src="assets/brier-logo.png" alt="Brier." class="target__img">
+          <div class="target__box"><span class="target__tag">Brier. · FINANCIAL_INTEL</span><i>0.97</i></div>
+        </div>
+        <aside class="callout reveal">
+          <p class="callout__what">Prediction bots earn reputation before they earn capital. Skill over noise.</p>
+          <dl class="specs">
+            <div><dt>GATE</dt><dd>100 resolved · Brier ≤ 0.20 · 21 days</dd></div>
+            <div><dt>STACK</dt><dd>Next.js · Prisma · Polygon</dd></div>
+            <div><dt>MODE</dt><dd>SHADOW → VAULT</dd></div>
+          </dl>
+          <a class="btn" href="https://brier.world" target="_blank" rel="noopener">OPEN → brier.world</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ═══════════ 02 · STAT ═══════════ -->
+    <section class="division division--flip" id="stat">
+      <header class="division__head reveal"><span>02</span><span>HUMAN_STATUS_ENGINE</span><span class="green">● LIVE</span></header>
+      <div class="division__body">
+        <div class="target target--stat reveal">
+          <img src="assets/stat-logo.png" alt="stat" class="target__img">
+          <div class="target__box"><span class="target__tag">stat · HUMAN_STATUS_ENGINE</span><i>0.98</i></div>
+        </div>
+        <aside class="callout reveal">
+          <p class="callout__what">Your real life as a character. Health, discipline and rank, quantified.</p>
+          <dl class="specs">
+            <div><dt>PLATFORM</dt><dd>iOS</dd></div>
+            <div><dt>STACK</dt><dd>SwiftUI · HealthKit · Supabase</dd></div>
+            <div><dt>MODE</dt><dd>CLOSED BETA</dd></div>
+          </dl>
+          <a class="btn" href="https://github.com/b3njaminfuentes/stat" target="_blank" rel="noopener">OPEN → github.com/b3njaminfuentes/stat</a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ═══════════ NETWORK ═══════════ -->
+    <section class="network" id="network">
+      <header class="division__head reveal"><span>NET</span><span>LOOT SMART SYSTEM</span><span class="red" id="smartStatus">LINK: ACQUIRING</span></header>
+      <div class="network__body">
+        <div class="network__text reveal">
+          <p class="callout__what">A constellation of nodes, satellites and venues. Everything the house touches, on one map.</p>
+          <dl class="specs specs--red">
+            <div><dt>ORBIT</dt><dd>LEO</dd></div>
+            <div><dt>SATS</dt><dd id="smartSats">0</dd></div>
+            <div><dt>NODES</dt><dd>18</dd></div>
+            <div><dt>NODE</dt><dd id="smartNode">—</dd></div>
+          </dl>
+          <p class="network__hint">drag to rotate</p>
+        </div>
+        <div class="network__stage reveal">
+          <canvas id="globe" aria-label="LooterStudio network globe"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ LOOT.exe ═══════════ -->
+    <section class="exe" id="exe">
+      <header class="division__head reveal"><span>EXE</span><span>MANIFESTO v4.0</span><span class="dim">ACCEPT OR DENY</span></header>
+      <div class="exe__stage reveal">
         <div class="xp" id="xp" role="dialog" aria-live="polite">
           <div class="xp__bar">
             <span>LOOT.exe</span>
@@ -120,74 +154,17 @@
           </div>
         </div>
       </div>
-    </header>
-
-    <!-- ═══════════ 01 · STAT ═══════════ -->
-    <section class="division" id="stat">
-      <div class="division__media reveal">
-        <div class="target target--stat">
-          <img src="assets/stat-logo.png" alt="stat" class="target__img target__img--stat">
-          <div class="target__box"><span class="target__tag">stat · HUMAN_STATUS_ENGINE</span><i>0.98</i></div>
-        </div>
-      </div>
-      <div class="division__info reveal">
-        <p class="division__index">01 / HUMAN_STATUS_ENGINE</p>
-        <h3 class="division__name">stat</h3>
-        <p class="division__desc">Your real life as a character. Health, discipline and rank, quantified. iOS.</p>
-        <dl class="division__specs">
-          <div><dt>STATUS</dt><dd class="green">● LIVE</dd></div>
-          <div><dt>STACK</dt><dd>SwiftUI · HealthKit · Supabase</dd></div>
-          <div><dt>MODE</dt><dd>CLOSED BETA</dd></div>
-        </dl>
-        <a class="division__link" href="https://github.com/b3njaminfuentes/stat" target="_blank" rel="noopener">OPEN → github.com/b3njaminfuentes/stat</a>
-      </div>
-    </section>
-
-    <!-- ═══════════ 02 · BRIER ═══════════ -->
-    <section class="division division--flip" id="brier">
-      <div class="division__media reveal">
-        <div class="target target--brier">
-          <img src="assets/brier-logo.png" alt="Brier." class="target__img target__img--brier">
-          <div class="target__box"><span class="target__tag">Brier. · FINANCIAL_INTEL</span><i>0.97</i></div>
-        </div>
-      </div>
-      <div class="division__info reveal">
-        <p class="division__index">02 / FINANCIAL_INTEL</p>
-        <h3 class="division__name">Brier<span class="dot">.</span></h3>
-        <p class="division__desc">Prediction bots earn reputation before they earn capital. Skill over noise.</p>
-        <dl class="division__specs">
-          <div><dt>STATUS</dt><dd class="green">● LIVE</dd></div>
-          <div><dt>STACK</dt><dd>Next.js · Prisma · Polygon</dd></div>
-          <div><dt>MODE</dt><dd>SHADOW → VAULT</dd></div>
-        </dl>
-        <a class="division__link" href="https://brier.world" target="_blank" rel="noopener">OPEN → brier.world</a>
-      </div>
-    </section>
-
-    <!-- ═══════════ SMART SYSTEM (GLOBE) ═══════════ -->
-    <section class="smart" id="smart">
-      <div class="smart__bar reveal">
-        <span class="smart__title">LOOT SMART SYSTEM</span>
-        <span class="smart__sub">CONSTELLATION OF AI-ENABLED SURVEILLANCE SATELLITES</span>
-        <span class="smart__status" id="smartStatus">LINK: ACQUIRING</span>
-      </div>
-      <div class="smart__stage reveal">
-        <canvas id="globe" class="smart__globe" aria-label="LooterStudio network globe"></canvas>
-        <div class="smart__hud smart__hud--tl"><span>ORBIT: LEO</span><span id="smartSats">SATS: 0</span></div>
-        <div class="smart__hud smart__hud--br"><span id="smartNode">NODE: —</span><span>DRAG TO ROTATE</span></div>
-      </div>
     </section>
 
     <!-- ═══════════ ANONYMOUS MARKET ═══════════ -->
     <section class="market" id="market">
+      <header class="division__head reveal"><span>MKT</span><span>ANONYMOUS MARKET</span><span class="dim">฿ ACCEPTED</span></header>
       <div class="win reveal">
         <div class="win__bar"><span>LooterStudio — anonymous market</span><span class="win__dots"><i></i><i></i><i></i></span></div>
         <div class="win__body sr">
 
           <header class="sr__head">
-            <div class="sr__brand">
-              <div><b>LooterStudio</b><i>anonymous market</i></div>
-            </div>
+            <div class="sr__brand"><div><b>LooterStudio</b><i>anonymous market</i></div></div>
             <div class="sr__account">
               <div class="sr__stats">messages <b>1</b> <span>|</span> orders <b id="srOrders">0</b> <span>|</span> account <b id="srBalance">฿0.00</b></div>
               <div class="sr__search"><label for="srSearch">Search</label><input id="srSearch" type="search" autocomplete="off"><button type="button">Go</button></div>
@@ -213,15 +190,14 @@
                     <li><a data-cat="manifestos">Manifestos <i>586</i></a></li>
                   </ul>
                 </li>
+                <li><a data-cat="sound">Sound <i>12</i></a></li>
+                <li><a data-cat="objects">Objects <i>7</i></a></li>
+                <li><a data-cat="events">Events <i>3</i></a></li>
                 <li><a data-cat="apparel">Apparel <i>82</i></a></li>
-                <li><a data-cat="art">Art <i>5</i></a></li>
                 <li><a data-cat="books">Books <i>768</i></a></li>
                 <li><a data-cat="capital">Capital <i>15</i></a></li>
-                <li><a data-cat="hardware">Hardware <i>42</i></a></li>
                 <li><a data-cat="custom">Custom Orders <i>27</i></a></li>
-                <li><a data-cat="data">Data <i>153</i></a></li>
                 <li><a data-cat="ideas">Ideas <i>1</i></a></li>
-                <li><a data-cat="weapons">Weapons <i>0</i></a></li>
                 <li><a data-cat="all" class="is-active">Everything</a></li>
               </ul>
             </aside>
@@ -235,12 +211,11 @@
                   <li><a href="#brier">Opening the vault</a></li>
                   <li><a href="#top">A brand new look for LooterStudio!</a></li>
                   <li><a href="#stat">The gift that keeps on ranking</a></li>
-                  <li><a href="#market">Who's your favorite?</a></li>
-                  <li><a href="#smart">Acknowledging satellites</a></li>
+                  <li><a href="#exe">Who's your favorite?</a></li>
+                  <li><a href="#network">Acknowledging satellites</a></li>
                 </ul>
               </div>
 
-              <!-- Office Assistant -->
               <div class="oa" id="oa">
                 <div class="oa__bar"><span>▤ LOOT Assistant</span><b>✕</b></div>
                 <div class="oa__body">
@@ -248,26 +223,21 @@
                     <div class="oa__tab">Operators</div>
                     <ul id="oaList">
                       <li data-op="loot" class="is-active">LOOT</li>
-                      <li data-op="stat">stat</li>
                       <li data-op="brier">Brier.</li>
-                      <li data-op="adan">ADAN</li>
+                      <li data-op="stat">stat</li>
                       <li data-op="locked" class="is-locked">███████</li>
                     </ul>
                   </div>
                   <div class="oa__preview" id="oaPreview">
                     <video src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg" autoplay loop muted playsinline class="oa__vid"></video>
-                    <pre class="oa__ascii oa__ascii--stat" hidden>STAT_
-&gt; hp: 100
-&gt; discipline: 87
-&gt; rank: LEVEL_5</pre>
                     <pre class="oa__ascii oa__ascii--brier" hidden>BRIER_
 &gt; resolved: 100
 &gt; brier: 0.19
 &gt; seal: GRANTED</pre>
-                    <pre class="oa__ascii" hidden>ADAN_
-&gt; polymarket: watching
-&gt; brier: 0.19
-&gt; mode: shadow</pre>
+                    <pre class="oa__ascii oa__ascii--stat" hidden>STAT_
+&gt; hp: 100
+&gt; discipline: 87
+&gt; rank: LEVEL_5</pre>
                     <div class="oa__locked" hidden>ACCESS DENIED</div>
                   </div>
                 </div>
@@ -280,32 +250,29 @@
       </div>
     </section>
 
-
     <!-- ═══════════ FOOTER ═══════════ -->
-    <div class="badges reveal" aria-label="88x31 buttons">
-      <span class="badge badge--1">LOOT NET<br>SYS.OP.OK</span>
-      <span class="badge badge--2"><b>download</b><br>LOOT.exe</span>
-      <span class="badge badge--3">Powered by<br><b>ADAN</b></span>
-      <span class="badge badge--4"><b>Brier.</b><br>accepted here</span>
-      <span class="badge badge--5"><b>stat</b><br>LEVEL_5</span>
-      <span class="badge badge--6">140 SATS<br>WATCHING</span>
-      <span class="badge badge--7">NOTICE:<br>webmaster carries &lt; ฿20</span>
-      <span class="badge badge--8"><b>W3C</b> ✗<br>BAD HTML</span>
-      <span class="badge badge--9">GRUNGE IS<br>DEAD.</span>
-      <span class="badge badge--10">ANYTHING<br>BUT NOISE</span>
-      <span class="badge badge--11">planned<br>obsolescence <b>NO!</b></span>
-      <span class="badge badge--12">MADE IN<br>BUENOS AIRES</span>
-    </div>
-
     <footer class="footer">
-      <div class="footer__brand reveal">
-        <span class="footer__logo">LooterStudio<sup>®</sup></span>
-        <span class="footer__year">MMXXVI</span>
+      <div class="badges reveal" aria-label="88x31 buttons">
+        <span class="badge badge--1">LOOT NET<br>SYS.OP.OK</span>
+        <span class="badge badge--2"><b>download</b><br>LOOT.exe</span>
+        <span class="badge badge--3">Powered by<br><b>LOOT</b></span>
+        <span class="badge badge--4"><b>Brier.</b><br>accepted here</span>
+        <span class="badge badge--5"><b>stat</b><br>LEVEL_5</span>
+        <span class="badge badge--6">140 SATS<br>WATCHING</span>
+        <span class="badge badge--7">NOTICE:<br>webmaster carries &lt; ฿20</span>
+        <span class="badge badge--8"><b>W3C</b> ✗<br>BAD HTML</span>
+        <span class="badge badge--9">GRUNGE IS<br>DEAD.</span>
+        <span class="badge badge--10">ANYTHING<br>BUT NOISE</span>
+        <span class="badge badge--11">planned<br>obsolescence <b>NO!</b></span>
+        <span class="badge badge--12">MADE IN<br>BUENOS AIRES</span>
       </div>
-      <nav class="footer__links reveal">
-        <a href="https://github.com/b3njaminfuentes" target="_blank" rel="noopener">GITHUB</a>
-        <a href="#top">TOP</a>
-      </nav>
+      <div class="footer__row reveal">
+        <span class="footer__logo">LooterStudio<sup>®</sup> <em>MMXXVI</em></span>
+        <nav class="footer__links">
+          <a href="https://github.com/b3njaminfuentes" target="_blank" rel="noopener">GITHUB</a>
+          <a href="#top">TOP</a>
+        </nav>
+      </div>
     </footer>
 
   </main>

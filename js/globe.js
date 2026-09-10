@@ -21,7 +21,7 @@
   /* Network nodes: [label, lon, lat] */
   const NODES = [
     ['LOOT · BUENOS AIRES', -58.38, -34.60],
-    ['ADAN · HETZNER FSN1', 8.68, 50.11],
+    ['LOOT · FRANKFURT', 8.68, 50.11],
     ['BRIER · POLYGON', -73.99, 40.73],
     ['STAT · CUPERTINO', -122.03, 37.32],
     ['LOOT · PLANET LABS', -122.42, 37.77],
@@ -30,14 +30,12 @@
     ['LOOT · CAPELLA SPACE', -0.13, 51.51],
     ['LOOT · ICEYE', 24.94, 60.17],
     ['LOOT · MAXAR', -104.99, 39.74],
-    ['ADAN · HYPERLIQUID', 103.82, 1.35],
+    ['LOOT · SINGAPORE', 103.82, 1.35],
     ['LOOT · US SPACE FORCE', -77.04, 38.91],
     ['LOOT · AIRBUS DS', 11.58, 48.14],
     ['LOOT · SA', 28.05, -26.20],
     ['LOOT · ESPAÑOL', -3.70, 40.42],
-    ['LOOT · SÃO PAULO', -46.63, -23.55],
-    ['LOOT · DUBAI', 55.27, 25.20],
-    ['LOOT · SYDNEY', 151.21, -33.87],
+        ['LOOT · SYDNEY', 151.21, -33.87],
     ['LOOT · MUMBAI', 72.88, 19.08],
     ['LOOT · SEOUL', 126.98, 37.57],
   ];
@@ -65,7 +63,7 @@
     W = stage.clientWidth; H = stage.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
-    R = Math.min(W, H) * 0.42;
+    R = Math.min(W, H) * 0.40;
     projection.translate([W / 2, H / 2]).scale(R);
   }
 
@@ -117,10 +115,10 @@
       ctx.fillStyle = front ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.35)';
       ctx.beginPath(); ctx.arc(px, py, front ? 1.6 : 1, 0, Math.PI * 2); ctx.fill();
     });
-    if (satsEl) satsEl.textContent = `SATS: ${visible}`;
+    if (satsEl) satsEl.textContent = visible;
 
     // nodes + labels
-    ctx.font = '10px "JetBrains Mono", monospace';
+    ctx.font = '9px "JetBrains Mono", monospace';
     ctx.textBaseline = 'middle';
     const centre = [-rot[0], -rot[1]];
     NODES.forEach(([label, lon, lat], i) => {
@@ -139,11 +137,6 @@
       ctx.shadowBlur = 0;
     });
 
-    // scanline sweep
-    const sy = (t * 1.5) % (H + 40) - 20;
-    const sg = ctx.createLinearGradient(0, sy - 20, 0, sy + 20);
-    sg.addColorStop(0, 'rgba(255,42,60,0)'); sg.addColorStop(0.5, 'rgba(255,42,60,0.12)'); sg.addColorStop(1, 'rgba(255,42,60,0)');
-    ctx.fillStyle = sg; ctx.fillRect(0, sy - 20, W, 40);
   }
 
   function frame() {
@@ -176,7 +169,7 @@
       const d = Math.hypot(px - mx, py - my);
       if (d < bd) { bd = d; best = label; }
     });
-    nodeEl.textContent = best ? `NODE: ${best}` : 'NODE: —';
+    nodeEl.textContent = best || '—';
   });
 
   /* load real countries */
