@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LooterStudio®</title>
+  <meta name="description" content="LooterStudio. An independent studio. Whatever comes next.">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" type="image/png" href="assets/loot-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- PERPETUAL TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track" id="tickerTrack"></div>
+  </div>
+
+  <!-- GLITCH TEAR OVERLAY -->
+  <div class="tear" id="tear" aria-hidden="true"></div>
+
+  <!-- HUD CORNERS + RETICLE -->
+  <div class="hud-frame" aria-hidden="true">
+    <span class="hud-frame__c hud-frame__c--tl"></span>
+    <span class="hud-frame__c hud-frame__c--tr"></span>
+    <span class="hud-frame__c hud-frame__c--bl"></span>
+    <span class="hud-frame__c hud-frame__c--br"></span>
+  </div>
+  <div class="reticle" id="reticle" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="80"/>
+      <circle cx="100" cy="100" r="45"/>
+      <line x1="100" y1="0" x2="100" y2="40"/>
+      <line x1="100" y1="160" x2="100" y2="200"/>
+      <line x1="0" y1="100" x2="40" y2="100"/>
+      <line x1="160" y1="100" x2="200" y2="100"/>
+    </svg>
+  </div>
+
+  <!-- HUD DATA -->
+  <div class="hud-data" aria-hidden="true">
+    <div class="hud-data__group">
+      <span id="hudCoords">LAT 40.712 · LON -74.006</span>
+      <span id="hudDepth">DEPTH: 0.0%</span>
+    </div>
+    <div class="hud-data__group">
+      <span id="hudClock">UTC 00:00:00</span>
+      <span>SYS: ACTIVE</span>
+    </div>
+  </div>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <main class="main">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <header class="hero" id="top">
+      <div class="hero__left">
+
+        <div class="hero__meta reveal">
+          <p>ID: L-ST-01</p>
+          <p class="green">CLR: LEVEL_5</p>
+          <p>NET: ACTIVE</p>
+        </div>
+
+        <h2 class="hero__headline reveal" id="headline">WHATEVER COMES NEXT.</h2>
+
+        <nav class="silk reveal" aria-label="Network">
+          <div class="silk__title">Browse Network:</div>
+          <ul class="silk__list">
+            <li><a href="#stat" class="silk__item">STAT <i>01</i></a></li>
+            <li><a href="#brier" class="silk__item">BRIER <i>02</i></a></li>
+            <li><span class="silk__item silk__item--locked"><b class="redacted">CLASSIFIED</b> <i>03</i></span></li>
+            <li><span class="silk__item silk__item--locked">??? <i>04</i></span></li>
+          </ul>
+        </nav>
+
+        <div class="brand reveal">
+          <h1 class="brand__title">
+            <span>LooterStudio<sup>®</sup></span>
+            <video class="brand__logo" src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg"
+                   autoplay loop muted playsinline disablepictureinpicture aria-label="LooterStudio 360 logo"></video>
+          </h1>
+          <ul class="brand__tags">
+            <li class="brand__tag brand__tag--root">anonymous market <i>3,402</i></li>
+            <li class="brand__tag">an independent studio <i>1,275</i></li>
+            <li class="brand__tag">we make things <i>875</i></li>
+            <li class="brand__tag brand__tag--accent">always early, never wrong <i>1,044</i></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="hero__right">
+        <!-- LOOT.exe -->
+        <div class="xp" id="xp" role="dialog" aria-live="polite">
+          <div class="xp__bar">
+            <span>LOOT.exe</span>
+            <button class="xp__close" id="xpClose" aria-label="Close">✕</button>
+          </div>
+          <div class="xp__body">
+            <span class="xp__icon" aria-hidden="true">⚠</span>
+            <p class="xp__msg" id="xpMsg" data-text="LOOT IS SWAG.">LOOT IS SWAG.</p>
+          </div>
+          <div class="xp__actions">
+            <button class="xp__btn" id="xpAccept">ACCEPT</button>
+            <button class="xp__btn" id="xpDeny">DENY</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══════════ 01 · STAT ═══════════ -->
+    <section class="division" id="stat">
+      <div class="division__media reveal">
+        <div class="scope scope--green">
+          <svg viewBox="0 0 300 300">
+            <circle cx="150" cy="150" r="120"/>
+            <circle cx="150" cy="150" r="60"/>
+            <line x1="150" y1="20" x2="150" y2="80"/>
+            <line x1="150" y1="220" x2="150" y2="280"/>
+            <line x1="20" y1="150" x2="80" y2="150"/>
+            <line x1="220" y1="150" x2="280" y2="150"/>
+          </svg>
+          <img src="assets/stat-logo.png" alt="stat" class="scope__logo scope__logo--stat">
+        </div>
+      </div>
+      <div class="division__info reveal">
+        <p class="division__index">01 / HUMAN_STATUS_ENGINE</p>
+        <h3 class="division__name">stat</h3>
+        <p class="division__desc">Your real life as a character. Health, discipline and rank, quantified. iOS.</p>
+        <dl class="division__specs">
+          <div><dt>STATUS</dt><dd class="green">● LIVE</dd></div>
+          <div><dt>STACK</dt><dd>SwiftUI · HealthKit · Supabase</dd></div>
+          <div><dt>MODE</dt><dd>CLOSED BETA</dd></div>
+        </dl>
+        <a class="division__link" href="https://github.com/b3njaminfuentes/stat" target="_blank" rel="noopener">OPEN → github.com/b3njaminfuentes/stat</a>
+      </div>
+    </section>
+
+    <!-- ═══════════ 02 · BRIER ═══════════ -->
+    <section class="division division--flip" id="brier">
+      <div class="division__media reveal">
+        <div class="scope scope--red">
+          <svg viewBox="0 0 300 300">
+            <circle cx="150" cy="150" r="120"/>
+            <circle cx="150" cy="150" r="60"/>
+            <line x1="150" y1="20" x2="150" y2="80"/>
+            <line x1="150" y1="220" x2="150" y2="280"/>
+            <line x1="20" y1="150" x2="80" y2="150"/>
+            <line x1="220" y1="150" x2="280" y2="150"/>
+          </svg>
+          <img src="assets/brier-logo.png" alt="Brier." class="scope__logo scope__logo--brier">
+        </div>
+      </div>
+      <div class="division__info reveal">
+        <p class="division__index">02 / FINANCIAL_INTEL</p>
+        <h3 class="division__name">Brier<span class="dot">.</span></h3>
+        <p class="division__desc">Prediction bots earn reputation before they earn capital. Skill over noise.</p>
+        <dl class="division__specs">
+          <div><dt>STATUS</dt><dd class="green">● LIVE</dd></div>
+          <div><dt>STACK</dt><dd>Next.js · Prisma · Polygon</dd></div>
+          <div><dt>MODE</dt><dd>SHADOW → VAULT</dd></div>
+        </dl>
+        <a class="division__link" href="https://brier.world" target="_blank" rel="noopener">OPEN → brier.world</a>
+      </div>
+    </section>
+
+    <!-- ═══════════ 03 / 04 ═══════════ -->
+    <section class="locked">
+      <div class="locked__row reveal">
+        <span>03</span><b class="redacted">CLASSIFIED PROJECT NAME</b><span class="red">● LOCKED</span>
+      </div>
+      <div class="locked__row reveal">
+        <span>04</span><b>???</b><span class="dim">● NULL</span>
+      </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="footer">
+      <div class="footer__brand reveal">
+        <span class="footer__logo">LooterStudio<sup>®</sup></span>
+        <span class="footer__year">MMXXVI</span>
+      </div>
+      <nav class="footer__links reveal">
+        <a href="https://github.com/b3njaminfuentes" target="_blank" rel="noopener">GITHUB</a>
+        <a href="#top">TOP</a>
+      </nav>
+    </footer>
+
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
