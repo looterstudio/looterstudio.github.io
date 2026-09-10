@@ -47,13 +47,16 @@
       <span id="hudDepth">DEPTH: 0.0%</span>
     </div>
     <div class="hud-data__group">
+      <span id="hudHits">HITS: 0</span>
       <span id="hudClock">UTC 00:00:00</span>
       <span>SYS: ACTIVE</span>
     </div>
   </div>
 
   <!-- CURSOR -->
-  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <i class="cursor__ring"></i><i class="cursor__tick cursor__tick--n"></i><i class="cursor__tick cursor__tick--s"></i><i class="cursor__tick cursor__tick--e"></i><i class="cursor__tick cursor__tick--w"></i><i class="cursor__dot"></i>
+  </div>
 
   <main class="main">
 
@@ -120,13 +123,9 @@
     <!-- ═══════════ 01 · STAT ═══════════ -->
     <section class="division" id="stat">
       <div class="division__media reveal">
-        <div class="target target--stat" data-label="HUMAN_STATUS_ENGINE" data-conf="0.98">
+        <div class="target target--stat">
           <img src="assets/stat-logo.png" alt="stat" class="target__img target__img--stat">
-          <div class="target__box target__box--main"><span class="target__tag">the operator of the future</span><i class="target__conf">0.98</i></div>
-          <div class="target__box target__box--sub" style="left:6%;top:8%;width:22%;height:16%"><span class="target__tag">trash</span></div>
-          <div class="target__box target__box--sub target__box--sign" style="right:5%;bottom:10%;width:18%;height:20%"><span class="target__tag">sign</span></div>
-          <div class="target__scan"></div>
-          <div class="target__meta"><span>CAM_01 · 60FPS</span><span class="target__conf-readout">CONF 0.98</span></div>
+          <div class="target__box"><span class="target__tag">stat · HUMAN_STATUS_ENGINE</span><i>0.98</i></div>
         </div>
       </div>
       <div class="division__info reveal">
@@ -145,13 +144,9 @@
     <!-- ═══════════ 02 · BRIER ═══════════ -->
     <section class="division division--flip" id="brier">
       <div class="division__media reveal">
-        <div class="target target--brier" data-label="FINANCIAL_INTEL" data-conf="0.97">
+        <div class="target target--brier">
           <img src="assets/brier-logo.png" alt="Brier." class="target__img target__img--brier">
-          <div class="target__box target__box--main"><span class="target__tag">the bazaar of answers</span><i class="target__conf">0.97</i></div>
-          <div class="target__box target__box--sub" style="right:8%;top:10%;width:20%;height:18%"><span class="target__tag">trash</span></div>
-          <div class="target__box target__box--sub target__box--sign" style="left:6%;bottom:12%;width:24%;height:14%"><span class="target__tag">sign</span></div>
-          <div class="target__scan"></div>
-          <div class="target__meta"><span>CAM_02 · 60FPS</span><span class="target__conf-readout">CONF 0.97</span></div>
+          <div class="target__box"><span class="target__tag">Brier. · FINANCIAL_INTEL</span><i>0.97</i></div>
         </div>
       </div>
       <div class="division__info reveal">
@@ -189,7 +184,6 @@
 
           <header class="sr__head">
             <div class="sr__brand">
-              <video src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg" autoplay loop muted playsinline class="sr__brand-logo"></video>
               <div><b>LooterStudio</b><i>anonymous market</i></div>
             </div>
             <div class="sr__account">
@@ -260,8 +254,14 @@
                   </div>
                   <div class="oa__preview" id="oaPreview">
                     <video src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg" autoplay loop muted playsinline class="oa__vid"></video>
-                    <img src="assets/stat-logo.png" alt="" class="oa__img oa__img--stat" hidden>
-                    <img src="assets/brier-logo.png" alt="" class="oa__img oa__img--brier" hidden>
+                    <pre class="oa__ascii oa__ascii--stat" hidden>STAT_
+&gt; hp: 100
+&gt; discipline: 87
+&gt; rank: LEVEL_5</pre>
+                    <pre class="oa__ascii oa__ascii--brier" hidden>BRIER_
+&gt; resolved: 100
+&gt; brier: 0.19
+&gt; seal: GRANTED</pre>
                     <pre class="oa__ascii" hidden>ADAN_
 &gt; polymarket: watching
 &gt; brier: 0.19
@@ -278,24 +278,15 @@
       </div>
     </section>
 
-    <!-- ═══════════ 03 / 04 ═══════════ -->
-    <section class="locked">
-      <div class="locked__row reveal">
-        <span>03</span><b class="redacted">CLASSIFIED PROJECT NAME</b><span class="red">● LOCKED</span>
-      </div>
-      <div class="locked__row reveal">
-        <span>04</span><b>???</b><span class="dim">● NULL</span>
-      </div>
-    </section>
 
     <!-- ═══════════ FOOTER ═══════════ -->
     <div class="badges reveal" aria-label="88x31 buttons">
-      <span class="badge badge--1">LOOT IS<br>SWAG</span>
+      <span class="badge badge--1">LOOT NET<br>SYS.OP.OK</span>
       <span class="badge badge--2"><b>download</b><br>LOOT.exe</span>
       <span class="badge badge--3">Powered by<br><b>ADAN</b></span>
       <span class="badge badge--4"><b>Brier.</b><br>accepted here</span>
       <span class="badge badge--5"><b>stat</b><br>LEVEL_5</span>
-      <span class="badge badge--6">NOT FOR<br>POORS</span>
+      <span class="badge badge--6">140 SATS<br>WATCHING</span>
       <span class="badge badge--7">NOTICE:<br>webmaster carries &lt; ฿20</span>
       <span class="badge badge--8"><b>W3C</b> ✗<br>BAD HTML</span>
       <span class="badge badge--9">GRUNGE IS<br>DEAD.</span>

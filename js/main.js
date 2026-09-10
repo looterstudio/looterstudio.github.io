@@ -73,10 +73,9 @@ const $ = (id) => document.getElementById(id);
 function initTicker() {
   const track = $('tickerTrack');
   if (!track) return;
-  const items = [];
-  MANIFESTO.forEach((m, i) => { items.push(`<b>${m.replace(/\.$/, '')}</b>`); items.push(SYS[i % SYS.length]); });
+  const items = [...SYS, 'ORBIT: LEO', 'SATS: 140', 'NODES: 20', 'MARKET: OPEN', 'OPERATOR: ONLINE', 'CLR: LEVEL_5', 'WHATEVER COMES NEXT'];
   const half = items.join(' &nbsp;┼&nbsp; ') + ' &nbsp;┼&nbsp; ';
-  track.innerHTML = half + half;
+  track.innerHTML = half + half + half;
 }
 
 /* ─── Tear flash ─── */
@@ -187,15 +186,10 @@ function errorCascade(n, text) {
    ═══════════════════════════════════════════════════════════════ */
 const TargetMode = (() => {
   const SPEC = [
-    ['.brand__title',        'the man of the future', 'main'],
-    ['.silk__title',         'sign',  'sign'],
-    ['.silk__item--locked .redacted', 'trash', 'trash'],
-    ['.hero__headline',      'signal', 'sign'],
-    ['.locked__row .redacted', 'trash', 'trash'],
-    ['.badges',              'trash', 'trash'],
-    ['.win__bar',            'sign', 'sign'],
-    ['.oa',                  'assistant', 'main'],
-    ['.footer__logo',        'the man of the future', 'main'],
+    ['.brand__title',   'the man of the future', 'main'],
+    ['.hero__headline', 'signal',                'main'],
+    ['.xp',             'weapon',                'main'],
+    ['.win',            'market',                'main'],
   ];
   let boxes = [], on = false, raf = null;
 
@@ -241,19 +235,6 @@ const TargetMode = (() => {
   return { toggle, restore };
 })();
 
-/* ─── Target frames: live confidence readouts ─── */
-function initTargetFrames() {
-  const frames = document.querySelectorAll('.target');
-  if (!frames.length || REDUCED) return;
-  setInterval(() => {
-    frames.forEach((f) => {
-      const base = parseFloat(f.dataset.conf || '0.97');
-      const v = (base - Math.random() * 0.06).toFixed(2);
-      f.querySelector('.target__conf').textContent = v;
-      f.querySelector('.target__conf-readout').textContent = `CONF ${v}`;
-    });
-  }, 700);
-}
 
 /* ═══════════════════════════════════════════════════════════════
    ANONYMOUS MARKET (Silk Road)
@@ -362,45 +343,6 @@ function initAssistant() {
   } catch (_) {}
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MEGA MOTION — scroll velocity skew, parallax layers, ticker speed
-   ═══════════════════════════════════════════════════════════════ */
-function initMegaMotion() {
-  if (REDUCED) return;
-  const main = document.querySelector('.main');
-  const ticker = $('tickerTrack');
-  const layers = [
-    [document.querySelector('.hero__headline'), 0.12],
-    [document.querySelector('.brand'), -0.06],
-    [document.querySelector('.hero__meta'), 0.2],
-    ...[...document.querySelectorAll('.target')].map((el) => [el, 0.08]),
-    [document.querySelector('.smart__bar'), 0.1],
-    [document.querySelector('.badges'), 0.05],
-  ].filter(([el]) => el);
-
-  let last = scrollY, vel = 0, skew = 0;
-  main.classList.add('motion-skew');
-
-  const frame = () => {
-    const y = scrollY;
-    vel = vel * 0.8 + (y - last) * 0.2;
-    last = y;
-    const target = Math.max(-6, Math.min(6, vel * 0.06));
-    skew += (target - skew) * 0.15;
-    main.style.transform = `skewY(${skew.toFixed(3)}deg)`;
-
-    layers.forEach(([el, k]) => {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > innerHeight + 200) return;
-      const centre = r.top + r.height / 2 - innerHeight / 2;
-      el.style.transform = `translate3d(0, ${(centre * k).toFixed(1)}px, 0)`;
-    });
-
-    if (ticker) ticker.style.animationDuration = `${Math.max(20, 140 - Math.abs(vel) * 4)}s`;
-    requestAnimationFrame(frame);
-  };
-  frame();
-}
 
 /* ─── Headline hover scramble ─── */
 function initHeadline() {
@@ -410,14 +352,53 @@ function initHeadline() {
   h.addEventListener('mouseenter', () => scramble(h, original, { frames: 8, tick: 30 }));
 }
 
-/* ─── Cursor ─── */
+/* ─── Cursor: weapon sight. Click = shoot. ─── */
 function initCursor() {
   const c = $('cursor');
   if (!c || window.matchMedia('(hover: none)').matches) return;
   let mx = -100, my = -100, cx = -100, cy = -100;
   addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-  const tick = () => { cx += (mx - cx) * 0.25; cy += (my - cy) * 0.25; c.style.transform = `translate(${cx - 9}px, ${cy - 9}px)`; requestAnimationFrame(tick); };
+  const tick = () => { cx += (mx - cx) * 0.35; cy += (my - cy) * 0.35; c.style.transform = `translate(${cx - c.offsetWidth / 2}px, ${cy - c.offsetHeight / 2}px)`; requestAnimationFrame(tick); };
   tick();
+
+  let hits = 0;
+  const HITTABLE = [
+    ['.target--stat',  () => flashMsg('HIT. STAT NEUTRALIZED.', 'is-error')],
+    ['.target--brier', () => flashMsg('HIT. BRIER NEUTRALIZED.', 'is-error')],
+    ['.brand__title',  () => flashMsg('HIT. THE MAN OF THE FUTURE.', 'is-error')],
+    ['.hero__headline', (el) => scramble(el, el.textContent, { frames: 10 })],
+    ['.xp',            () => { XP.denies++; flashMsg('YOU SHOT LOOT.exe. WRONG DECISION.', 'is-error'); errorCascade(4, 'WRONG DECISION.'); }],
+    ['.silk__item--locked', () => { flashMsg('CLASSIFIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(2, 'ACCESS DENIED.'); }],
+    ['.sr__p',         null], // market handles its own clicks
+    ['.badge',         (el) => el.classList.add('is-hit')],
+  ];
+
+  addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    if (e.target.closest('button, input, a, #globe, .sr__cats, #oaList')) return;
+    // recoil + flash + shake
+    c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
+    if (!REDUCED) {
+      const f = document.createElement('div'); f.className = 'flash'; document.body.appendChild(f); setTimeout(() => f.remove(), 140);
+      document.body.classList.remove('is-shake'); void document.body.offsetWidth; document.body.classList.add('is-shake');
+    }
+    // bullet hole where it landed (page coords so it scrolls with content)
+    const h = document.createElement('div');
+    h.className = 'hole';
+    h.style.left = `${e.pageX}px`; h.style.top = `${e.pageY}px`;
+    h.style.setProperty('--a1', `${rand(0, 360)}deg`); h.style.setProperty('--a2', `${rand(0, 360)}deg`);
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 12000);
+    // what did we hit?
+    for (const [sel, fn] of HITTABLE) {
+      const el = e.target.closest(sel);
+      if (!el) continue;
+      if (fn) { el.classList.remove('is-hit'); void el.offsetWidth; el.classList.add('is-hit'); fn(el); }
+      hits++;
+      const hud = $('hudHits'); if (hud) hud.textContent = `HITS: ${hits}`;
+      break;
+    }
+  });
 }
 
 /* ─── Reveal ─── */
@@ -427,7 +408,7 @@ function initReveal() {
     entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
   els.forEach((el, i) => { el.style.transitionDelay = `${Math.min(i * 0.05, 0.3)}s`; io.observe(el); });
-  setTimeout(() => els.forEach((el) => el.classList.add('in')), 4000);
+  setTimeout(() => els.forEach((el) => el.classList.add('in')), 2500);
 }
 
 /* ─── HUD ─── */
@@ -475,10 +456,8 @@ function initAmbientTears() {
 document.addEventListener('DOMContentLoaded', () => {
   initTicker();
   initXP();
-  initTargetFrames();
   initMarket();
   initAssistant();
-  initMegaMotion();
   initAmbientTears();
   initHeadline();
   initCursor();
