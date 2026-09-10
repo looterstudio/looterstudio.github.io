@@ -185,6 +185,10 @@ body.is-shake { animation: shake .18s steps(2); }
   margin-top: 9vh;
 }
 
+.hero__sub { margin-top: 18px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--ghost); line-height: 1.8; }
+.hero__sub br + * { color: var(--dim); }
+.silk__item em { font-style: italic; font-size: 11px; color: #444; margin-left: 2px; }
+
 /* Silk road nav */
 .silk { margin-top: 3rem; font-family: var(--brand); }
 .silk__title {
