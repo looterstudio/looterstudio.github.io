@@ -166,7 +166,7 @@ const PRODUCTS = [
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS' },
   { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', price: 1e9 },
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'just a tung tung tung sahur pic', priceLabel: 'USD 100,000' },
-  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS. first pressing. sealed', price: 12.00, note: 'soon' },
+  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
@@ -197,6 +197,7 @@ function initMarket() {
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
     grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
+    grid.querySelectorAll('.tile--leverage').forEach(vibrationField);
   };
   render();
 
@@ -255,6 +256,71 @@ function matrixRain(tile) {
     requestAnimationFrame(tick);
   };
   if (!REDUCED) tick(); else { ctx.fillStyle = '#00ff41'; ctx.font = `${fs}px monospace`; for (let y = fs; y < c.height; y += fs) ctx.fillText('0101101001010100110'.slice(0, Math.ceil(c.width / 7)), 0, y); }
+}
+
+/* Vibration field: a swirling energy vortex, drawn from the inside */
+function vibrationField(tile) {
+  const c = document.createElement('canvas');
+  tile.innerHTML = ''; tile.appendChild(c);
+  const label = document.createElement('b'); label.textContent = '10x'; tile.appendChild(label);
+  const ctx = c.getContext('2d');
+  let W = 0, H = 0;
+  const size = () => { W = c.width = tile.clientWidth; H = c.height = tile.clientHeight; };
+  size();
+  let t = 0;
+  const draw = (loop) => {
+    if (!tile.isConnected) return;
+    if (W !== tile.clientWidth) size();
+    const cx = W / 2, cy = H / 2, R = Math.max(W, H) * 0.75;
+    // ground: deep violet with a soft lavender bloom that breathes
+    const breathe = 0.5 + 0.5 * Math.sin(t * 0.05);
+    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    bg.addColorStop(0, `rgba(200,180,255,${0.55 + breathe * 0.25})`);
+    bg.addColorStop(0.45, 'rgba(90,60,255,0.9)');
+    bg.addColorStop(1, '#1a0aa8');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    // aura: a wobbling energy boundary, layered and soft
+    for (let k = 3; k >= 1; k--) {
+      ctx.beginPath();
+      for (let i = 0; i <= 90; i++) {
+        const ang = (i / 90) * Math.PI * 2;
+        const wob = Math.sin(ang * 3 + t * 0.06) * 6 + Math.sin(ang * 7 - t * 0.09) * 3 + Math.sin(ang * 11 + t * 0.13) * 2;
+        const r = R * (0.28 + k * 0.14) + wob * k;
+        const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.closePath();
+      ctx.fillStyle = `rgba(190,170,255,${0.10 + breathe * 0.05})`; ctx.fill();
+      ctx.strokeStyle = `rgba(255,255,255,${0.10 + (4 - k) * 0.08})`; ctx.lineWidth = 1; ctx.stroke();
+    }
+    // ripples: interference rings travelling outward
+    ctx.lineWidth = 1.2;
+    for (let r = 4; r < R; r += 7) {
+      const a = 0.5 + 0.5 * Math.sin(r * 0.28 - t * 0.22);
+      ctx.strokeStyle = `rgba(230,220,255,${a * a * 0.55 * (1 - r / R)})`;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    }
+    // vortex: three spiral arms, drawn as jittered polylines
+    for (let arm = 0; arm < 3; arm++) {
+      ctx.beginPath();
+      for (let s = 0; s < 140; s++) {
+        const r = s * (R / 140) * 0.9;
+        const ang = s * 0.085 + arm * (Math.PI * 2 / 3) + t * 0.035 + Math.sin(s * 0.3 + t * 0.2) * 0.06;
+        const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
+        s ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(20,0,140,0.55)'; ctx.lineWidth = 3; ctx.stroke();
+      ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1; ctx.stroke();
+    }
+    // core: a bright eye that shivers
+    const jx = (Math.random() - 0.5) * 2, jy = (Math.random() - 0.5) * 2;
+    const core = ctx.createRadialGradient(cx + jx, cy + jy, 0, cx + jx, cy + jy, 26 + breathe * 6);
+    core.addColorStop(0, 'rgba(255,255,255,0.95)'); core.addColorStop(0.4, 'rgba(180,160,255,0.6)'); core.addColorStop(1, 'rgba(120,80,255,0)');
+    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx + jx, cy + jy, 32, 0, Math.PI * 2); ctx.fill();
+    t++;
+    if (loop) requestAnimationFrame(() => draw(true));
+  };
+  draw(!REDUCED);
 }
 
 /* Show a one-off line in LOOT.exe and scroll it into view */
