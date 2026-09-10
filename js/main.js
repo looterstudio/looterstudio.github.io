@@ -39,19 +39,6 @@ const MANIFESTO = [
   'LOOT IS WHATEVER COMES NEXT.',
 ];
 
-/* Operator voices (Office Assistant) */
-const OPERATORS = {
-  loot:  { name: 'LOOT',   desc: 'The voice behind LOOT.exe. Speaks in manifesto.', lines: MANIFESTO },
-  stat:  { name: 'stat',   desc: 'Human status engine. Quantifies discipline.', lines: [
-    'STAT IS YOUR REAL LIFE.', 'STAT IS A CHARACTER SHEET.', 'STAT IS DISCIPLINE.', 'STAT IS RANK.',
-    'STAT IS NOT A FITNESS APP.', 'STAT IS LEVEL_5.', 'STAT IS THE CLAN.', 'STAT IS EARLY.',
-  ] },
-  brier: { name: 'Brier.', desc: 'Financial intel. Reputation before capital.', lines: [
-    'BRIER IS THE BAZAAR OF ANSWERS.', 'BRIER IS SKILL OVER NOISE.', 'BRIER IS REPUTATION BEFORE CAPITAL.',
-    'BRIER IS ≤ 0.20.', 'BRIER IS A SEAL.', 'BRIER IS 100 RESOLVED PREDICTIONS.', 'BRIER IS A VAULT.', 'BRIER IS NEVER WRONG.',
-  ] },
-  locked: { name: '███████', desc: 'ACCESS DENIED. CLR: LEVEL_6 required.', lines: null },
-};
 
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const GLYPHS = '!<>-_\\/[]{}—=+*^?#01ABCDEFXYZ';
@@ -86,13 +73,13 @@ function scramble(el, target, { frames = 9, tick = 28, onSet } = {}) {
 /* ═══════════════════════════════════════════════════════════════
    LOOT.exe — manifesto cycler + ACCEPT / DENY consequences
    ═══════════════════════════════════════════════════════════════ */
-const XP = { voice: 'loot', idx: 0, paused: false, denies: 0, timer: null };
+const XP = { idx: 0, paused: false, denies: 0, timer: null };
 
 function initXP() {
   const xp = $('xp'), msg = $('xpMsg');
   if (!xp || !msg) return;
 
-  const lines = () => OPERATORS[XP.voice].lines || MANIFESTO;
+  const lines = () => MANIFESTO;
   const say = (text) => scramble(msg, text, { onSet: (t) => { msg.dataset.text = t; } });
   const glitch = () => { xp.classList.remove('glitch'); void xp.offsetWidth; xp.classList.add('glitch'); };
 
@@ -125,24 +112,19 @@ function initXP() {
 
   /* ACCEPT → access granted + target mode */
   const accept = () => {
-    hold('ACCESS GRANTED. CLR: LEVEL_5 → LEVEL_6.', 'is-ok', 2600, () => {
-      const clr = $('hudClr');
-      if (clr) clr.textContent = 'CLR: LEVEL_6';
+    hold('ACCESS GRANTED. CLR: LEVEL_6.', 'is-ok', 2600, () => {
+      document.querySelectorAll('.silk__item--locked').forEach((el) => {
+        el.classList.add('is-unlocked');
+        const em = el.querySelector('em'); if (em) em.textContent = 'unlocked';
+      });
+      try { localStorage.setItem('loot.clr', '6'); } catch (_) {}
     });
-    TargetMode.toggle(true);
   };
 
   $('xpAccept')?.addEventListener('click', accept);
   $('xpDeny')?.addEventListener('click', deny);
   $('xpClose')?.addEventListener('click', deny);
 
-  /* external hook: switch voice */
-  XP.setVoice = (op) => {
-    if (!OPERATORS[op]?.lines) return false;
-    XP.voice = op; XP.idx = -1;
-    hold(`OPERATOR: ${OPERATORS[op].name.toUpperCase()} ONLINE.`, 'is-ok', 1800);
-    return true;
-  };
 }
 
 function errorCascade(n, text) {
@@ -163,60 +145,6 @@ function errorCascade(n, text) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TARGET MODE — AI-vision boxes over the live page
-   ═══════════════════════════════════════════════════════════════ */
-const TargetMode = (() => {
-  const SPEC = [
-    ['.brand',    'the man of the future', 'main'],
-    ['.headline', 'signal',                'main'],
-    ['.xp',             'weapon',                'main'],
-    ['.win',            'market',                'main'],
-  ];
-  let boxes = [], on = false, raf = null;
-
-  const build = () => {
-    boxes = SPEC.map(([sel, label, kind]) => {
-      const el = document.querySelector(sel);
-      if (!el) return null;
-      const b = document.createElement('div');
-      b.className = `tm tm--${kind}`;
-      b.innerHTML = `<b>${label}</b><i>${(0.9 + Math.random() * 0.09).toFixed(2)}</i>`;
-      document.body.appendChild(b);
-      return { el, b, jx: 0, jy: 0, t: 0 };
-    }).filter(Boolean);
-  };
-
-  const tick = () => {
-    if (!on) return;
-    const now = performance.now();
-    boxes.forEach((o) => {
-      const r = o.el.getBoundingClientRect();
-      const visible = r.bottom > 0 && r.top < innerHeight && r.width > 0;
-      o.b.style.opacity = visible ? 1 : 0;
-      if (!visible) return;
-      if (now - o.t > 600) { o.t = now; o.jx = rand(-3, 3); o.jy = rand(-3, 3); o.b.querySelector('i').textContent = (0.9 + Math.random() * 0.09).toFixed(2); }
-      const pad = 8;
-      o.b.style.left = `${r.left - pad + o.jx}px`;
-      o.b.style.top = `${r.top - pad + o.jy}px`;
-      o.b.style.width = `${r.width + pad * 2}px`;
-      o.b.style.height = `${r.height + pad * 2}px`;
-    });
-    raf = requestAnimationFrame(tick);
-  };
-
-  const toggle = (state) => {
-    on = state;
-    document.body.classList.toggle('target-mode', on);
-    if (on) { if (!boxes.length) build(); boxes.forEach((o) => (o.b.style.opacity = 1)); tick(); }
-    else { cancelAnimationFrame(raf); boxes.forEach((o) => (o.b.style.opacity = 0)); }
-    try { localStorage.setItem('loot.target', on ? '1' : '0'); } catch (_) {}
-  };
-
-  const restore = () => { try { if (localStorage.getItem('loot.target') === '1') toggle(true); } catch (_) {} };
-  return { toggle, restore };
-})();
-
 
 /* ═══════════════════════════════════════════════════════════════
    ANONYMOUS MARKET (Silk Road)
@@ -233,9 +161,9 @@ const PRODUCTS = [
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  text: 'CULT', title: 'Membership. LOOT IS A CULT. hoodie incl.', price: 4.20 },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', text: 'PRE-ORDER', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. Last one', price: 0.91 },
-  { id: 'sound',  cat: ['sound', 'art'],       tile: 'cult',  text: 'LOOT FM', title: 'LOOT SOUND. first pressing. sealed', price: 12.00, note: 'soon' },
-  { id: 'obj',    cat: ['objects', 'art'],     tile: 'taste', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
-  { id: 'event',  cat: ['events', 'custom'],   tile: 'club',  text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
+  { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', text: 'LOOT FM', title: 'LOOT SOUND. first pressing. sealed', price: 12.00, note: 'soon' },
+  { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
+  { id: 'event',  cat: ['events', 'custom'],   tile: 'events', text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
   { id: 'redact', cat: ['custom'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
 ];
 
@@ -310,34 +238,6 @@ function toast(text, state) {
   setTimeout(() => t.remove(), 2400);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   OFFICE ASSISTANT
-   ═══════════════════════════════════════════════════════════════ */
-function initAssistant() {
-  const list = $('oaList'), prev = $('oaPreview'), desc = $('oaDesc');
-  if (!list || !prev) return;
-  let current = 'loot';
-  const views = { loot: '.oa__vid', brier: '.oa__ascii--brier', stat: '.oa__ascii--stat', locked: '.oa__locked' };
-
-  const show = (op) => {
-    current = op;
-    list.querySelectorAll('li').forEach((li) => li.classList.toggle('is-active', li.dataset.op === op));
-    Object.entries(views).forEach(([k, sel]) => { const el = prev.querySelector(sel); if (el) el.hidden = k !== op; });
-    desc.textContent = OPERATORS[op].desc;
-  };
-  list.addEventListener('click', (e) => { const li = e.target.closest('li[data-op]'); if (li) show(li.dataset.op); });
-  $('oaSet')?.addEventListener('click', () => {
-    if (!XP.setVoice || !XP.setVoice(current)) { flashMsg('ACCESS DENIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(3, 'ACCESS DENIED.'); return; }
-    try { localStorage.setItem('loot.voice', current); } catch (_) {}
-  });
-  $('oaCancel')?.addEventListener('click', () => show('loot'));
-
-  try {
-    const saved = localStorage.getItem('loot.voice');
-    if (saved && OPERATORS[saved]?.lines) { XP.voice = saved; show(saved); }
-  } catch (_) {}
-}
-
 
 /* ─── Headline hover scramble ─── */
 function initHeadline() {
@@ -365,13 +265,12 @@ function initCursor() {
     ['.xp',            () => { XP.denies++; flashMsg('YOU SHOT LOOT.exe. WRONG DECISION.', 'is-error'); errorCascade(4, 'WRONG DECISION.'); }],
     ['.silk__item--locked', () => { flashMsg('CLASSIFIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(2, 'ACCESS DENIED.'); }],
     ['.sr__p',         null], // market handles its own clicks
-    ['.badge',         (el) => el.classList.add('is-hit')],
   ];
 
   const armedAt = performance.now() + 800; // ignore synthetic clicks during load
   addEventListener('pointerdown', (e) => {
     if (e.button !== 0 || performance.now() < armedAt) return;
-    if (e.target.closest('button, input, a, #globe, .sr__cats, #oaList')) return;
+    if (e.target.closest('button, input, a, .xp__bar, .sr__cats')) return;
     // recoil + flash + shake
     c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
     if (!REDUCED) {
@@ -391,7 +290,6 @@ function initCursor() {
       if (!el) continue;
       if (fn) { el.classList.remove('is-hit'); void el.offsetWidth; el.classList.add('is-hit'); fn(el); }
       hits++;
-      const hud = $('hudHits'); if (hud) hud.textContent = `HITS: ${hits}`;
       break;
     }
   });
@@ -405,23 +303,6 @@ function initReveal() {
   }, { threshold: 0.12 });
   els.forEach((el, i) => { el.style.transitionDelay = `${Math.min(i * 0.05, 0.3)}s`; io.observe(el); });
   setTimeout(() => els.forEach((el) => el.classList.add('in')), 2500);
-}
-
-/* ─── HUD ─── */
-function initHUD() {
-  const depth = $('hudDepth'), coords = $('hudCoords'), clock = $('hudClock');
-  const onScroll = () => {
-    const max = document.documentElement.scrollHeight - innerHeight;
-    const pct = max > 0 ? (scrollY / max) * 100 : 0;
-    if (depth) depth.textContent = `DEPTH: ${pct.toFixed(1)}%`;
-    if (coords) coords.textContent = `LAT ${(40.712 + pct * 0.01).toFixed(3)} · LON ${(-74.006 + pct * 0.005).toFixed(3)}`;
-  };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
-  if (clock) {
-    const p = (n) => String(n).padStart(2, '0');
-    const t = () => { const d = new Date(); clock.textContent = `UTC ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}`; };
-    t(); setInterval(t, 1000);
-  }
 }
 
 
@@ -440,15 +321,56 @@ function initAmbientTears() {
   schedule();
 }
 
+/* ─── LOOT.exe: draggable window, position remembered ─── */
+function initDrag() {
+  const xp = $('xp'), bar = $('xpBar');
+  if (!xp || !bar) return;
+  const place = (x, y) => {
+    const w = xp.offsetWidth, h = xp.offsetHeight;
+    x = Math.max(0, Math.min(innerWidth - w, x)); y = Math.max(0, Math.min(innerHeight - h, y));
+    xp.style.left = `${x}px`; xp.style.top = `${y}px`; xp.style.right = 'auto'; xp.style.bottom = 'auto';
+    return [x, y];
+  };
+  try {
+    const saved = JSON.parse(localStorage.getItem('loot.xp') || 'null');
+    if (saved && innerWidth > 900) place(saved[0], saved[1]);
+  } catch (_) {}
+  let drag = null;
+  bar.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('#xpClose')) return;
+    const r = xp.getBoundingClientRect();
+    drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+    xp.classList.add('is-dragging');
+    bar.setPointerCapture(e.pointerId);
+  });
+  bar.addEventListener('pointermove', (e) => { if (drag) place(e.clientX - drag.dx, e.clientY - drag.dy); });
+  const end = (e) => {
+    if (!drag) return;
+    const [x, y] = place(e.clientX - drag.dx, e.clientY - drag.dy);
+    drag = null; xp.classList.remove('is-dragging');
+    try { localStorage.setItem('loot.xp', JSON.stringify([x, y])); } catch (_) {}
+  };
+  bar.addEventListener('pointerup', end); bar.addEventListener('pointercancel', end);
+  addEventListener('resize', () => { const r = xp.getBoundingClientRect(); if (xp.style.left) place(r.left, r.top); });
+}
+
+/* ─── Restore clearance from a previous ACCEPT ─── */
+function restoreClearance() {
+  try {
+    if (localStorage.getItem('loot.clr') === '6') document.querySelectorAll('.silk__item--locked').forEach((el) => {
+      el.classList.add('is-unlocked'); const em = el.querySelector('em'); if (em) em.textContent = 'unlocked';
+    });
+  } catch (_) {}
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  initDrag();
+  restoreClearance();
   initXP();
   initMarket();
-  initAssistant();
   initAmbientTears();
   initHeadline();
   initCursor();
   initReveal();
-  initHUD();
   initVideos();
-  TargetMode.restore();
 });
