@@ -286,6 +286,7 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .sr__brand-logo { width: 128px; height: 128px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.2); margin: -20px 0; }
 .sr__brand b { display: block; font-size: 32px; font-weight: 900; letter-spacing: -.03em; line-height: 1; color: var(--bone); }
 .sr__brand i { color: var(--ghost); font-size: 14px; }
+.sr__brand b sup { font-family: var(--mono); font-size: 11px; font-weight: 400; vertical-align: top; margin-left: 2px; position: relative; top: 2px; }
 .sr__stats { color: var(--ghost); font-size: 12px; }
 .sr__stats b { color: var(--green); font-weight: bold; }
 .sr__stats span { margin: 0 6px; color: #444; }
