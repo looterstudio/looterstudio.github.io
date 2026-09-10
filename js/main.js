@@ -171,7 +171,7 @@ const PRODUCTS = [
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: 'SOURCE CODE\nLIBRARY (1-10)', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
-  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  text: '', title: 'ILLUMINATI MEMBERSHIP. hoodie incl. no refunds', price: 4.20 },
+  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. hoodie incl. no refunds', price: 4.20 },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', text: 'PRE-ORDER', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. Last one', price: 0.91 },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', text: 'REDSTAR RECORDS', title: 'REDSTAR RECORDS. first pressing. sealed', price: 12.00, note: 'soon' },
