@@ -258,7 +258,7 @@ function matrixRain(tile) {
   if (!REDUCED) tick(); else { ctx.fillStyle = '#00ff41'; ctx.font = `${fs}px monospace`; for (let y = fs; y < c.height; y += fs) ctx.fillText('0101101001010100110'.slice(0, Math.ceil(c.width / 7)), 0, y); }
 }
 
-/* Vibration field: a swirling energy vortex, drawn from the inside */
+/* Aura: layered energy glows breathing around a core, additive light, grain */
 function vibrationField(tile) {
   const c = document.createElement('canvas');
   tile.innerHTML = ''; tile.appendChild(c);
@@ -267,60 +267,81 @@ function vibrationField(tile) {
   let W = 0, H = 0;
   const size = () => { W = c.width = tile.clientWidth; H = c.height = tile.clientHeight; };
   size();
+  // grain sheet, rendered once
+  const grain = document.createElement('canvas'); grain.width = grain.height = 128;
+  const gctx = grain.getContext('2d'), gd = gctx.createImageData(128, 128);
+  for (let i = 0; i < gd.data.length; i += 4) { const v = Math.random() * 255; gd.data[i] = gd.data[i + 1] = gd.data[i + 2] = v; gd.data[i + 3] = 26; }
+  gctx.putImageData(gd, 0, 0);
+  // energy blobs orbiting the core
+  const BLOBS = Array.from({ length: 7 }, (_, i) => ({
+    hue: 250 + i * 18 + Math.random() * 20, orbit: 8 + Math.random() * 30, speed: (0.004 + Math.random() * 0.008) * (i % 2 ? 1 : -1),
+    phase: Math.random() * Math.PI * 2, r: 0.28 + Math.random() * 0.22, pulse: 0.02 + Math.random() * 0.03,
+  }));
   let t = 0;
   const draw = (loop) => {
     if (!tile.isConnected) return;
     if (W !== tile.clientWidth) size();
-    const cx = W / 2, cy = H / 2, R = Math.max(W, H) * 0.75;
-    // ground: deep violet with a soft lavender bloom that breathes
-    const breathe = 0.5 + 0.5 * Math.sin(t * 0.05);
-    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-    bg.addColorStop(0, `rgba(200,180,255,${0.55 + breathe * 0.25})`);
-    bg.addColorStop(0.45, 'rgba(90,60,255,0.9)');
-    bg.addColorStop(1, '#1a0aa8');
-    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-    // aura: a wobbling energy boundary, layered and soft
-    for (let k = 3; k >= 1; k--) {
-      ctx.beginPath();
-      for (let i = 0; i <= 90; i++) {
-        const ang = (i / 90) * Math.PI * 2;
-        const wob = Math.sin(ang * 3 + t * 0.06) * 6 + Math.sin(ang * 7 - t * 0.09) * 3 + Math.sin(ang * 11 + t * 0.13) * 2;
-        const r = R * (0.28 + k * 0.14) + wob * k;
-        const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
-        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-      }
-      ctx.closePath();
-      ctx.fillStyle = `rgba(190,170,255,${0.10 + breathe * 0.05})`; ctx.fill();
-      ctx.strokeStyle = `rgba(255,255,255,${0.10 + (4 - k) * 0.08})`; ctx.lineWidth = 1; ctx.stroke();
+    const cx = W / 2, cy = H / 2, R = Math.min(W, H);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#0b0330'; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'lighter';
+    BLOBS.forEach((b, i) => {
+      const a = b.phase + t * b.speed;
+      const x = cx + Math.cos(a) * b.orbit, y = cy + Math.sin(a * 1.3) * b.orbit;
+      const rr = R * b.r * (1 + Math.sin(t * b.pulse + i) * 0.18);
+      const g = ctx.createRadialGradient(x, y, 0, x, y, rr);
+      g.addColorStop(0, `hsla(${b.hue + Math.sin(t * 0.01 + i) * 25}, 100%, 72%, .55)`);
+      g.addColorStop(0.5, `hsla(${b.hue + 30}, 95%, 55%, .22)`);
+      g.addColorStop(1, 'hsla(260, 100%, 40%, 0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, rr, 0, Math.PI * 2); ctx.fill();
+    });
+    // core
+    const breathe = 0.5 + 0.5 * Math.sin(t * 0.045);
+    const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * (0.12 + breathe * 0.05));
+    core.addColorStop(0, 'rgba(255,255,255,.9)'); core.addColorStop(0.5, 'rgba(220,200,255,.45)'); core.addColorStop(1, 'rgba(160,120,255,0)');
+    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx, cy, R * 0.2, 0, Math.PI * 2); ctx.fill();
+    // outer halo rings, very soft
+    for (let k = 1; k <= 3; k++) {
+      const hr = R * (0.22 + k * 0.11) + Math.sin(t * 0.03 + k) * 4;
+      ctx.strokeStyle = `hsla(${280 + k * 20}, 100%, 80%, ${0.12 - k * 0.03})`; ctx.lineWidth = 6 - k;
+      ctx.beginPath(); ctx.arc(cx, cy, hr, 0, Math.PI * 2); ctx.stroke();
     }
-    // ripples: interference rings travelling outward
-    ctx.lineWidth = 1.2;
-    for (let r = 4; r < R; r += 7) {
-      const a = 0.5 + 0.5 * Math.sin(r * 0.28 - t * 0.22);
-      ctx.strokeStyle = `rgba(230,220,255,${a * a * 0.55 * (1 - r / R)})`;
-      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
-    }
-    // vortex: three spiral arms, drawn as jittered polylines
-    for (let arm = 0; arm < 3; arm++) {
-      ctx.beginPath();
-      for (let s = 0; s < 140; s++) {
-        const r = s * (R / 140) * 0.9;
-        const ang = s * 0.085 + arm * (Math.PI * 2 / 3) + t * 0.035 + Math.sin(s * 0.3 + t * 0.2) * 0.06;
-        const x = cx + Math.cos(ang) * r, y = cy + Math.sin(ang) * r;
-        s ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-      }
-      ctx.strokeStyle = 'rgba(20,0,140,0.55)'; ctx.lineWidth = 3; ctx.stroke();
-      ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1; ctx.stroke();
-    }
-    // core: a bright eye that shivers
-    const jx = (Math.random() - 0.5) * 2, jy = (Math.random() - 0.5) * 2;
-    const core = ctx.createRadialGradient(cx + jx, cy + jy, 0, cx + jx, cy + jy, 26 + breathe * 6);
-    core.addColorStop(0, 'rgba(255,255,255,0.95)'); core.addColorStop(0.4, 'rgba(180,160,255,0.6)'); core.addColorStop(1, 'rgba(120,80,255,0)');
-    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(cx + jx, cy + jy, 32, 0, Math.PI * 2); ctx.fill();
+    // grain + vignette
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.drawImage(grain, -Math.floor(Math.random() * 64), -Math.floor(Math.random() * 64), W + 64, H + 64);
+    ctx.globalCompositeOperation = 'source-over';
+    const v = ctx.createRadialGradient(cx, cy, R * 0.35, cx, cy, R * 0.75);
+    v.addColorStop(0, 'rgba(5,0,30,0)'); v.addColorStop(1, 'rgba(5,0,30,.85)');
+    ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     t++;
     if (loop) requestAnimationFrame(() => draw(true));
   };
   draw(!REDUCED);
+}
+
+/* Tagline: every so often it slips into another alphabet and comes back */
+function initTagline() {
+  const el = document.querySelector('.sr__brand i');
+  if (!el || REDUCED) return;
+  const EN = el.textContent;
+  const ALIEN = [
+    'всегда рано, никогда не ошибается',
+    '常に早く、決して間違えない',
+    'αεί πρώιμος, ποτέ λάθος',
+    'ᚨᛚᚹᚨᛁᛊ ᛖᚨᚱᛚᛁ, ᚾᛖᚹᛖᚱ ᚹᚱᛟᚾᚷ',
+    'ⴰⵍⵡⴰⵢⵙ ⴻⴰⵔⵍⵢ, ⵏⴻⵠⴻⵔ ⵡⵔⵓⵏⴳ',
+    'תמיד מוקדם, אף פעם לא טועה',
+    '01100001 01101100 01110111',
+    'ALWAYS EARLY, NEVER WRONG',
+  ];
+  const cycle = () => {
+    const alien = pick(ALIEN);
+    el.classList.add('is-glitch');
+    scramble(el, alien, { frames: 7, tick: 30 });
+    setTimeout(() => { scramble(el, EN, { frames: 7, tick: 30 }); setTimeout(() => el.classList.remove('is-glitch'), 260); }, 700 + Math.random() * 900);
+    setTimeout(cycle, 3500 + Math.random() * 5000);
+  };
+  setTimeout(cycle, 2500);
 }
 
 /* Show a one-off line in LOOT.exe and scroll it into view */
@@ -519,6 +540,7 @@ function restoreClearance() {
 document.addEventListener('DOMContentLoaded', () => {
   initDrag();
   restoreClearance();
+  initTagline();
   initXP();
   initMarket();
   initAmbientTears();
