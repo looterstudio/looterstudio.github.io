@@ -411,48 +411,84 @@ function initHeadline() {
   h.addEventListener('mouseenter', () => scramble(h, original, { frames: 8, tick: 30 }));
 }
 
-/* ─── Cracked screen glass: radial fractures + concentric web ─── */
+/* ─── Shattered screen: fractures, web, shards, refraction and blood ─── */
 function crackGlass(px, py) {
-  const S = 300, c = S / 2;
-  const rays = 9 + Math.floor(Math.random() * 6);
-  const angles = Array.from({ length: rays }, (_, i) => (i / rays) * Math.PI * 2 + rand(-0.25, 0.25));
-  const lens = angles.map(() => rand(70, 145));
-  let d = '';
-  // fractures: jittered polylines from the centre
+  const S = 420, c = S / 2;
+  const rays = 11 + Math.floor(Math.random() * 7);
+  const angles = Array.from({ length: rays }, (_, i) => (i / rays) * Math.PI * 2 + rand(-0.22, 0.22));
+  const lens = angles.map(() => rand(90, 200));
+  const pt = (a, r) => `${(c + Math.cos(a) * r).toFixed(1)} ${(c + Math.sin(a) * r).toFixed(1)}`;
+
+  // main fractures: jittered, with short side branches
+  let d = '', branches = '';
   angles.forEach((a, i) => {
-    let x = c, y = c, pts = `M${c} ${c}`;
-    const steps = 4 + Math.floor(Math.random() * 3);
+    let path = `M${c} ${c}`;
+    const steps = 5 + Math.floor(Math.random() * 3);
     for (let s = 1; s <= steps; s++) {
       const r = (lens[i] / steps) * s;
-      const ja = a + rand(-0.12, 0.12);
-      x = c + Math.cos(ja) * r; y = c + Math.sin(ja) * r;
-      pts += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+      const ja = a + rand(-0.1, 0.1);
+      path += ` L${pt(ja, r)}`;
+      if (s > 1 && Math.random() < 0.5) {
+        const ba = ja + rand(-0.9, 0.9), br = rand(10, 34);
+        const [x0, y0] = pt(ja, r).split(' ');
+        branches += `M${x0} ${y0} l${(Math.cos(ba) * br).toFixed(1)} ${(Math.sin(ba) * br).toFixed(1)} `;
+      }
     }
-    d += pts + ' ';
+    d += path + ' ';
   });
-  // web rings: polygon segments between neighbouring rays at a few radii
-  let web = '';
-  [0.28, 0.52, 0.78].forEach((k) => {
+
+  // concentric web: rings of segments joining neighbouring rays, denser near the centre
+  let web = '', shards = '';
+  [0.18, 0.34, 0.52, 0.72, 0.9].forEach((k, ring) => {
     angles.forEach((a, i) => {
-      if (Math.random() < 0.25) return;
+      if (Math.random() < 0.18) return;
       const b = angles[(i + 1) % rays];
-      const r1 = lens[i] * k * rand(0.9, 1.1), r2 = lens[(i + 1) % rays] * k * rand(0.9, 1.1);
-      const mid = rand(0.3, 0.7);
-      const mx = c + Math.cos(a + (b - a) * mid) * ((r1 + r2) / 2) * rand(0.92, 1.05);
-      const my = c + Math.sin(a + (b - a) * mid) * ((r1 + r2) / 2) * rand(0.92, 1.05);
-      web += `M${(c + Math.cos(a) * r1).toFixed(1)} ${(c + Math.sin(a) * r1).toFixed(1)} L${mx.toFixed(1)} ${my.toFixed(1)} L${(c + Math.cos(b) * r2).toFixed(1)} ${(c + Math.sin(b) * r2).toFixed(1)} `;
+      const r1 = lens[i] * k * rand(0.92, 1.08), r2 = lens[(i + 1) % rays] * k * rand(0.92, 1.08);
+      const mid = a + ((b - a + Math.PI * 2) % (Math.PI * 2)) * rand(0.35, 0.65);
+      const rm = ((r1 + r2) / 2) * rand(0.9, 1.06);
+      web += `M${pt(a, r1)} L${pt(mid, rm)} L${pt(b, r2)} `;
+      // a few shards catch the light: thin translucent triangles between rings
+      if (ring < 3 && Math.random() < 0.35) {
+        const kk = [0.18, 0.34, 0.52, 0.72][ring + 1];
+        shards += `<polygon points="${pt(a, r1)},${pt(mid, rm)},${pt(b, lens[(i + 1) % rays] * kk)}" fill="rgba(255,255,255,${rand(0.03, 0.09).toFixed(3)})"/>`;
+      }
     });
   });
+
+  // blood: a main splat behind the hole, satellite drops, and two or three drips that run down
+  const splat = Array.from({ length: 7 }, (_, i) => {
+    const a = (i / 7) * Math.PI * 2 + rand(-0.4, 0.4), r = rand(6, 30);
+    return `<ellipse cx="${(c + Math.cos(a) * r).toFixed(1)}" cy="${(c + Math.sin(a) * r).toFixed(1)}" rx="${rand(9, 22).toFixed(1)}" ry="${rand(7, 16).toFixed(1)}" transform="rotate(${rand(0, 180).toFixed(0)} ${(c + Math.cos(a) * r).toFixed(1)} ${(c + Math.sin(a) * r).toFixed(1)})"/>`;
+  }).join('');
+  const drops = Array.from({ length: 10 }, () => {
+    const a = rand(0, Math.PI * 2), r = rand(24, 70);
+    return `<circle cx="${(c + Math.cos(a) * r).toFixed(1)}" cy="${(c + Math.sin(a) * r).toFixed(1)}" r="${rand(1, 3.5).toFixed(1)}"/>`;
+  }).join('');
+  const drips = Array.from({ length: 2 + Math.floor(Math.random() * 2) }, (_, i) => {
+    const x = c + rand(-16, 16), len = rand(60, 150), w = rand(2.5, 5);
+    return `<path class="drip" style="animation-delay:${(i * 0.35).toFixed(2)}s;animation-duration:${rand(3, 5).toFixed(1)}s" d="M${x.toFixed(1)} ${c + 10} q ${(w / 2).toFixed(1)} ${(len * 0.5).toFixed(1)} 0 ${len.toFixed(1)} q ${(-w).toFixed(1)} 6 ${(-w * 0.2).toFixed(1)} 0 q ${(w * 0.2).toFixed(1)} ${(-len * 0.5).toFixed(1)} ${(w * 0.9).toFixed(1)} ${(-len).toFixed(1)} z"/>`;
+  }).join('');
+
   const el = document.createElement('div');
   el.className = 'crack';
   el.style.left = `${px}px`; el.style.top = `${py}px`;
   el.innerHTML = `<svg viewBox="0 0 ${S} ${S}" width="${S}" height="${S}">
-    <defs><radialGradient id="cg"><stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
-    <circle cx="${c}" cy="${c}" r="13" fill="url(#cg)"/>
-    <path d="${web}" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="1"/>
-    <path d="${d}" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.6" stroke-linecap="round"/>
-    <path d="${d}" fill="none" stroke="rgba(0,240,255,.35)" stroke-width="3" transform="translate(1.5 0)"/>
-    <circle cx="${c}" cy="${c}" r="6" fill="#000"/>
+    <defs>
+      <radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".5" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+      <radialGradient id="dim"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+      <filter id="blur"><feGaussianBlur stdDeviation="1.2"/></filter>
+    </defs>
+    <circle cx="${c}" cy="${c}" r="${S * 0.45}" fill="url(#dim)"/>
+    <g class="blood" fill="#8b0012" opacity=".95">${splat}${drops}${drips}</g>
+    <g class="blood-gloss" fill="#ff1a2e" opacity=".28" filter="url(#blur)">${splat}</g>
+    ${shards}
+    <path d="${web}" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1"/>
+    <path d="${branches}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
+    <path d="${d}" fill="none" stroke="rgba(0,240,255,.35)" stroke-width="3.5" transform="translate(1.6 0)"/>
+    <path d="${d}" fill="none" stroke="rgba(255,0,60,.25)" stroke-width="3.5" transform="translate(-1.6 0)"/>
+    <path d="${d}" fill="none" stroke="rgba(255,255,255,.95)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${c}" cy="${c}" r="16" fill="url(#hole)"/>
+    <circle cx="${c}" cy="${c}" r="7" fill="#000"/>
   </svg>`;
   document.body.appendChild(el);
   return el;

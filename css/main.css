@@ -63,23 +63,34 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 .dvd canvas { width: 100%; height: 100%; display: block; }
 .dvd.is-bounce { opacity: 1; }
 
-/* ─── Cursor: weapon sight ─── */
-.cursor { position: fixed; top: 0; left: 0; width: 34px; height: 34px; pointer-events: none; z-index: 100; mix-blend-mode: difference; transition: width .12s, height .12s; }
+/* ─── Cursor: sniper scope ─── */
+.cursor { position: fixed; top: 0; left: 0; width: 44px; height: 44px; pointer-events: none; z-index: 100; mix-blend-mode: difference; transition: width .12s, height .12s; }
 .cursor i { position: absolute; background: #fff; }
-.cursor__ring { inset: 0; background: none !important; border: 1.5px solid #fff; border-radius: 50%; }
-.cursor__dot { left: 50%; top: 50%; width: 3px; height: 3px; margin: -1.5px 0 0 -1.5px; border-radius: 50%; }
-.cursor__tick { width: 1px; height: 8px; left: 50%; margin-left: -.5px; }
-.cursor__tick--n { top: -4px; } .cursor__tick--s { bottom: -4px; }
-.cursor__tick--e, .cursor__tick--w { width: 8px; height: 1px; top: 50%; margin: -.5px 0 0; left: auto; }
-.cursor__tick--e { right: -4px; } .cursor__tick--w { left: -4px; }
-.cursor.is-recoil { width: 46px; height: 46px; }
-.cursor.is-recoil .cursor__ring { border-color: var(--red); }
+.cursor__ring { inset: 0; background: none !important; border: 1px solid #fff; border-radius: 50%; }
+.cursor__ring--in { inset: 13px; border-width: 1px; opacity: .7; }
+.cursor__dot { left: 50%; top: 50%; width: 2px; height: 2px; margin: -1px 0 0 -1px; }
+.cursor__tick { width: 1px; height: 10px; left: 50%; margin-left: -.5px; }
+.cursor__tick--n { top: -5px; } .cursor__tick--s { bottom: -5px; }
+.cursor__tick--e, .cursor__tick--w { width: 10px; height: 1px; top: 50%; margin: -.5px 0 0; left: auto; }
+.cursor__tick--e { right: -5px; } .cursor__tick--w { left: -5px; }
+.cursor__mil { width: 1px; height: 6px; left: 50%; margin-left: -.5px; opacity: .8; }
+.cursor__mil--n { top: 6px; } .cursor__mil--s { bottom: 6px; }
+.cursor__mil--e, .cursor__mil--w { width: 6px; height: 1px; top: 50%; margin: -.5px 0 0; left: auto; }
+.cursor__mil--e { right: 6px; } .cursor__mil--w { left: 6px; }
+.cursor.is-lock { mix-blend-mode: normal; }
+.cursor.is-lock i { background: var(--red); }
+.cursor.is-lock .cursor__ring { border-color: var(--red); box-shadow: 0 0 10px rgba(255,0,60,.6); }
+.cursor.is-lock .cursor__ring--in { animation: lockspin 1.2s linear infinite; border-style: dashed; }
+@keyframes lockspin { to { transform: rotate(360deg); } }
+.cursor.is-recoil { width: 58px; height: 58px; }
 @media (hover: none) { .cursor { display: none; } body, a, button { cursor: auto; } }
 
 /* shot effects: cracked screen glass */
-.crack { position: absolute; width: 300px; height: 300px; margin: -150px 0 0 -150px; pointer-events: none; z-index: 30; mix-blend-mode: screen; animation: crackIn .1s steps(2) both; transition: opacity 2s; }
+.crack { position: absolute; width: 420px; height: 420px; margin: -210px 0 0 -210px; pointer-events: none; z-index: 30; animation: crackIn .1s steps(2) both; transition: opacity 2s; }
 .crack.is-fading { opacity: 0; }
-.crack svg { display: block; filter: drop-shadow(0 0 2px rgba(255,255,255,.5)); }
+.crack svg { display: block; }
+.crack .drip { transform-origin: 50% 0; transform: scaleY(0); animation: drip 4s cubic-bezier(.4,0,.6,1) forwards; }
+@keyframes drip { 0% { transform: scaleY(0); opacity: .95 } 100% { transform: scaleY(1); opacity: .9 } }
 @keyframes crackIn { from { transform: scale(.5); opacity: 0 } to { transform: none; opacity: 1 } }
 
 .hole { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; pointer-events: none; z-index: 30;
