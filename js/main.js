@@ -165,7 +165,7 @@ const PRODUCTS = [
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world' },
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS' },
   { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', price: 1e9 },
-  { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'just a tung tung tung sahur · looterstudio edition · 1/1', priceLabel: '100,000 USDC', offer: 'https://www.tensor.trade/item/Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7', mint: 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7' },
+  { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'tung tung tung sahur · 1/1 · <b class="verified">LooterStudio verified ✓</b>', priceLabel: '100,000 USDC', offer: 'https://www.tensor.trade/item/Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7', mint: 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
