@@ -412,7 +412,7 @@ function initHeadline() {
 }
 
 /* ─── Shattered screen: fractures, web, shards, refraction and blood ─── */
-function crackGlass(px, py) {
+function crackGlass(px, py, blood = 0) {
   const S = 420, c = S / 2;
   const rays = 11 + Math.floor(Math.random() * 7);
   const angles = Array.from({ length: rays }, (_, i) => (i / rays) * Math.PI * 2 + rand(-0.22, 0.22));
@@ -455,19 +455,36 @@ function crackGlass(px, py) {
     });
   });
 
-  // blood: a main splat behind the hole, satellite drops, and two or three drips that run down
-  const splat = Array.from({ length: 7 }, (_, i) => {
-    const a = (i / 7) * Math.PI * 2 + rand(-0.4, 0.4), r = rand(6, 30);
-    return `<ellipse cx="${(c + Math.cos(a) * r).toFixed(1)}" cy="${(c + Math.sin(a) * r).toFixed(1)}" rx="${rand(9, 22).toFixed(1)}" ry="${rand(7, 16).toFixed(1)}" transform="rotate(${rand(0, 180).toFixed(0)} ${(c + Math.cos(a) * r).toFixed(1)} ${(c + Math.sin(a) * r).toFixed(1)})"/>`;
-  }).join('');
-  const drops = Array.from({ length: 10 }, () => {
-    const a = rand(0, Math.PI * 2), r = rand(24, 70);
-    return `<circle cx="${(c + Math.cos(a) * r).toFixed(1)}" cy="${(c + Math.sin(a) * r).toFixed(1)}" r="${rand(1, 3.5).toFixed(1)}"/>`;
-  }).join('');
-  const drips = Array.from({ length: 2 + Math.floor(Math.random() * 2) }, (_, i) => {
-    const x = c + rand(-16, 16), len = rand(60, 150), w = rand(2.5, 5);
-    return `<path class="drip" style="animation-delay:${(i * 0.35).toFixed(2)}s;animation-duration:${rand(3, 5).toFixed(1)}s" d="M${x.toFixed(1)} ${c + 10} q ${(w / 2).toFixed(1)} ${(len * 0.5).toFixed(1)} 0 ${len.toFixed(1)} q ${(-w).toFixed(1)} 6 ${(-w * 0.2).toFixed(1)} 0 q ${(w * 0.2).toFixed(1)} ${(-len * 0.5).toFixed(1)} ${(w * 0.9).toFixed(1)} ${(-len).toFixed(1)} z"/>`;
-  }).join('');
+  // blood: none on a clean shot; from the second hit on it gets worse.
+  // irregular blobs (random-radius polygons), directional spray, drips with a heavy bulb at the end
+  const blob = (x, y, rr, n = 14) => {
+    let p = '';
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2, r = rr * rand(0.55, 1.25);
+      p += `${i ? 'L' : 'M'}${(x + Math.cos(a) * r).toFixed(1)} ${(y + Math.sin(a) * r).toFixed(1)} `;
+    }
+    return p + 'Z ';
+  };
+  let splat = '', spray = '', drips = '', gloss = '';
+  if (blood > 0) {
+    const k = Math.min(blood, 5);                       // 1..5 intensity
+    const dir = rand(0, Math.PI * 2);                    // spray direction
+    splat += blob(c, c, 14 + k * 5);
+    for (let i = 0; i < 3 + k * 2; i++) {
+      const a = dir + rand(-0.9, 0.9), r = rand(10, 30 + k * 12);
+      splat += blob(c + Math.cos(a) * r, c + Math.sin(a) * r, rand(4, 9 + k * 2), 10);
+    }
+    for (let i = 0; i < 25 + k * 15; i++) {
+      const a = dir + rand(-1.2, 1.2), r = rand(20, 60 + k * 25);
+      spray += `<circle cx="${(c + Math.cos(a) * r).toFixed(1)}" cy="${(c + Math.sin(a) * r).toFixed(1)}" r="${rand(0.6, 2.4).toFixed(1)}"/>`;
+    }
+    for (let i = 0; i < Math.min(1 + k, 5); i++) {
+      const x = c + rand(-14 - k * 3, 14 + k * 3), len = rand(50 + k * 15, 110 + k * 30), w = rand(2.5, 4.5 + k);
+      const y0 = c + rand(4, 14);
+      drips += `<path class="drip" style="animation-delay:${(i * 0.4 + rand(0, 0.4)).toFixed(2)}s;animation-duration:${rand(3.5, 6).toFixed(1)}s" d="M${(x - w / 2).toFixed(1)} ${y0} q ${(w * 0.3).toFixed(1)} ${(len * 0.5).toFixed(1)} 0 ${len.toFixed(1)} a ${(w * 0.9).toFixed(1)} ${(w * 0.9).toFixed(1)} 0 1 0 ${w.toFixed(1)} 0 q ${(-w * 0.3).toFixed(1)} ${(-len * 0.5).toFixed(1)} 0 ${(-len).toFixed(1)} z"/>`;
+    }
+    gloss = `<ellipse cx="${c - 6}" cy="${c - 8}" rx="${6 + k * 2}" ry="${3 + k}" fill="rgba(255,120,130,.35)" transform="rotate(-30 ${c - 6} ${c - 8})"/>`;
+  }
 
   const el = document.createElement('div');
   el.className = 'crack';
@@ -477,10 +494,13 @@ function crackGlass(px, py) {
       <radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".5" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
       <radialGradient id="dim"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
       <filter id="blur"><feGaussianBlur stdDeviation="1.2"/></filter>
+      <radialGradient id="bloodfill"><stop offset="0" stop-color="#3a0006"/><stop offset=".55" stop-color="#8b0012"/><stop offset="1" stop-color="#a1121f" stop-opacity=".85"/></radialGradient>
     </defs>
     <circle cx="${c}" cy="${c}" r="${S * 0.45}" fill="url(#dim)"/>
-    <g class="blood" fill="#8b0012" opacity=".95">${splat}${drops}${drips}</g>
-    <g class="blood-gloss" fill="#ff1a2e" opacity=".28" filter="url(#blur)">${splat}</g>
+    ${blood > 0 ? `<g class="blood" fill="url(#bloodfill)" opacity=".96"><path d="${splat}"/></g>
+    <g class="blood" fill="#6d000d" opacity=".9">${spray}${drips}</g>
+    <g class="blood-edge" fill="none" stroke="rgba(40,0,4,.7)" stroke-width="1"><path d="${splat}"/></g>
+    ${gloss}` : ''}
     ${shards}
     <path d="${web}" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1"/>
     <path d="${branches}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1"/>
@@ -503,7 +523,7 @@ function initCursor() {
   const tick = () => { cx += (mx - cx) * 0.35; cy += (my - cy) * 0.35; c.style.transform = `translate(${cx - c.offsetWidth / 2}px, ${cy - c.offsetHeight / 2}px)`; requestAnimationFrame(tick); };
   tick();
 
-  let hits = 0;
+  let hits = 0, shots = 0;
   const HITTABLE = [
     ['.target--stat',  () => flashMsg('HIT. STAT NEUTRALIZED.', 'is-error')],
     ['.target--brier', () => flashMsg('HIT. BRIER NEUTRALIZED.', 'is-error')],
@@ -524,7 +544,8 @@ function initCursor() {
       document.body.classList.remove('is-shake'); void document.body.offsetWidth; document.body.classList.add('is-shake');
     }
     // shattered glass where it landed (page coords so it scrolls with content)
-    const h = crackGlass(pageX, pageY);
+    shots++;
+    const h = crackGlass(pageX, pageY, shots >= 2 ? shots - 1 : 0);
     setTimeout(() => h.classList.add('is-fading'), 9000);
     setTimeout(() => h.remove(), 11000);
     // what did we hit?
