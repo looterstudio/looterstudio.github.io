@@ -816,7 +816,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTagline();
   initXP();
   initMarket();
-  initMarketScale();
   initAmbientTears();
   initHeadline();
   initCursor();
