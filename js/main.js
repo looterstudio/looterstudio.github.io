@@ -170,10 +170,10 @@ const PRODUCTS = [
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
-  { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
+  { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', img: 'assets/vibration.jpg', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
-  { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. one per buyer', priceLabel: '9 USDC', buy: 'idea' },
+  { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea. 100% original. one per buyer', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'events', text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
@@ -199,7 +199,7 @@ function initMarket() {
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
     grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
-    grid.querySelectorAll('.tile--leverage').forEach(vibrationField);
+    grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
   };
   render();
 
