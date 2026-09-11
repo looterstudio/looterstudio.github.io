@@ -456,34 +456,61 @@ function crackGlass(px, py, blood = 0) {
   });
 
   // blood: none on a clean shot; from the second hit on it gets worse.
-  // irregular blobs (random-radius polygons), directional spray, drips with a heavy bulb at the end
-  const blob = (x, y, rr, n = 14) => {
+  // organic blobs (wobbly polygons + turbulence displacement), directional spray with
+  // elongated droplets, and drips that meander, taper and end in a heavy asymmetric bulb.
+  const blob = (x, y, rr, n = 18, wob = 0.35) => {
     let p = '';
+    const seed = rand(0, Math.PI * 2);
     for (let i = 0; i < n; i++) {
-      const a = (i / n) * Math.PI * 2, r = rr * rand(0.55, 1.25);
+      const a = (i / n) * Math.PI * 2;
+      const r = rr * (1 + wob * Math.sin(a * 3 + seed) * Math.sin(a * 5 + seed * 2) + rand(-0.08, 0.08));
       p += `${i ? 'L' : 'M'}${(x + Math.cos(a) * r).toFixed(1)} ${(y + Math.sin(a) * r).toFixed(1)} `;
     }
     return p + 'Z ';
   };
-  let splat = '', spray = '', drips = '', gloss = '';
+  const drip = (x0, y0, len, w0) => {
+    // centreline with slow meander + small jitter; width tapers, then bulb
+    const N = 14, L = [], R = [];
+    const bend = rand(-0.35, 0.35), freq = rand(1.5, 3);
+    for (let i = 0; i <= N; i++) {
+      const t = i / N;
+      const cx = x0 + Math.sin(t * Math.PI * freq) * (w0 * 1.2) * bend + Math.sin(t * 17) * 0.6;
+      const cy = y0 + t * len;
+      const w = i === 0 ? w0 * 1.4 : w0 * (1 - t * 0.55) * (1 + Math.sin(t * 9) * 0.12);
+      L.push([cx - w / 2, cy]); R.push([cx + w / 2, cy]);
+    }
+    const [ex, ey] = [(L[N][0] + R[N][0]) / 2, L[N][1]];
+    const br = w0 * rand(0.9, 1.3);
+    let d = `M${L[0][0].toFixed(1)} ${L[0][1].toFixed(1)} `;
+    for (let i = 1; i <= N; i++) d += `L${L[i][0].toFixed(1)} ${L[i][1].toFixed(1)} `;
+    d += `A${br.toFixed(1)} ${(br * 1.15).toFixed(1)} 0 1 0 ${R[N][0].toFixed(1)} ${R[N][1].toFixed(1)} `;
+    for (let i = N - 1; i >= 0; i--) d += `L${R[i][0].toFixed(1)} ${R[i][1].toFixed(1)} `;
+    return { d: d + 'Z', ex, ey, br };
+  };
+
+  let splat = '', spray = '', drips = '', gloss = '', pool = '';
   if (blood > 0) {
-    const k = Math.min(blood, 5);                       // 1..5 intensity
-    const dir = rand(0, Math.PI * 2);                    // spray direction
-    splat += blob(c, c, 14 + k * 5);
+    const k = Math.min(blood, 5);
+    const dir = rand(0, Math.PI * 2);
+    pool = blob(c, c, 10 + k * 3, 16, 0.2);
+    splat += blob(c + rand(-4, 4), c + rand(-4, 4), 15 + k * 5, 20, 0.4);
     for (let i = 0; i < 3 + k * 2; i++) {
       const a = dir + rand(-0.9, 0.9), r = rand(10, 30 + k * 12);
-      splat += blob(c + Math.cos(a) * r, c + Math.sin(a) * r, rand(4, 9 + k * 2), 10);
+      splat += blob(c + Math.cos(a) * r, c + Math.sin(a) * r, rand(3, 8 + k * 2), 12, 0.45);
     }
-    for (let i = 0; i < 25 + k * 15; i++) {
-      const a = dir + rand(-1.2, 1.2), r = rand(20, 60 + k * 25);
-      spray += `<circle cx="${(c + Math.cos(a) * r).toFixed(1)}" cy="${(c + Math.sin(a) * r).toFixed(1)}" r="${rand(0.6, 2.4).toFixed(1)}"/>`;
+    for (let i = 0; i < 30 + k * 18; i++) {
+      const a = dir + rand(-1.3, 1.3), r = rand(18, 60 + k * 28);
+      const x = c + Math.cos(a) * r, y = c + Math.sin(a) * r, s = rand(0.6, 2.2);
+      spray += Math.random() < 0.4
+        ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${s.toFixed(1)}"/>`
+        : `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="${(s * rand(1.6, 3)).toFixed(1)}" ry="${s.toFixed(1)}" transform="rotate(${(a * 180 / Math.PI).toFixed(0)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;
     }
     for (let i = 0; i < Math.min(1 + k, 5); i++) {
-      const x = c + rand(-14 - k * 3, 14 + k * 3), len = rand(50 + k * 15, 110 + k * 30), w = rand(2.5, 4.5 + k);
-      const y0 = c + rand(4, 14);
-      drips += `<path class="drip" style="animation-delay:${(i * 0.4 + rand(0, 0.4)).toFixed(2)}s;animation-duration:${rand(3.5, 6).toFixed(1)}s" d="M${(x - w / 2).toFixed(1)} ${y0} q ${(w * 0.3).toFixed(1)} ${(len * 0.5).toFixed(1)} 0 ${len.toFixed(1)} a ${(w * 0.9).toFixed(1)} ${(w * 0.9).toFixed(1)} 0 1 0 ${w.toFixed(1)} 0 q ${(-w * 0.3).toFixed(1)} ${(-len * 0.5).toFixed(1)} 0 ${(-len).toFixed(1)} z"/>`;
+      const x = c + rand(-12 - k * 3, 12 + k * 3), y0 = c + rand(2, 12);
+      const { d, ex, ey, br } = drip(x, y0, rand(45 + k * 15, 110 + k * 30), rand(2.6, 4.2 + k * 0.6));
+      drips += `<g class="drip" style="animation-delay:${(i * 0.45 + rand(0, 0.5)).toFixed(2)}s;animation-duration:${rand(4, 7).toFixed(1)}s"><path d="${d}"/><ellipse cx="${(ex - br * 0.3).toFixed(1)}" cy="${(ey + br * 0.2).toFixed(1)}" rx="${(br * 0.28).toFixed(1)}" ry="${(br * 0.45).toFixed(1)}" fill="rgba(255,150,160,.35)"/></g>`;
     }
-    gloss = `<ellipse cx="${c - 6}" cy="${c - 8}" rx="${6 + k * 2}" ry="${3 + k}" fill="rgba(255,120,130,.35)" transform="rotate(-30 ${c - 6} ${c - 8})"/>`;
+    gloss = `<ellipse cx="${c - 5 - k}" cy="${c - 7 - k}" rx="${5 + k * 2}" ry="${2.5 + k * 0.8}" fill="rgba(255,140,150,.32)" transform="rotate(-28 ${c - 5 - k} ${c - 7 - k})"/>`;
   }
 
   const el = document.createElement('div');
@@ -494,12 +521,17 @@ function crackGlass(px, py, blood = 0) {
       <radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".5" stop-color="#000" stop-opacity=".9"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
       <radialGradient id="dim"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
       <filter id="blur"><feGaussianBlur stdDeviation="1.2"/></filter>
+      <filter id="goo" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="${Math.floor(rand(1, 99))}" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>
       <radialGradient id="bloodfill"><stop offset="0" stop-color="#3a0006"/><stop offset=".55" stop-color="#8b0012"/><stop offset="1" stop-color="#a1121f" stop-opacity=".85"/></radialGradient>
     </defs>
     <circle cx="${c}" cy="${c}" r="${S * 0.45}" fill="url(#dim)"/>
-    ${blood > 0 ? `<g class="blood" fill="url(#bloodfill)" opacity=".96"><path d="${splat}"/></g>
-    <g class="blood" fill="#6d000d" opacity=".9">${spray}${drips}</g>
-    <g class="blood-edge" fill="none" stroke="rgba(40,0,4,.7)" stroke-width="1"><path d="${splat}"/></g>
+    ${blood > 0 ? `<g filter="url(#goo)">
+      <g class="blood" fill="url(#bloodfill)" opacity=".96"><path d="${splat}"/></g>
+      <g class="blood" fill="#7a0010" opacity=".92">${spray}</g>
+      <g class="blood" fill="#8a0012" opacity=".95">${drips}</g>
+      <g class="blood-edge" fill="none" stroke="rgba(35,0,4,.75)" stroke-width="1.1"><path d="${splat}"/></g>
+    </g>
+    <path d="${pool}" fill="#2a0004" opacity=".9"/>
     ${gloss}` : ''}
     ${shards}
     <path d="${web}" fill="none" stroke="rgba(255,255,255,.42)" stroke-width="1"/>
