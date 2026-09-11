@@ -85,7 +85,8 @@ function scramble(el, target, { frames = 9, tick = 28, onSet } = {}) {
 /* ═══════════════════════════════════════════════════════════════
    LOOT.exe — manifesto cycler + ACCEPT / DENY consequences
    ═══════════════════════════════════════════════════════════════ */
-const XP = { idx: 0, paused: false, denies: 0, timer: null };
+const XP = { idx: 0, paused: false, denies: 0, timer: null, accepted: false };
+try { XP.accepted = localStorage.getItem('loot.clr') === '6'; } catch (_) {}
 
 function initXP() {
   const xp = $('xp'), msg = $('xpMsg');
@@ -125,6 +126,7 @@ function initXP() {
 
   /* ACCEPT → access granted + target mode */
   const accept = () => {
+    XP.accepted = true;
     hold('ACCESS GRANTED. CLR: LEVEL_6.', 'is-ok', 2600, () => {
       document.querySelectorAll('.silk__item--locked').forEach((el) => {
         el.classList.add('is-unlocked');
@@ -763,14 +765,19 @@ function initXPPresence() {
   const xp = $('xp'), bar = $('xpBar'), btn = $('xpMinBtn');
   if (!xp || !bar) return;
   const small = () => window.matchMedia('(max-width: 900px)').matches;
-  const setMin = (v) => { xp.classList.toggle('is-min', v); xp.classList.remove('is-collapsed'); };
+  // only those who ACCEPT get to minimize. DENY and you live with it.
+  const setMin = (v) => {
+    if (v && !XP.accepted) { flashMsg(XP.denies ? 'YOU DENIED. NO MINIMIZE FOR YOU.' : 'ACCEPT FIRST.', 'is-error'); return; }
+    xp.classList.toggle('is-min', v); xp.classList.remove('is-collapsed');
+  };
   btn?.addEventListener('click', (e) => { e.stopPropagation(); setMin(true); });
   bar.addEventListener('click', (e) => { if (e.target.closest('button')) return; if (xp.classList.contains('is-min')) setMin(false); else if (small()) setMin(true); });
-  // phones start as a pill; desktop folds itself after a while without attention
-  if (small()) setTimeout(() => setMin(true), 4000);
+  // phones start as a pill (if allowed); desktop folds itself after a while without attention (if allowed)
+  const quiet = () => { if (XP.accepted) { xp.classList.add('is-min'); xp.classList.remove('is-collapsed'); } };
+  if (small()) setTimeout(quiet, 4000);
   else {
     let idle = null;
-    const arm = () => { clearTimeout(idle); idle = setTimeout(() => { if (!xp.matches(':hover')) setMin(true); }, 25000); };
+    const arm = () => { clearTimeout(idle); idle = setTimeout(() => { if (!xp.matches(':hover')) quiet(); }, 25000); };
     xp.addEventListener('mouseenter', () => clearTimeout(idle));
     xp.addEventListener('mouseleave', arm);
     arm();
