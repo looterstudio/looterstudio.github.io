@@ -196,7 +196,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<i class="rq rq--1">?</i><i class="rq rq--2">?</i><i class="rq rq--3">?</i><i class="rq rq--4">?</i><i class="rq rq--5">?</i><b class="q" data-text="?">?</b>' : ''}${p.seized ? `<i class="tape"><span>${'SEIZED BY LOOTERSTUDIO® ┼ '.repeat(14)}</span></i>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<i class="rq rq--1">?</i><i class="rq rq--2">?</i><i class="rq rq--3">?</i><i class="rq rq--4">?</i><i class="rq rq--5">?</i><b class="q" data-text="?">?</b>' : ''}${p.seized ? `<canvas class="seal-rain"></canvas><i class="seal-corner seal-corner--tl"></i><i class="seal-corner seal-corner--tr"></i><i class="seal-corner seal-corner--bl"></i><i class="seal-corner seal-corner--br"></i><div class="seal"><b data-text="SEIZED BY LOOTERSTUDIO®">SEIZED BY LOOTERSTUDIO®</b><small>ACCESS REVOKED · CASE 0001</small></div>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -206,6 +206,7 @@ function initMarket() {
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
     grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
     grid.querySelectorAll('.tile--alien').forEach(alienBlock);
+    grid.querySelectorAll('.tile--seized').forEach(matrixSeal);
   };
   render();
 

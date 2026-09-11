@@ -494,11 +494,6 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--alien span { font-family: var(--mono); font-size: 18px; letter-spacing: .18em; color: var(--green-dim); text-shadow: 0 0 12px rgba(0,255,65,.35); animation: riddle 2.2s steps(2) infinite; }
 @keyframes riddle { 50% { opacity: .55; } }
 .tile--seized { overflow: hidden; }
-.tile .tape { position: absolute; left: -30%; width: 160%; height: 18px; line-height: 18px; top: 47%; transform: rotate(-14deg); z-index: 2; white-space: nowrap; overflow: hidden;
-  background: var(--green); color: #000; font-family: var(--mono); font-weight: 700; font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  border-top: 1px solid #003b0f; border-bottom: 1px solid #003b0f; box-shadow: 0 0 14px rgba(0,255,65,.55), 0 2px 8px rgba(0,0,0,.7); }
-.tile .tape span { display: inline-block; font: inherit; font-size: 9px; line-height: 18px; color: #000; letter-spacing: .22em; background: none; padding: 0; border: 0; width: auto; animation: tapeRun 26s linear infinite; }
-@keyframes tapeRun { to { transform: translateX(-50%); } }
 .verified { color: var(--green); font-weight: bold; white-space: nowrap; }
 
 /* ─── Riddle: a green question mark that will not sit still ─── */
@@ -556,3 +551,20 @@ a.target__tag:hover { background: #fff; color: var(--red); }
   .xp__body { padding: 16px 14px 8px; }
   .xp__actions { padding: 4px 14px 12px; }
 }
+
+/* ─── Matrix seal ─── */
+.tile--seized img { filter: saturate(.75) brightness(.85); }
+.seal-rain { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; mix-blend-mode: screen; }
+.seal-corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--green); z-index: 3; opacity: .9; }
+.seal-corner--tl { left: 6px; top: 6px; border-right: 0; border-bottom: 0; }
+.seal-corner--tr { right: 6px; top: 6px; border-left: 0; border-bottom: 0; }
+.seal-corner--bl { left: 6px; bottom: 6px; border-right: 0; border-top: 0; }
+.seal-corner--br { right: 6px; bottom: 6px; border-left: 0; border-top: 0; }
+.seal { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); z-index: 3; text-align: center; pointer-events: none; }
+.seal b { position: relative; display: block; font-family: var(--mono); font-weight: 700; font-size: 13px; letter-spacing: .2em; color: var(--green); text-shadow: 0 0 10px rgba(0,255,65,.8), 0 0 24px rgba(0,255,65,.4); animation: sealjolt 3s steps(1) infinite; }
+.seal b::before, .seal b::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; }
+.seal b::before { color: #00f0ff; animation: qsliceA 3s steps(1) infinite; }
+.seal b::after  { color: #ff003c; animation: qsliceB 3s steps(1) infinite; }
+.seal small { display: block; margin-top: 5px; font-family: var(--mono); font-size: 8px; letter-spacing: .3em; color: rgba(0,255,65,.7); }
+@keyframes sealjolt { 0%,84% { transform: none } 86% { transform: translate(-3px, 1px) skewX(-6deg) } 89% { transform: translate(3px, -1px) } 92% { transform: none } }
+.tile--club span { font-size: inherit; }
