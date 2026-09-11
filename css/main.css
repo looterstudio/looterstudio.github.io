@@ -424,7 +424,13 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .target { max-width: 360px; }
   .target__lead { display: none; }
   .callout, .division--flip .callout { padding: 0; justify-items: start; }
-  .xp { top: auto; bottom: 16px; right: 4vw; left: 4vw; width: auto; }
+  .xp { top: auto; bottom: 12px; right: 4vw; left: 4vw; width: auto; }
+  .xp.is-collapsed .xp__body, .xp.is-collapsed .xp__actions { display: none; }
+  .xp.is-collapsed { opacity: .92; }
+  .xp__bar { cursor: pointer; }
+  .dvd { opacity: .4; }
+  .sr__brand-logo { width: 120px; height: 120px; margin: -18px 0; }
+  .sr__brand b { font-size: 30px; }
   .xp__msg { white-space: normal; }
   .dvd { width: 220px; height: 220px; }
   .market { margin-top: 10vh; }

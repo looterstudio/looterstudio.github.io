@@ -496,8 +496,8 @@ function crackGlass(px, py) {
 
 /* ─── Cursor: weapon sight. Click = shoot. ─── */
 function initCursor() {
-  const c = $('cursor');
-  if (!c || window.matchMedia('(hover: none)').matches) return;
+  const c = $('cursor') || document.createElement('div');
+  const HOVER = !window.matchMedia('(hover: none)').matches;
   let mx = -100, my = -100, cx = -100, cy = -100;
   addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
   const tick = () => { cx += (mx - cx) * 0.35; cy += (my - cy) * 0.35; c.style.transform = `translate(${cx - c.offsetWidth / 2}px, ${cy - c.offsetHeight / 2}px)`; requestAnimationFrame(tick); };
@@ -514,17 +514,17 @@ function initCursor() {
   ];
 
   const armedAt = performance.now() + 800; // ignore synthetic clicks during load
-  addEventListener('pointerdown', (e) => {
-    if (e.button !== 0 || performance.now() < armedAt) return;
-    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .trio .obj')) return;
+  const shoot = (e, clientX, clientY, pageX, pageY) => {
+    if (performance.now() < armedAt) return;
+    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .trio .obj, .xp')) return;
     // recoil + flash + shake
     c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
     if (!REDUCED) {
       const f = document.createElement('div'); f.className = 'flash'; document.body.appendChild(f); setTimeout(() => f.remove(), 140);
       document.body.classList.remove('is-shake'); void document.body.offsetWidth; document.body.classList.add('is-shake');
     }
-    // cracked glass where it landed (page coords so it scrolls with content)
-    const h = crackGlass(e.pageX, e.pageY);
+    // shattered glass where it landed (page coords so it scrolls with content)
+    const h = crackGlass(pageX, pageY);
     setTimeout(() => h.classList.add('is-fading'), 9000);
     setTimeout(() => h.remove(), 11000);
     // what did we hit?
@@ -535,7 +535,20 @@ function initCursor() {
       hits++;
       break;
     }
+  };
+  // mouse: fire on press
+  addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    shoot(e, e.clientX, e.clientY, e.pageX, e.pageY);
   });
+  // touch: fire on a clean tap, never while scrolling
+  let t0 = null;
+  addEventListener('touchstart', (e) => { const t = e.touches[0]; t0 = { x: t.clientX, y: t.clientY, at: performance.now() }; }, { passive: true });
+  addEventListener('touchend', (e) => {
+    const t = e.changedTouches[0];
+    if (!t0 || Math.hypot(t.clientX - t0.x, t.clientY - t0.y) > 10 || performance.now() - t0.at > 400) return;
+    shoot(e, t.clientX, t.clientY, t.clientX + scrollX, t.clientY + scrollY);
+  }, { passive: true });
 }
 
 /* ─── Reveal ─── */
@@ -585,8 +598,12 @@ function initDrag() {
     if (saved && innerWidth > 900) place(saved[0], saved[1]);
   } catch (_) {}
   let drag = null;
+  // small screens: the bar toggles the window instead of dragging it (checked at event time)
+  const small = () => window.matchMedia('(max-width: 900px)').matches;
+  bar.addEventListener('click', (e) => { if (small() && !e.target.closest('#xpClose')) xp.classList.toggle('is-collapsed'); });
+  setTimeout(() => { if (small()) xp.classList.add('is-collapsed'); }, 9000);
   bar.addEventListener('pointerdown', (e) => {
-    if (e.target.closest('#xpClose')) return;
+    if (small() || e.target.closest('#xpClose')) return;
     const r = xp.getBoundingClientRect();
     drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
     xp.classList.add('is-dragging');

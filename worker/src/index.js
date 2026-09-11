@@ -8,8 +8,10 @@
 
 const RPCS = ['https://api.mainnet-beta.solana.com', 'https://solana-rpc.publicnode.com'];
 
+let reqOrigin = '';
 const cors = (env, extra = {}) => ({
-  'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN,
+  'Access-Control-Allow-Origin': [env.ALLOWED_ORIGIN, 'http://localhost:8080', 'https://looterstudio.github.io'].includes(reqOrigin) ? reqOrigin : env.ALLOWED_ORIGIN,
+  'Vary': 'Origin',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Content-Type': 'application/json',
@@ -103,6 +105,7 @@ async function claim(env, { sig, kind }) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    reqOrigin = request.headers.get('Origin') || '';
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors(env) });
     try {
       if (url.pathname === '/stats') return json(env, await stats(env));
