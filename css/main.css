@@ -440,18 +440,20 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .sr__search input { max-width: none; padding: 5px 6px; }
   .sr__user { grid-column: 1 / -1; display: flex; gap: 8px 14px; align-items: center; justify-items: start; text-align: left; font-size: 11px; }
   .sr__user small { display: none; }
-  .sr__grid { grid-template-columns: 78px 1fr; gap: 8px; padding-top: 10px; }
-  .sr__cats-title { font-size: 9px; padding: 1px 4px; }
-  .sr__cats ul { padding-top: 4px; }
+  .sr__grid { display: block; padding-top: 10px; }
+  .sr__cats { margin-bottom: 14px; }
+  .sr__cats-title { font-size: 9px; padding: 1px 5px; }
+  .sr__cats > ul { columns: 3; column-gap: 14px; padding-top: 6px; }
+  .sr__cats > ul > li { break-inside: avoid; }
   .sr__cats ul ul { padding-left: 8px; }
-  .sr__cats a { font-size: 10px; padding: 1px 0; }
+  .sr__cats a { font-size: 10.5px; padding: 1px 0; }
   .sr__cats a i { font-size: 8px; margin-left: 2px; }
-  .sr__products { grid-template-columns: repeat(3, 1fr); gap: 10px 6px; }
-  .sr__p-title { font-size: 9px; min-height: 0; line-height: 1.25; }
-  .sr__p-price { font-size: 11px; }
+  .sr__products { grid-template-columns: repeat(3, 1fr); gap: 14px 8px; }
+  .sr__p-title { font-size: 10px; min-height: 3.8em; line-height: 1.25; }
+  .sr__p-price { font-size: 12px; }
   .sr__p-price small { font-size: 9px; margin-left: 4px; }
-  .sr__offer, .sr__buy { font-size: 7px; padding: 4px 5px; letter-spacing: .08em; }
-  .sr__news { grid-column: 1 / -1; margin-top: 14px; padding: 8px 10px; }
+  .sr__offer, .sr__buy { font-size: 7.5px; padding: 5px 6px; letter-spacing: .06em; white-space: nowrap; }
+  .sr__news { margin-top: 16px; padding: 8px 10px; }
   .sr__news li { font-size: 11px; }
   .tile--riddle .rq { font-size: 9px; } .tile--riddle .rq__big { font-size: 56px; }
   .tile .cam { font-size: 7px; } .tile .cam__big { font-size: 15px; }
