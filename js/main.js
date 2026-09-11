@@ -92,7 +92,8 @@ function initXP() {
   if (!xp || !msg) return;
 
   const lines = () => MANIFESTO;
-  const say = (text) => scramble(msg, text, { onSet: (t) => { msg.dataset.text = t; } });
+  const mini = $('xpMini');
+  const say = (text) => scramble(msg, text, { onSet: (t) => { msg.dataset.text = t; if (mini) mini.textContent = t; } });
   const glitch = () => { xp.classList.remove('glitch'); void xp.offsetWidth; xp.classList.add('glitch'); };
 
   const next = () => {
@@ -100,10 +101,10 @@ function initXP() {
     XP.idx = (XP.idx + 1) % lines().length;
     say(lines()[XP.idx]);
     glitch();
-    if (Math.random() < 0.3) tearFlash();
+    if (Math.random() < 0.12) tearFlash();
   };
-  const loop = () => { next(); XP.timer = setTimeout(loop, rand(1300, 1900)); };
-  XP.timer = setTimeout(loop, 2200);
+  const loop = () => { next(); XP.timer = setTimeout(loop, rand(3200, 5200)); };
+  XP.timer = setTimeout(loop, 2500);
 
   const hold = (text, state, ms, after) => {
     XP.paused = true;
@@ -683,7 +684,7 @@ function initVideos() {
 /* ─── Ambient tears ─── */
 function initAmbientTears() {
   if (REDUCED) return;
-  const schedule = () => setTimeout(() => { tearFlash(); schedule(); }, rand(6000, 14000));
+  const schedule = () => setTimeout(() => { tearFlash(); schedule(); }, rand(30000, 70000));
   schedule();
 }
 
@@ -704,10 +705,8 @@ function initDrag() {
   let drag = null;
   // small screens: the bar toggles the window instead of dragging it (checked at event time)
   const small = () => window.matchMedia('(max-width: 900px)').matches;
-  bar.addEventListener('click', (e) => { if (small() && !e.target.closest('#xpClose')) xp.classList.toggle('is-collapsed'); });
-  setTimeout(() => { if (small()) xp.classList.add('is-collapsed'); }, 9000);
   bar.addEventListener('pointerdown', (e) => {
-    if (small() || e.target.closest('#xpClose')) return;
+    if (small() || e.target.closest('button')) return;
     const r = xp.getBoundingClientRect();
     drag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
     xp.classList.add('is-dragging');
@@ -759,6 +758,51 @@ function initMarketScale() {
   [300, 1200, 3000].forEach((t) => setTimeout(apply, t));
 }
 
+/* ─── LOOT.exe: minimize to a pill; wake on tap; react to what you look at ─── */
+function initXPPresence() {
+  const xp = $('xp'), bar = $('xpBar'), btn = $('xpMinBtn');
+  if (!xp || !bar) return;
+  const small = () => window.matchMedia('(max-width: 900px)').matches;
+  const setMin = (v) => { xp.classList.toggle('is-min', v); xp.classList.remove('is-collapsed'); };
+  btn?.addEventListener('click', (e) => { e.stopPropagation(); setMin(true); });
+  bar.addEventListener('click', (e) => { if (e.target.closest('button')) return; if (xp.classList.contains('is-min')) setMin(false); else if (small()) setMin(true); });
+  // phones start as a pill; desktop folds itself after a while without attention
+  if (small()) setTimeout(() => setMin(true), 4000);
+  else {
+    let idle = null;
+    const arm = () => { clearTimeout(idle); idle = setTimeout(() => { if (!xp.matches(':hover')) setMin(true); }, 25000); };
+    xp.addEventListener('mouseenter', () => clearTimeout(idle));
+    xp.addEventListener('mouseleave', arm);
+    arm();
+  }
+  // it notices what you look at
+  const seen = new Set();
+  const notice = (sel, text) => {
+    document.querySelectorAll(sel).forEach((el) => el.addEventListener('mouseenter', () => {
+      if (seen.has(text) || XP.paused) return; seen.add(text);
+      const msg = $('xpMsg'), mini = $('xpMini');
+      XP.paused = true;
+      scramble(msg, text, { onSet: (t) => { msg.dataset.text = t; if (mini) mini.textContent = t; } });
+      setTimeout(() => { XP.paused = false; }, 3500);
+    }, { once: true }));
+  };
+  notice('.target--brier', 'LOOT IS WATCHING BRIER.');
+  notice('.target--stat', 'LOOT IS WATCHING STAT.');
+  notice('.tile--tung', 'LOOT IS NOT SELLING THAT.');
+  notice('.tile--logo', 'LOOT IS NOT FOR SALE TO YOU.');
+  notice('.tile--seized', 'LOOT WAS THERE.');
+  // colourway changes get announced, quietly
+  let lastVariant = document.body.dataset.variant;
+  setInterval(() => {
+    const v = document.body.dataset.variant;
+    if (v && v !== lastVariant) { lastVariant = v; if (!XP.paused && !seen.has('v' + v)) { seen.add('v' + v); const msg = $('xpMsg'), mini = $('xpMini'); XP.paused = true; const t = `LOOT IS ${v.toUpperCase()}.`; scramble(msg, t, { onSet: (x) => { msg.dataset.text = x; if (mini) mini.textContent = x; } }); setTimeout(() => { XP.paused = false; }, 3000); } }
+  }, 500);
+  // boredom
+  let lastMove = performance.now();
+  ['mousemove', 'touchstart', 'scroll', 'keydown'].forEach((ev) => addEventListener(ev, () => { lastMove = performance.now(); }, { passive: true }));
+  setInterval(() => { if (performance.now() - lastMove > 45000 && !XP.paused && !seen.has('bored')) { seen.add('bored'); const msg = $('xpMsg'), mini = $('xpMini'); XP.paused = true; scramble(msg, 'LOOT IS BORED.', { onSet: (x) => { msg.dataset.text = x; if (mini) mini.textContent = x; } }); setTimeout(() => { XP.paused = false; }, 3500); } }, 5000);
+}
+
 /* ─── Restore clearance from a previous ACCEPT ─── */
 function restoreClearance() {
   try {
@@ -770,6 +814,7 @@ function restoreClearance() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initDrag();
+  initXPPresence();
   restoreClearance();
   initVariants();
   initTagline();

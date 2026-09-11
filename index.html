@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202609111258">
+  <link rel="stylesheet" href="css/main.css?v=202609111322">
 </head>
 <body>
 
@@ -30,8 +30,8 @@
   <!-- LOOT.exe — floating, draggable, always there -->
   <div class="xp" id="xp" role="dialog" aria-live="polite">
     <div class="xp__bar" id="xpBar">
-      <span>LOOT.exe</span>
-      <button class="xp__close" id="xpClose" aria-label="Close">✕</button>
+      <span class="xp__title">LOOT.exe<em class="xp__mini" id="xpMini"></em></span>
+      <span class="xp__ctl"><button class="xp__min" id="xpMinBtn" aria-label="Minimize">—</button><button class="xp__close" id="xpClose" aria-label="Close">✕</button></span>
     </div>
     <div class="xp__body">
       <span class="xp__icon" aria-hidden="true">⚠</span>
@@ -146,9 +146,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202609111258" defer></script>
-  <script src="js/globe.js?v=202609111258" defer></script>
+  <script src="js/main.js?v=202609111322" defer></script>
+  <script src="js/globe.js?v=202609111322" defer></script>
   <script>window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
-  <script type="module" src="js/pay.js?v=202609111258"></script>
+  <script type="module" src="js/pay.js?v=202609111322"></script>
 </body>
 </html>
