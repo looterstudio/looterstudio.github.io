@@ -446,7 +446,7 @@ function initCursor() {
   const armedAt = performance.now() + 800; // ignore synthetic clicks during load
   addEventListener('pointerdown', (e) => {
     if (e.button !== 0 || performance.now() < armedAt) return;
-    if (e.target.closest('button, input, a, .xp__bar, .sr__cats')) return;
+    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .trio .obj')) return;
     // recoil + flash + shake
     c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
     if (!REDUCED) {
@@ -533,6 +533,21 @@ function initDrag() {
   addEventListener('resize', () => { const r = xp.getBoundingClientRect(); if (xp.style.left) place(r.left, r.top); });
 }
 
+/* ─── Colourways: click a variant, the whole house wears it ─── */
+function initVariants() {
+  const figs = document.querySelectorAll('.trio .obj[data-variant]');
+  if (!figs.length) return;
+  const apply = (v) => {
+    document.body.dataset.variant = v;
+    figs.forEach((f) => f.classList.toggle('is-active', f.dataset.variant === v));
+    try { localStorage.setItem('loot.variant', v); } catch (_) {}
+  };
+  figs.forEach((f) => f.addEventListener('click', () => { apply(f.dataset.variant); tearFlash(); }));
+  let saved = 'original';
+  try { saved = localStorage.getItem('loot.variant') || 'original'; } catch (_) {}
+  apply(saved);
+}
+
 /* ─── Restore clearance from a previous ACCEPT ─── */
 function restoreClearance() {
   try {
@@ -545,6 +560,7 @@ function restoreClearance() {
 document.addEventListener('DOMContentLoaded', () => {
   initDrag();
   restoreClearance();
+  initVariants();
   initTagline();
   initXP();
   initMarket();
