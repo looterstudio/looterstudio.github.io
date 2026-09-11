@@ -118,6 +118,7 @@ function initXP() {
   /* DENY → wrong decision + error cascade */
   const deny = () => {
     XP.denies++;
+    if (!document.body.classList.contains('is-gated')) document.body.classList.add('is-gated');
     XP.accepted = false; try { localStorage.removeItem('loot.clr'); } catch (_) {}
     xp.classList.remove('is-min', 'is-collapsed');
     document.body.classList.remove('deny-flash'); void document.body.offsetWidth; document.body.classList.add('deny-flash');
@@ -129,6 +130,7 @@ function initXP() {
   /* ACCEPT → access granted + target mode */
   const accept = () => {
     XP.accepted = true;
+    if (document.body.classList.contains('is-gated')) { document.body.classList.remove('is-gated'); tearFlash(); xp.classList.remove('is-min'); }
     hold('ACCESS GRANTED. CLR: LEVEL_6.', 'is-ok', 2600, () => {
       document.querySelectorAll('.silk__item--locked').forEach((el) => {
         el.classList.add('is-unlocked');
@@ -196,7 +198,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<i class="rq rq--1">?</i><i class="rq rq--2">?</i><i class="rq rq--3">?</i><i class="rq rq--4">?</i><i class="rq rq--5">?</i><b class="q" data-text="?">?</b>' : ''}${p.seized ? `<canvas class="seal-rain"></canvas><i class="seal-corner seal-corner--tl"></i><i class="seal-corner seal-corner--tr"></i><i class="seal-corner seal-corner--bl"></i><i class="seal-corner seal-corner--br"></i><div class="seal"><b data-text="SEIZED BY LOOTERSTUDIO®">SEIZED BY LOOTERSTUDIO®</b><small>ACCESS REVOKED · CASE 0001</small></div>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<span class="cam cam--tl"><i class="cam__rec"></i>REC</span><span class="cam cam--tr">CAM 03</span><span class="cam cam--bl cam__time">00:00:00</span><span class="cam cam--br">LOOT</span><div class="cam__big" data-text="SEIZED">SEIZED</div>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -206,7 +208,7 @@ function initMarket() {
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
     grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
     grid.querySelectorAll('.tile--alien').forEach(alienBlock);
-    grid.querySelectorAll('.tile--seized').forEach(matrixSeal);
+    grid.querySelectorAll('.cam__time').forEach(camClock);
   };
   render();
 
@@ -250,6 +252,14 @@ function initMarket() {
 }
 
 const ALIEN_GLYPHS = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟⵀⵁⵂⵃⵄⵅⵆⵇⵈⵉⵊⵋⵌⵍⵎⵏ∀∂∃∅∇∈∉∋∏∑√∞∠∧∨∩∪∫≈≠≡⊂⊃⊕⊗01';
+
+/* Surveillance clock on the seized tile */
+function camClock(el) {
+  const t0 = Date.now() - (41 * 60 + 12) * 1000;
+  const p = (n) => String(n).padStart(2, '0');
+  const tick = () => { if (!el.isConnected) return; const s = Math.floor((Date.now() - t0) / 1000); el.textContent = `${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`; setTimeout(tick, 1000); };
+  tick();
+}
 
 /* Alien terminal: two voices talking, never translated. A decrypt bar that never finishes. */
 function alienBlock(tile) {
@@ -770,13 +780,13 @@ function initXPPresence() {
   const small = () => window.matchMedia('(max-width: 900px)').matches;
   // only those who ACCEPT get to minimize. DENY and you live with it.
   const setMin = (v) => {
-    if (v && !XP.accepted) { flashMsg(XP.denies ? 'YOU DENIED. NO MINIMIZE FOR YOU.' : 'ACCEPT FIRST.', 'is-error'); return; }
+    if (v && (!XP.accepted || document.body.classList.contains('is-gated'))) { flashMsg(XP.denies ? 'YOU DENIED. NO MINIMIZE FOR YOU.' : 'ACCEPT FIRST.', 'is-error'); return; }
     xp.classList.toggle('is-min', v); xp.classList.remove('is-collapsed');
   };
   btn?.addEventListener('click', (e) => { e.stopPropagation(); setMin(true); });
   bar.addEventListener('click', (e) => { if (e.target.closest('button')) return; if (xp.classList.contains('is-min')) setMin(false); else if (small()) setMin(true); });
   // phones start as a pill (if allowed); desktop folds itself after a while without attention (if allowed)
-  const quiet = () => { if (XP.accepted) { xp.classList.add('is-min'); xp.classList.remove('is-collapsed'); } };
+  const quiet = () => { if (XP.accepted && !document.body.classList.contains('is-gated')) { xp.classList.add('is-min'); xp.classList.remove('is-collapsed'); } };
   if (small()) setTimeout(quiet, 4000);
   else {
     let idle = null;
@@ -797,6 +807,7 @@ function restoreClearance() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (!XP.accepted) document.body.classList.add('is-gated');
   initDrag();
   initXPPresence();
   restoreClearance();

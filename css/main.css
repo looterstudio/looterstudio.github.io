@@ -496,21 +496,6 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--seized { overflow: hidden; }
 .verified { color: var(--green); font-weight: bold; white-space: nowrap; }
 
-/* ─── Riddle: a green question mark that will not sit still ─── */
-.tile--riddle { background: #020602; outline: 1px solid #143d14; position: relative; overflow: hidden; }
-.tile--riddle::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(57,255,20,.05) 0 1px, transparent 1px 3px); pointer-events: none; }
-.tile--riddle .rq { position: absolute; font-family: var(--brand); font-weight: 900; font-size: 34px; color: rgba(57,255,20,.14); font-style: normal; }
-.rq--1 { left: 8%; top: 6%; transform: rotate(-18deg); } .rq--2 { right: 10%; top: 12%; transform: rotate(22deg); font-size: 26px; }
-.rq--3 { left: 14%; bottom: 10%; transform: rotate(12deg); font-size: 28px; } .rq--4 { right: 8%; bottom: 8%; transform: rotate(-25deg); }
-.rq--5 { left: 46%; top: 4%; transform: rotate(6deg); font-size: 20px; }
-.tile--riddle .q { position: relative; font-family: var(--brand); font-weight: 900; font-size: 120px; line-height: 1; color: #39ff14; text-shadow: 0 0 18px rgba(57,255,20,.6); animation: qjolt 2.4s steps(1) infinite; }
-.tile--riddle .q::before, .tile--riddle .q::after { content: attr(data-text); position: absolute; inset: 0; opacity: .9; pointer-events: none; }
-.tile--riddle .q::before { color: #00f0ff; animation: qsliceA 2.4s steps(1) infinite; }
-.tile--riddle .q::after  { color: #ff003c; animation: qsliceB 2.4s steps(1) infinite; }
-@keyframes qjolt { 0%,84% { transform: none; filter: none } 86% { transform: translate(-4px, 2px) skewX(-8deg); filter: brightness(1.6) } 89% { transform: translate(5px, -2px) skewX(6deg) } 92% { transform: translate(-2px, 1px) } 95% { transform: none; filter: none } }
-@keyframes qsliceA { 0%,84% { clip-path: inset(0 0 100% 0); transform: none } 86% { clip-path: inset(10% 0 60% 0); transform: translate(-7px, 0) } 89% { clip-path: inset(55% 0 20% 0); transform: translate(6px, 0) } 92% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 0) } 95% { clip-path: inset(0 0 100% 0) } }
-@keyframes qsliceB { 0%,84% { clip-path: inset(0 0 100% 0); transform: none } 86% { clip-path: inset(60% 0 10% 0); transform: translate(7px, 0) } 89% { clip-path: inset(5% 0 75% 0); transform: translate(-6px, 0) } 92% { clip-path: inset(45% 0 25% 0); transform: translate(3px, 0) } 95% { clip-path: inset(0 0 100% 0) } }
-
 /* ─── Alien terminal ─── */
 .tile--alien { background: #000; outline: 1px solid #143d14; padding: 10px; place-items: stretch; position: relative; overflow: hidden; }
 .tile--alien::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,255,65,.045) 0 1px, transparent 1px 3px); pointer-events: none; }
@@ -552,19 +537,29 @@ a.target__tag:hover { background: #fff; color: var(--red); }
   .xp__actions { padding: 4px 14px 12px; }
 }
 
-/* ─── Matrix seal ─── */
-.tile--seized img { filter: saturate(.75) brightness(.85); }
-.seal-rain { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; mix-blend-mode: screen; }
-.seal-corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--green); z-index: 3; opacity: .9; }
-.seal-corner--tl { left: 6px; top: 6px; border-right: 0; border-bottom: 0; }
-.seal-corner--tr { right: 6px; top: 6px; border-left: 0; border-bottom: 0; }
-.seal-corner--bl { left: 6px; bottom: 6px; border-right: 0; border-top: 0; }
-.seal-corner--br { right: 6px; bottom: 6px; border-left: 0; border-top: 0; }
-.seal { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); z-index: 3; text-align: center; pointer-events: none; }
-.seal b { position: relative; display: block; font-family: var(--mono); font-weight: 700; font-size: 13px; letter-spacing: .2em; color: var(--green); text-shadow: 0 0 10px rgba(0,255,65,.8), 0 0 24px rgba(0,255,65,.4); animation: sealjolt 3s steps(1) infinite; }
-.seal b::before, .seal b::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; }
-.seal b::before { color: #00f0ff; animation: qsliceA 3s steps(1) infinite; }
-.seal b::after  { color: #ff003c; animation: qsliceB 3s steps(1) infinite; }
-.seal small { display: block; margin-top: 5px; font-family: var(--mono); font-size: 8px; letter-spacing: .3em; color: rgba(0,255,65,.7); }
-@keyframes sealjolt { 0%,84% { transform: none } 86% { transform: translate(-3px, 1px) skewX(-6deg) } 89% { transform: translate(3px, -1px) } 92% { transform: none } }
+
+/* ─── ??? · terminal ─── */
+.tile--riddle { background: #000; outline: 1px solid #143d14; display: grid; place-items: center; }
+.tile--riddle .rq { margin: 0; color: var(--green); font: 700 13px/1.6 var(--mono); letter-spacing: .1em; text-shadow: 0 0 8px rgba(0,255,65,.5); text-align: center; }
+.tile--riddle .rq__big { display: block; font-size: 96px; line-height: 1; margin-bottom: 6px; }
+.tile--riddle .rq__cur { font-style: normal; animation: blink 1s steps(1) infinite; }
+
+/* ─── SEIZED · camera ─── */
+.tile--seized img { filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(2.4) brightness(.8) contrast(1.1); image-rendering: pixelated; animation: none; }
+.tile--seized::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 2px, transparent 2px 4px); pointer-events: none; }
+.tile .cam { position: absolute; z-index: 2; font: 700 9px var(--mono); letter-spacing: .22em; color: var(--green); text-shadow: 0 0 6px rgba(0,255,65,.8); }
+.cam--tl { left: 10px; top: 10px; } .cam--tr { right: 10px; top: 10px; } .cam--bl { left: 10px; bottom: 10px; } .cam--br { right: 10px; bottom: 10px; }
+.cam__rec { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--red); margin-right: 6px; vertical-align: middle; animation: blink 1.2s steps(1) infinite; }
+.tile .cam__big { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); z-index: 2; text-align: center; font: 700 22px var(--mono); letter-spacing: .3em; color: var(--green); text-shadow: 0 0 14px rgba(0,255,65,.9); animation: sealjolt 4s steps(1) infinite; }
+.tile .cam__big::before, .tile .cam__big::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; }
+.tile .cam__big::before { color: #00f0ff; animation: qsliceA 4s steps(1) infinite; }
+.tile .cam__big::after  { color: #ff003c; animation: qsliceB 4s steps(1) infinite; }
+@keyframes sealjolt { 0%,84% { transform: translateY(-50%) } 86% { transform: translateY(-50%) translate(-3px, 1px) skewX(-6deg) } 89% { transform: translateY(-50%) translate(3px, -1px) } 92% { transform: translateY(-50%) } }
+@keyframes qsliceA { 0%,84% { clip-path: inset(0 0 100% 0); transform: none; opacity: 0 } 86% { clip-path: inset(10% 0 60% 0); transform: translate(-7px, 0); opacity: .9 } 89% { clip-path: inset(55% 0 20% 0); transform: translate(6px, 0); opacity: .9 } 92% { clip-path: inset(30% 0 40% 0); transform: translate(-3px, 0); opacity: .9 } 95% { clip-path: inset(0 0 100% 0); opacity: 0 } }
+@keyframes qsliceB { 0%,84% { clip-path: inset(0 0 100% 0); transform: none; opacity: 0 } 86% { clip-path: inset(60% 0 10% 0); transform: translate(7px, 0); opacity: .9 } 89% { clip-path: inset(5% 0 75% 0); transform: translate(-6px, 0); opacity: .9 } 92% { clip-path: inset(45% 0 25% 0); transform: translate(3px, 0); opacity: .9 } 95% { clip-path: inset(0 0 100% 0); opacity: 0 } }
 .tile--club span { font-size: inherit; }
+
+/* ─── The gate: nothing exists until you ACCEPT ─── */
+body.is-gated .main, body.is-gated .dvd { visibility: hidden; }
+body.is-gated .xp { top: 50% !important; left: 50% !important; right: auto !important; bottom: auto !important; translate: -50% -50%; width: min(600px, 92vw); }
+body.is-gated .xp__min { visibility: hidden; }
