@@ -1,6 +1,6 @@
 # LooterStudio · vault (private notes)
 
-Everything the house decided, in one place. Public site: https://b3njaminfuentes.github.io/looterstudio/
+Everything the house decided, in one place. Public site: https://looterstudio.github.io/ (repo looterstudio/looterstudio.github.io; mirror b3njaminfuentes/looterstudio kept only for the on-chain NFT URI)
 
 ## The house
 - LooterStudio® is owned by three: Benjamín, Felipe, Dottu (Marco). Same as Brier.
@@ -18,7 +18,7 @@ Everything the house decided, in one place. Public site: https://b3njaminfuentes
 ## Pending (needs SOL or a card)
 - 0.05–0.1 SOL: list Tung Tung at 100,000 USDC on Tensor; create collection LooterStudio®; rename on-chain.
 - Domain (~3–12 USD/yr): removes Phantom's red warning, fixes "Github" label, survives the org move.
-- GitHub org `looterstudio` with the three as owners; move this repo; site becomes looterstudio.github.io (or the domain).
+- DONE 2026-09-11: org `brierProtocol` renamed to `looterstudio`; repos looterstudio.github.io (site), brier-protocol, stat (private), vault (notes). Domain looterstudio.com pending CNAME.
 - Membership: 333 × 42 USDC, buyer pays mint, unique colourway each, token-gated chat.
 - Ideas file: write to 10+ (English, one per line). Load with `npx wrangler kv key put --binding LOOT --remote ideas --path worker/ideas.json` (Node 25 at /opt/homebrew/opt/node@25/bin).
 
