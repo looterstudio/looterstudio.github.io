@@ -410,8 +410,8 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 
 /* ─── Responsive ─── */
 @media (max-width: 1100px) {
-  .sr__grid { grid-template-columns: 170px 1fr; }
-  .sr__news { grid-column: 1 / -1; }
+  body:not(.market-scaled) .sr__grid { grid-template-columns: 170px 1fr; }
+  body:not(.market-scaled) .sr__news { grid-column: 1 / -1; }
 }
 @media (max-width: 900px) {
   .trio { min-height: 0; padding: 8vh 0 4vh; grid-template-columns: repeat(3, 1fr); gap: 20px 10px; }
@@ -429,19 +429,21 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .xp.is-collapsed { opacity: .92; }
   .xp__bar { cursor: pointer; }
   .dvd { opacity: .4; }
-  .sr__brand-logo { width: 120px; height: 120px; margin: -18px 0; }
-  .sr__brand b { font-size: 30px; }
+  body:not(.market-scaled) .sr__brand-logo { width: 120px; height: 120px; margin: -18px 0; }
+  body:not(.market-scaled) .sr__brand b { font-size: 30px; }
   .xp__msg { white-space: normal; }
   .dvd { width: 220px; height: 220px; }
   .market { margin-top: 10vh; }
-  .sr__head { grid-template-columns: 1fr; gap: 12px; }
-  .sr__user { justify-items: start; text-align: left; }
-  .sr__grid { grid-template-columns: 1fr; }
-  .sr__cats ul { columns: 2; } .sr__cats ul ul { columns: 1; }
-  .sr__products { grid-template-columns: repeat(2, 1fr); gap: 16px 10px; }
-  .sr__p-title { font-size: 11px; }
-  .sr__p-price { font-size: 13px; }
-  .sr__search input { max-width: none; }
+  /* the market is the desktop page, scaled to fit: you see all of it, like on the web */
+  .market-wrap { overflow: visible; }
+  body.market-scaled .market { width: 1200px; transform-origin: 0 0; margin-top: 0; }
+  body.market-scaled .sr__brand-logo { width: 190px; height: 190px; margin: -34px 0; }
+  body.market-scaled .sr__brand b { font-size: 60px; }
+  body:not(.market-scaled) .sr__head { grid-template-columns: 1fr; gap: 12px; }
+  body:not(.market-scaled) .sr__user { justify-items: start; text-align: left; }
+  body:not(.market-scaled) .sr__grid { grid-template-columns: 1fr; }
+  body:not(.market-scaled) .sr__cats ul { columns: 2; }
+  body:not(.market-scaled) .sr__products { grid-template-columns: repeat(2, 1fr); gap: 16px 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .xp, .target__img { animation: none !important; transition: none !important; }

@@ -656,6 +656,28 @@ function initVariants() {
   apply(saved);
 }
 
+/* ─── Small screens: show the whole desktop market, scaled to the phone ─── */
+function initMarketScale() {
+  const m = document.getElementById('market');
+  if (!m) return;
+  const wrap = document.createElement('div'); wrap.className = 'market-wrap';
+  m.parentNode.insertBefore(wrap, m); wrap.appendChild(m);
+  const apply = () => {
+    const small = innerWidth < 900;
+    document.body.classList.toggle('market-scaled', small);
+    if (!small) { m.style.transform = ''; wrap.style.height = ''; return; }
+    const avail = m.parentNode.clientWidth || innerWidth;
+    const s = avail / 1200;
+    m.style.transform = `scale(${s})`;
+    wrap.style.height = `${m.offsetHeight * s}px`;
+  };
+  apply();
+  addEventListener('resize', apply, { passive: true });
+  document.addEventListener('loot:stats', () => setTimeout(apply, 50));
+  // products render after fonts/images; settle a few times
+  [300, 1200, 3000].forEach((t) => setTimeout(apply, t));
+}
+
 /* ─── Restore clearance from a previous ACCEPT ─── */
 function restoreClearance() {
   try {
@@ -672,6 +694,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTagline();
   initXP();
   initMarket();
+  initMarketScale();
   initAmbientTears();
   initHeadline();
   initCursor();
