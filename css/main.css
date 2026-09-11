@@ -494,10 +494,10 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--alien span { font-family: var(--mono); font-size: 18px; letter-spacing: .18em; color: var(--green-dim); text-shadow: 0 0 12px rgba(0,255,65,.35); animation: riddle 2.2s steps(2) infinite; }
 @keyframes riddle { 50% { opacity: .55; } }
 .tile--seized { overflow: hidden; }
-.tape { position: absolute; left: -30%; width: 160%; height: 11px; line-height: 11px; top: 48%; transform: rotate(-14deg); z-index: 2; white-space: nowrap; overflow: hidden;
-  background: #f2c400; color: #000; font-family: var(--brand); font-weight: 900; font-size: 7px; letter-spacing: .14em;
-  border-top: 1px solid #000; border-bottom: 1px solid #000; box-shadow: 0 2px 6px rgba(0,0,0,.7); }
-.tape span { display: inline-block; animation: tapeRun 22s linear infinite; }
+.tape { position: absolute; left: -30%; width: 160%; height: 14px; line-height: 14px; top: 48%; transform: rotate(-14deg); z-index: 2; white-space: nowrap; overflow: hidden;
+  background: rgba(0, 6, 0, .88); color: var(--green); font-family: var(--mono); font-weight: 700; font-size: 8px; letter-spacing: .28em; text-transform: uppercase;
+  border-top: 1px solid rgba(0,255,65,.7); border-bottom: 1px solid rgba(0,255,65,.7); box-shadow: 0 0 12px rgba(0,255,65,.35), 0 2px 8px rgba(0,0,0,.7); text-shadow: 0 0 6px rgba(0,255,65,.8); }
+.tape span { display: inline-block; animation: tapeRun 26s linear infinite; }
 @keyframes tapeRun { to { transform: translateX(-50%); } }
 .verified { color: var(--green); font-weight: bold; white-space: nowrap; }
 
