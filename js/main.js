@@ -191,7 +191,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<i class="rq rq--1">?</i><i class="rq rq--2">?</i><i class="rq rq--3">?</i><i class="rq rq--4">?</i><i class="rq rq--5">?</i><b class="q" data-text="?">?</b>' : ''}${p.seized ? `<span class="evidence"><b>EVIDENCE</b>CASE 0001 · LOOT<i></i></span><i class="tape tape--a"><span>${'SEIZED BY LooterStudio®  ✦  '.repeat(10)}</span></i><i class="tape tape--b"><span>${'SEIZED BY LooterStudio®  ✦  '.repeat(10)}</span></i>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<i class="rq rq--1">?</i><i class="rq rq--2">?</i><i class="rq rq--3">?</i><i class="rq rq--4">?</i><i class="rq rq--5">?</i><b class="q" data-text="?">?</b>' : ''}${p.seized ? `<i class="tape"><span>${'SEIZED BY LooterStudio®  ✦  '.repeat(12)}</span></i>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -258,22 +258,22 @@ function alienBlock(tile) {
   const esc = (t) => t.replace(/</g, '&lt;');
   const render = () => {
     const cursor = Math.floor(performance.now() / 400) % 2 ? '_' : ' ';
-    pre.innerHTML = [...lines, `<span class="${voice ? 'v2' : ''}">${voice ? '&lt; ' : '&gt; '}${esc(cur)}${cursor}</span>`].join('\n');
+    pre.innerHTML = [...lines, `<span>&gt; ${esc(cur)}${cursor}</span>`].join('\n');
   };
   const tick = () => {
     if (!tile.isConnected) return;
     if (i < target.length) { cur += target[i++]; render(); setTimeout(tick, 35 + Math.random() * 80); return; }
     setTimeout(() => {
-      lines.push(`<span class="${voice ? 'v2' : ''}">${voice ? '&lt; ' : '&gt; '}${esc(cur)}</span>`);
+      lines.push(`<span>&gt; ${esc(cur)}</span>`);
       if (Math.random() < 0.22) lines.push(`<span class="noise">${esc(Array.from({ length: 18 }, () => Math.random() < 0.5 ? '?' : G[Math.floor(Math.random() * G.length)]).join(''))}</span>`);
       while (lines.length > 7) lines.shift();
-      voice = voice ? 0 : 1; cur = ''; target = sentence(); i = 0; render();
+      cur = ''; target = sentence(); i = 0; render();
       if (Math.random() < 0.3) { tile.classList.remove('is-burst'); void tile.offsetWidth; tile.classList.add('is-burst'); }
       setTimeout(tick, 300 + Math.random() * 700);
     }, 700 + Math.random() * 1400);
   };
   render();
-  if (REDUCED) { pre.textContent = ['> ' + sentence(), '< ' + sentence(), '> ' + sentence()].join('\n'); return; }
+  if (REDUCED) { pre.textContent = ['> ' + sentence(), '> ' + sentence(), '> ' + sentence()].join('\n'); return; }
   tick();
 }
 
