@@ -194,7 +194,7 @@ function initMarket() {
         <div class="tile tile--${p.tile}">${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
-        ${p.offer ? `<div class="sr__chain"><a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER → tensor</a><a class="sr__mint" href="https://solscan.io/token/${p.mint}" target="_blank" rel="noopener">on-chain · solana · ${p.mint.slice(0, 4)}…${p.mint.slice(-4)}</a></div>` : ''}
+        ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
     grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
