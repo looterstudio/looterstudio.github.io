@@ -173,7 +173,7 @@ const PRODUCTS = [
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', img: 'assets/vibration.jpg', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
-  { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea. 100% original. one per buyer', priceLabel: '9 USDC', buy: 'idea' },
+  { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO BEACH CLUB. classified', priceLabel: 'SEIZED' },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'riddle', text: '??????????', title: '??????????', priceLabel: '?' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: 'ᛚᛟᛟᛏ ⵉⵙ ᚹᚨᛏᚲᚺᛁᚾᚷ', title: '????? ?? ??? ????', priceLabel: '???' },
@@ -195,7 +195,7 @@ function initMarket() {
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
-        ${p.buy ? `<button class="sr__offer sr__buy" data-buy="${p.buy}" type="button">BUY</button><span class="sr__count" data-count="${p.buy}"></span>` : ''}
+        ${p.buy ? `<button class="sr__offer sr__buy" data-buy="${p.buy}" type="button">BUY</button>` : ''}
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
     if (TOUCH) swapVideos(grid); else grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
