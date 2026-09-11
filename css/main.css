@@ -496,3 +496,6 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--alien { background: #000; outline: 1px solid #222; }
 .tile--alien span { font-family: var(--mono); font-size: 18px; letter-spacing: .18em; color: var(--green-dim); text-shadow: 0 0 12px rgba(0,255,65,.35); animation: riddle 2.2s steps(2) infinite; }
 @keyframes riddle { 50% { opacity: .55; } }
+.tile--alien { padding: 0; place-items: center; }
+.tile--alien .alien { font-family: var(--mono); font-size: 15px; line-height: 1.35; letter-spacing: .12em; color: var(--green); text-shadow: 0 0 14px rgba(0,255,65,.5); margin: 0; text-align: center; animation: riddle 1.1s steps(2) infinite; }
+.tile--riddle span { font-size: 30px; letter-spacing: .06em; color: var(--bone); }

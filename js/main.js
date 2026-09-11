@@ -176,8 +176,8 @@ const PRODUCTS = [
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO BEACH CLUB. classified', priceLabel: 'SEIZED' },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'riddle', text: '??????????', title: '??????????', priceLabel: '?' },
-  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: 'ᛚᛟᛟᛏ ⵉⵙ ᚹᚨᛏᚲᚺᛁᚾᚷ', title: '????? ?? ??? ????', priceLabel: '???' },
-  { id: 'redact', cat: ['custom'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
+  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
+  { id: 'redact', cat: ['custom'], tile: 'riddle', text: '??????????', title: '?????????? [CLASSIFIED]', priceLabel: '??????' },
 ];
 
 function initMarket() {
@@ -200,6 +200,7 @@ function initMarket() {
     if (TOUCH) swapVideos(grid); else grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
     grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
+    grid.querySelectorAll('.tile--alien').forEach(alienBlock);
   };
   render();
 
@@ -243,6 +244,16 @@ function initMarket() {
 }
 
 const ALIEN_GLYPHS = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟⵀⵁⵂⵃⵄⵅⵆⵇⵈⵉⵊⵋⵌⵍⵎⵏ∀∂∃∅∇∈∉∋∏∑√∞∠∧∨∩∪∫≈≠≡⊂⊃⊕⊗01';
+
+/* Alien block: lines of glyphs that keep rewriting themselves, with ???? bleeding through */
+function alienBlock(tile) {
+  const pre = document.createElement('pre'); pre.className = 'alien';
+  tile.innerHTML = ''; tile.appendChild(pre);
+  const line = (n) => Array.from({ length: n }, () => Math.random() < 0.18 ? '?' : ALIEN_GLYPHS[Math.floor(Math.random() * (ALIEN_GLYPHS.length - 2))]).join('');
+  const draw = () => { pre.textContent = Array.from({ length: 7 }, (_, i) => line(9 + (i % 3))).join('\n'); };
+  draw();
+  if (!REDUCED) setInterval(draw, 420);
+}
 
 /* Alien rain inside a tile (curtains of glyphs) */
 function matrixRain(tile) {
