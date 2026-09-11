@@ -407,8 +407,10 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .division { grid-template-columns: 1fr; gap: 20px; margin-top: 9vh; }
   .division--flip .target { order: 0; } .division--flip .callout { order: 1; }
   .target { max-width: 360px; }
-  .target__lead { display: none; }
-  .callout, .division--flip .callout { padding: 0; justify-items: start; }
+  .target__lead, .division--flip .target__lead { display: block; left: 50%; right: auto; top: 100%; width: 1px; height: 46px; transform: translateX(-50%); }
+  .target__lead::after, .division--flip .target__lead::after { left: -4px; right: auto; top: auto; bottom: -5px; }
+  .target { margin-bottom: 44px; }
+  .callout, .division--flip .callout { padding: 0; justify-items: center; text-align: center; }
   .xp { top: auto; bottom: 12px; right: 4vw; left: 4vw; width: auto; }
   .xp.is-collapsed .xp__body, .xp.is-collapsed .xp__actions { display: none; }
   .xp.is-collapsed { opacity: .92; }
