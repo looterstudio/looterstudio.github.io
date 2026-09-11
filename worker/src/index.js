@@ -1,0 +1,119 @@
+/* ═══════════════════════════════════════════════════════════════
+   LooterStudio® anonymous market — pay-to-reveal worker
+   GET  /stats                → counters
+   POST /claim {sig, kind}    → verifies a USDC payment on Solana and
+                                reveals idea #n or beer certificate #n
+   Ideas live in KV under "ideas" (JSON array of strings).
+   ═══════════════════════════════════════════════════════════════ */
+
+const RPCS = ['https://api.mainnet-beta.solana.com', 'https://solana-rpc.publicnode.com'];
+
+const cors = (env, extra = {}) => ({
+  'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Content-Type': 'application/json',
+  ...extra,
+});
+const json = (env, body, status = 200) => new Response(JSON.stringify(body), { status, headers: cors(env) });
+
+async function rpc(method, params) {
+  let last;
+  for (const url of RPCS) {
+    try {
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) });
+      const j = await r.json();
+      if (j.result !== undefined) return j.result;
+      last = j.error;
+    } catch (e) { last = e; }
+  }
+  throw new Error(`rpc failed: ${JSON.stringify(last)}`);
+}
+
+/* Find how much USDC this transaction moved into the treasury token account. */
+function paidUsdc(tx, env) {
+  if (!tx || tx.meta?.err) return 0;
+  const pre = (tx.meta.preTokenBalances || []).find((b) => b.mint === env.USDC_MINT && b.owner === env.TREASURY_OWNER);
+  const post = (tx.meta.postTokenBalances || []).find((b) => b.mint === env.USDC_MINT && b.owner === env.TREASURY_OWNER);
+  const before = pre ? Number(pre.uiTokenAmount.uiAmount || 0) : 0;
+  const after = post ? Number(post.uiTokenAmount.uiAmount || 0) : 0;
+  return Math.max(0, after - before);
+}
+
+function payer(tx) {
+  const keys = tx.transaction.message.accountKeys;
+  const k = keys.find((a) => a.signer);
+  return k ? (k.pubkey || k) : null;
+}
+
+async function stats(env) {
+  const ideas = JSON.parse((await env.LOOT.get('ideas')) || '[]');
+  const ideasSold = Number((await env.LOOT.get('ideas:sold')) || 0);
+  const beersSold = Number((await env.LOOT.get('beers:sold')) || 0);
+  const total = Number(env.IDEAS_TOTAL);
+  return {
+    ideas_total: total,
+    ideas_sold: ideasSold,
+    ideas_left: Math.max(0, total - ideasSold),
+    ideas_in_stock: Math.max(0, ideas.length - ideasSold),
+    beers_sold: beersSold,
+    price_idea: Number(env.PRICE_IDEA),
+    price_beer: Number(env.PRICE_BEER),
+    treasury_usdc: env.TREASURY_USDC,
+    treasury_owner: env.TREASURY_OWNER,
+  };
+}
+
+async function claim(env, { sig, kind }) {
+  if (!sig || !/^[1-9A-HJ-NP-Za-km-z]{60,100}$/.test(sig)) return { error: 'bad signature' };
+  if (!['idea', 'beer'].includes(kind)) return { error: 'bad kind' };
+
+  const seen = await env.LOOT.get(`claim:${sig}`);
+  if (seen) return JSON.parse(seen); // idempotent: same receipt, same reveal
+
+  const tx = await rpc('getTransaction', [sig, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0, commitment: 'confirmed' }]);
+  if (!tx) return { error: 'not confirmed yet', retry: true };
+  const paid = paidUsdc(tx, env);
+  const price = Number(kind === 'idea' ? env.PRICE_IDEA : env.PRICE_BEER);
+  if (paid + 1e-6 < price) return { error: `paid ${paid} USDC, price is ${price} USDC` };
+
+  const from = payer(tx);
+  const when = new Date((tx.blockTime || Math.floor(Date.now() / 1000)) * 1000).toISOString();
+
+  let out;
+  if (kind === 'idea') {
+    const ideas = JSON.parse((await env.LOOT.get('ideas')) || '[]');
+    const sold = Number((await env.LOOT.get('ideas:sold')) || 0);
+    if (sold >= Number(env.IDEAS_TOTAL)) return { error: 'sold out' };
+    if (sold >= ideas.length) return { error: 'restocking' };
+    const n = sold + 1;
+    out = { kind, number: n, text: ideas[sold], sig, from, when };
+    await env.LOOT.put('ideas:sold', String(n));
+  } else {
+    const sold = Number((await env.LOOT.get('beers:sold')) || 0);
+    const n = sold + 1;
+    out = { kind, number: n, sig, from, when };
+    await env.LOOT.put('beers:sold', String(n));
+  }
+  await env.LOOT.put(`claim:${sig}`, JSON.stringify(out));
+  await env.LOOT.put(`log:${kind}:${String(out.number).padStart(5, '0')}`, JSON.stringify(out));
+  return out;
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (request.method === 'OPTIONS') return new Response(null, { headers: cors(env) });
+    try {
+      if (url.pathname === '/stats') return json(env, await stats(env));
+      if (url.pathname === '/claim' && request.method === 'POST') {
+        const body = await request.json().catch(() => ({}));
+        const out = await claim(env, body);
+        return json(env, out, out.error && !out.retry ? 400 : 200);
+      }
+      return json(env, { ok: true, house: 'LooterStudio®' });
+    } catch (e) {
+      return json(env, { error: String(e.message || e) }, 500);
+    }
+  },
+};

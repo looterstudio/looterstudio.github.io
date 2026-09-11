@@ -462,3 +462,10 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .sr__chain { display: grid; gap: 6px; justify-items: start; margin-top: 4px; }
 .sr__mint { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
 .sr__mint:hover { color: var(--green); }
+.sr__buy { background: #000; }
+.sr__buy:disabled { opacity: .5; }
+.sr__count { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; margin-top: 4px; }
+.reveal-win { top: 50%; left: 50%; right: auto; bottom: auto; transform: translate(-50%, -50%); width: min(560px, 92vw); z-index: 80; }
+.reveal-win__body { display: block; padding: 22px 20px 12px; }
+.reveal-win__text { font-family: var(--xp); font-size: 16px; line-height: 1.45; color: #000; background: #fff; border: 2px inset #d4d0c8; padding: 14px; }
+.xp__actions a.xp__btn { text-decoration: none; display: inline-block; text-align: center; }

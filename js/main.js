@@ -172,8 +172,8 @@ const PRODUCTS = [
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
-  { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', price: 0.03 },
-  { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. Last one', price: 0.91 },
+  { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
+  { id: 'idea',   cat: ['ideas'],              tile: 'idea',  text: '', title: 'A fucking idea. 100% original. one per buyer', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'events', text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
@@ -195,6 +195,7 @@ function initMarket() {
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
+        ${p.buy ? `<button class="sr__offer sr__buy" data-buy="${p.buy}" type="button">BUY</button><span class="sr__count" data-count="${p.buy}"></span>` : ''}
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
     grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
@@ -218,7 +219,10 @@ function initMarket() {
     if (!card) return;
     const p = PRODUCTS.find((x) => x.id === card.dataset.id);
     if (!p) return;
+    const buyBtn = e.target.closest('.sr__buy');
+    if (buyBtn) { runBuy(buyBtn); return; }
     if (e.target.closest('.sr__offer')) return;
+    if (p.buy) { runBuy(card.querySelector('.sr__buy')); return; }
     if (p.offer) { window.open(p.offer, '_blank', 'noopener'); return; }
     if (p.price === 0) {
       cart++; orders++;
@@ -348,6 +352,31 @@ function initTagline() {
   };
   setTimeout(cycle, 2500);
 }
+
+/* Pay-to-reveal: delegate to pay.js (Phantom + USDC) */
+async function runBuy(btn) {
+  if (!window.LootPay) { flashMsg('MARKET OFFLINE. TRY AGAIN.', 'is-error'); return; }
+  const kind = btn.dataset.buy;
+  const label = btn.textContent;
+  btn.disabled = true;
+  try {
+    await window.LootPay.buy(kind, (s) => { btn.textContent = s.toUpperCase(); });
+    flashMsg(kind === 'idea' ? 'IDEA DELIVERED. DO NOT LOSE IT.' : 'BEER SERVED. GOOD QUALITY.', 'is-ok');
+  } catch (err) {
+    const m = String(err?.message || err);
+    flashMsg(m.toUpperCase().slice(0, 60), 'is-error');
+    if (/USDC/i.test(m)) errorCascade(2, 'LOOT IS NOT FOR POORS.');
+  } finally { btn.disabled = false; btn.textContent = label; }
+}
+
+document.addEventListener('loot:stats', (e) => {
+  const s = e.detail;
+  document.querySelectorAll('[data-count]').forEach((el) => {
+    if (!s) { el.textContent = ''; return; }
+    if (el.dataset.count === 'idea') el.textContent = s.ideas_in_stock > 0 ? `${s.ideas_total} ideas · ${s.ideas_sold} sold` : (s.ideas_left > 0 ? 'restocking' : 'sold out');
+    if (el.dataset.count === 'beer') el.textContent = `${s.beers_sold} served`;
+  });
+});
 
 /* Show a one-off line in LOOT.exe and scroll it into view */
 function flashMsg(text, state) {

@@ -1,0 +1,16 @@
+name = "loot-market"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+TREASURY_OWNER = "G1NaEsx5Pg7dSmyYy6Jfraa74b7nTbmN9A9NuiK171Ma"
+TREASURY_USDC = "C3YvVCiAMwZ6Yz4ZAJWY7fcFo8upJD9xd9Mrpc9VkHuC"
+USDC_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
+IDEAS_TOTAL = "100"
+PRICE_IDEA = "9"
+PRICE_BEER = "1"
+ALLOWED_ORIGIN = "https://b3njaminfuentes.github.io"
+
+[[kv_namespaces]]
+binding = "LOOT"
+id = "0d24634cd4754a19aee4338a492ed334"
