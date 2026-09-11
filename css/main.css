@@ -459,3 +459,6 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .sr__brand i.is-glitch { color: var(--bone); text-shadow: 2px 0 var(--red), -2px 0 var(--cyan); }
 .sr__offer { display: inline-block; margin-top: 4px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--green); border: 1px solid var(--green-dim); padding: 6px 8px; }
 .sr__offer:hover { background: var(--green); color: #000; }
+.sr__chain { display: grid; gap: 6px; justify-items: start; margin-top: 4px; }
+.sr__mint { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
+.sr__mint:hover { color: var(--green); }
