@@ -448,7 +448,9 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .sr__cats ul ul { padding-left: 8px; }
   .sr__cats a { font-size: 10.5px; padding: 1px 0; }
   .sr__cats a i { font-size: 8px; margin-left: 2px; }
-  .sr__products { grid-template-columns: repeat(3, 1fr); gap: 14px 8px; }
+  .sr__products { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 8px; }
+  .sr__p { min-width: 0; }
+  .sr__p-title, .sr__p-price { overflow-wrap: anywhere; }
   .sr__p-title { font-size: 10px; min-height: 3.8em; line-height: 1.25; }
   .sr__p-price { font-size: 12px; }
   .sr__p-price small { font-size: 9px; margin-left: 4px; }
