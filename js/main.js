@@ -172,7 +172,7 @@ const PRODUCTS = [
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', img: 'assets/vibration.jpg', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
-  { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  text: '🍺', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
+  { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea. 100% original. one per buyer', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
