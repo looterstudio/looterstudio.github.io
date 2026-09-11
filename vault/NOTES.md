@@ -30,6 +30,12 @@ Everything the house decided, in one place. Public site: https://b3njaminfuentes
 ## LOOT.exe backlog (not built)
 - history of ACCEPT/DENY per operator · child windows (idea.txt, offer.exe) · terminal mode (`buy beer`, `offer 50`) · sound toggle · real-data lines · ACCEPT unlocks something real · downloadable LOOT.exe · global counters (operators online, accept/deny today) · voice per colourway.
 
+## Latest state (11 sep 2026, evening)
+- Every visit starts at the door (LOOT.exe + planet). ACCEPT opens; DENY escalates and revokes minimize.
+- Phone: header like the web, categories in three columns above, three equal product columns, News last. 360 on phones = transparent animated WebP (assets/loot-360-alpha.webp). Cracks contained in #fx layer.
+- Seized tile = surveillance cam (S2). ??? tiles = terminal (R1). Alien tile = `>` typing, no header.
+- Colourways rotate on their own: original, platinum, led, red, chrome.
+
 ## Design decisions the user made (do not undo)
 - No Virgil quotes/captions. No "polymath" copy. No scroll motion. No scanners/trash boxes. Brier before stat. No ADAN anywhere. One logo per division.
 - Market is the landing. Colourways rotate on their own (original, platinum, led, red, chrome).
