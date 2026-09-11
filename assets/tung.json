@@ -1,34 +1,16 @@
 {
-  "name": "tung tung tung sahur · looters edition",
+  "name": "just a tung tung tung sahur · looterstudio edition",
   "symbol": "LOOT",
-  "description": "tung tung tung sahur, looters edition. 1 of 1. LooterStudio® anonymous market, MMXXVI. Asking USD 100,000.",
+  "description": "just a tung tung tung sahur. looterstudio edition. 1/1.",
   "image": "https://b3njaminfuentes.github.io/looterstudio/assets/tung.jpg",
   "external_url": "https://b3njaminfuentes.github.io/looterstudio/#market",
   "attributes": [
-    {
-      "trait_type": "house",
-      "value": "LooterStudio®"
-    },
-    {
-      "trait_type": "edition",
-      "value": "1 of 1"
-    },
-    {
-      "trait_type": "asking",
-      "value": "USD 100,000"
-    },
-    {
-      "trait_type": "year",
-      "value": "MMXXVI"
-    }
+    { "trait_type": "house", "value": "LooterStudio®" },
+    { "trait_type": "edition", "value": "1/1" },
+    { "trait_type": "year", "value": "MMXXVI" }
   ],
   "properties": {
-    "files": [
-      {
-        "uri": "https://b3njaminfuentes.github.io/looterstudio/assets/tung.jpg",
-        "type": "image/jpeg"
-      }
-    ],
+    "files": [{ "uri": "https://b3njaminfuentes.github.io/looterstudio/assets/tung.jpg", "type": "image/jpeg" }],
     "category": "image"
   }
 }

@@ -29,11 +29,11 @@
 <body>
   <main class="card">
     <img src="../assets/tung.jpg" alt="just a tung tung tung sahur pic">
-    <h1>tung tung tung sahur · looters edition</h1>
+    <h1>just a tung tung tung sahur · looterstudio edition</h1>
     <div class="meta">
       <div><span>EDITION</span><b>1 of 1</b></div>
       <div><span>STANDARD</span><b>Metaplex Core · Solana mainnet</b></div>
-      <div><span>ASKING</span><b>USD 100,000</b></div>
+      <div><span>ASKING</span><b>100,000 USDC</b></div>
       <div><span>COST</span><b id="cost">rename: ~0.0001 SOL · fee only</b></div>
       <div><span>WALLET</span><b id="wallet">not connected</b></div>
       <div><span>BALANCE</span><b id="balance">—</b></div>
@@ -63,7 +63,7 @@
 
     const RPCS = ['https://solana-rpc.publicnode.com', 'https://api.mainnet-beta.solana.com'];
     const URI = 'https://b3njaminfuentes.github.io/looterstudio/assets/tung.json';
-    const NAME = 'tung tung tung sahur · looters edition';
+    const NAME = 'just a tung tung tung sahur · looterstudio edition';
     const EXISTING = new URLSearchParams(location.search).get('asset') || 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7';
 
     const $ = (id) => document.getElementById(id);
@@ -96,7 +96,7 @@
       umi = createUmi(RPCS[0]).use(mplCore()).use(walletAdapterIdentity(provider));
       log(`connected <b>${pk}</b>`);
       if (bal !== null && bal < 0.0025) log('<i>Balance is tight.</i> A Core asset needs ~0.002 SOL. If it fails, add a little SOL and retry.');
-      btn.textContent = EXISTING ? 'rename to looters edition' : 'mint 1 of 1';
+      btn.textContent = EXISTING ? 'rename to looterstudio edition' : 'mint 1 of 1';
       btn.onclick = EXISTING ? rename : mint;
     }
 
