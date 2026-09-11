@@ -128,10 +128,10 @@ body[data-variant="red"] { --logo-filter: sepia(1) saturate(7) hue-rotate(-45deg
 /* ─── Outro: one quiet line ─── */
 .outro { margin-top: 18vh; padding: 0 0 6vh; }
 .outro__row { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
-.outro__brand { display: flex; align-items: center; gap: 14px; }
-.outro__logo { width: 110px; height: 110px; flex: none; margin: -20px 0; }
-.outro__word { font-family: var(--brand); font-weight: 900; font-size: 44px; letter-spacing: -.035em; color: var(--bone); }
-.outro__word sup { font-family: var(--mono); font-size: 10px; font-weight: 400; vertical-align: top; margin-left: 2px; position: relative; top: 4px; }
+.outro__brand { display: flex; align-items: center; gap: 10px; }
+.outro__logo { width: 150px; height: 150px; flex: none; margin: -28px 0; }
+.outro__word { font-family: var(--brand); font-weight: 900; font-size: 64px; letter-spacing: -.04em; color: var(--bone); }
+.outro__word sup { font-family: var(--mono); font-size: 18px; font-weight: 700; vertical-align: top; margin-left: 4px; position: relative; top: 6px; }
 .outro__year { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; color: var(--dim); margin-left: 6px; }
 .tags { font-family: var(--brand); font-style: italic; line-height: 1.5; text-align: right; }
 .tags li { color: #666; font-size: 13px; }
