@@ -59,7 +59,7 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 
 
 /* ─── Planet, DVD mode ─── */
-.dvd { position: fixed; top: 0; left: 0; width: 400px; height: 400px; z-index: 1; opacity: .6; pointer-events: none; will-change: transform; }
+.dvd { position: fixed; top: 0; left: 0; width: 400px; height: 400px; z-index: -1; opacity: .6; pointer-events: none; will-change: transform; }
 .dvd canvas { width: 100%; height: 100%; display: block; }
 .dvd.is-bounce { opacity: 1; }
 
@@ -98,13 +98,22 @@ body.is-shake { animation: shake .18s steps(2); }
 
 
 /* ─── Layout ─── */
-.main { position: relative; z-index: 2; padding: 40px var(--gutter) 12vh; }
+.main { padding: 40px var(--gutter) 12vh; }
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
 /* ─── Trio: three 360 marks, nothing else ─── */
 .trio { min-height: calc(100vh - 40px); display: flex; align-items: center; justify-content: center; gap: clamp(8px, 4vw, 72px); padding: 6vh 0; }
-.trio__logo { width: clamp(120px, 22vw, 340px); height: clamp(120px, 22vw, 340px); object-fit: cover; mix-blend-mode: screen; filter: brightness(1.15) contrast(1.05); }
+.trio__logo { width: clamp(120px, 22vw, 340px); height: clamp(120px, 22vw, 340px); object-fit: cover; mix-blend-mode: screen; filter: brightness(1.35) contrast(1.05); }
+.obj { display: grid; justify-items: center; gap: 10px; }
+.obj figcaption { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--bone); text-align: center; display: grid; gap: 4px; }
+.obj figcaption span { font-size: 10px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
+.obj figcaption a { color: var(--green-dim); text-decoration: underline; }
+.obj--variant .trio__logo { filter: brightness(1.35) hue-rotate(120deg); }
+.obj--archive .trio__logo { filter: brightness(1.4) grayscale(1); }
+.obj--sale { justify-self: end; justify-items: end; }
+.obj--sale figcaption { text-align: right; }
+.obj--sale .trio__logo { width: clamp(140px, 16vw, 260px); height: clamp(140px, 16vw, 260px); }
 
 /* ─── Outro: the wordmark closes the page ─── */
 .outro { margin-top: 18vh; padding-bottom: 6vh; }
@@ -284,7 +293,7 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .market { margin-top: 4vh; font-family: var(--brand); font-size: 13px; color: var(--bone); }
 .sr__head { display: grid; grid-template-columns: auto 1fr auto; gap: 32px; align-items: start; padding-bottom: 14px; border-bottom: 1px solid #2a2a2a; }
 .sr__brand { display: flex; align-items: center; gap: 6px; }
-.sr__brand-logo { width: 190px; height: 190px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.2); margin: -34px 0; }
+.sr__brand-logo { width: 190px; height: 190px; object-fit: cover; mix-blend-mode: screen; filter: brightness(1.35); margin: -34px 0; }
 .sr__brand b { display: block; font-size: clamp(36px, 4vw, 60px); font-weight: 900; letter-spacing: -.035em; line-height: 1; color: var(--bone); }
 .sr__brand i { color: var(--ghost); font-size: clamp(15px, 1.4vw, 22px); }
 .sr__brand b sup { font-family: var(--mono); font-size: .42em; font-weight: 700; vertical-align: top; margin-left: .06em; position: relative; top: .1em; }
@@ -384,7 +393,8 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .brand__word { font-size: clamp(2.6rem, 13vw, 5rem); }
   .outro { margin-top: 10vh; }
   .outro__row { grid-template-columns: 1fr; gap: 28px; }
-  .silk { justify-self: start; }
+  .obj--sale { justify-self: start; justify-items: start; }
+  .obj--sale figcaption { text-align: left; }
   .silk__list { flex-direction: column; gap: 6px; }
   .division { grid-template-columns: 1fr; gap: 20px; margin-top: 9vh; }
   .division--flip .target { order: 0; } .division--flip .callout { order: 1; }
@@ -415,6 +425,7 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 /* new tiles */
 .tile video { width: 100%; height: 100%; object-fit: cover; }
 .tile--logo { outline: 1px solid var(--brier); }
+.tile--logo video { mix-blend-mode: screen; filter: brightness(1.35); }
 .tile--tung { background: #111; }
 .tile--tung img { width: 100%; height: 100%; object-fit: cover; }
 .tile--tung span { color: #888; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; }

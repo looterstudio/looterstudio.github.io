@@ -16,25 +16,7 @@
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ctx = canvas.getContext('2d');
 
-  const NODES = [
-    ['LOOT · BUENOS AIRES', -58.38, -34.60],
-    ['LOOT · FRANKFURT', 8.68, 50.11],
-    ['BRIER · POLYGON', -73.99, 40.73],
-    ['STAT · CUPERTINO', -122.03, 37.32],
-    ['LOOT · PLANET LABS', -122.42, 37.77],
-    ['LOOT · SYNSPECTIVE', 139.69, 35.69],
-    ['LOOT · CAPELLA SPACE', -0.13, 51.51],
-    ['LOOT · ICEYE', 24.94, 60.17],
-    ['LOOT · MAXAR', -104.99, 39.74],
-    ['LOOT · SINGAPORE', 103.82, 1.35],
-    ['LOOT · US SPACE FORCE', -77.04, 38.91],
-    ['LOOT · AIRBUS DS', 11.58, 48.14],
-    ['LOOT · SA', 28.05, -26.20],
-    ['LOOT · ESPAÑOL', -3.70, 40.42],
-    ['LOOT · SYDNEY', 151.21, -33.87],
-    ['LOOT · MUMBAI', 72.88, 19.08],
-    ['LOOT · SEOUL', 126.98, 37.57],
-  ];
+  const NODES = [['LOOTERSTUDIO HQ · BUENOS AIRES', -58.38, -34.60]];
 
   const SATS = Array.from({ length: 90 }, () => ({
     incl: (Math.random() * 160 - 80) * Math.PI / 180,
@@ -50,7 +32,7 @@
   const sphere = { type: 'Sphere' };
   let land = null, borders = null;
   let W = 0, H = 0, R = 0, dpr = 1;
-  let rot = [-60, -20];
+  let rot = [58, 34];
   let t = 0, glow = 0;
   const STARS = Array.from({ length: 70 }, () => [Math.random(), Math.random(), Math.random()]);
 
@@ -123,7 +105,7 @@
       ctx.beginPath(); ctx.arc(px, py, front ? 1.4 : 0.8, 0, Math.PI * 2); ctx.fill();
     });
 
-    ctx.font = '8px "JetBrains Mono", monospace';
+    ctx.font = '9px "JetBrains Mono", monospace';
     ctx.textBaseline = 'middle';
     const centre = [-rot[0], -rot[1]];
     NODES.forEach(([label, lon, lat], i) => {
@@ -132,12 +114,18 @@
       const [px, py] = projection([lon, lat]);
       const fade = Math.min(1, (Math.PI / 2 - d) * 2.2);
       const pulse = 0.5 + 0.5 * Math.sin(t * 0.05 + i);
-      ctx.strokeStyle = `rgba(255,42,60,${0.6 * fade})`; ctx.lineWidth = 0.8;
-      ctx.beginPath(); ctx.arc(px, py, 2 + pulse * 2, 0, Math.PI * 2); ctx.stroke();
+      // HQ: expanding pulse rings + solid marker
+      for (let k = 0; k < 3; k++) {
+        const ph = ((t * 0.02) + k / 3) % 1;
+        ctx.strokeStyle = `rgba(255,42,60,${(1 - ph) * 0.8 * fade})`; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(px, py, 3 + ph * 22, 0, Math.PI * 2); ctx.stroke();
+      }
       ctx.fillStyle = `rgba(255,255,255,${fade})`;
-      ctx.beginPath(); ctx.arc(px, py, 1.2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(px, py, 2.4, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = `rgba(255,255,255,${0.6 * fade})`; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + 14, py - 14); ctx.lineTo(px + 22, py - 14); ctx.stroke();
       ctx.fillStyle = `rgba(255,255,255,${0.8 * fade})`;
-      ctx.fillText(label, px + 5, py);
+      ctx.fillText(label, px + 25, py - 14);
     });
   }
 
