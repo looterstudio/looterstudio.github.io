@@ -520,3 +520,8 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--alien { background: #000; outline: 1px solid #143d14; padding: 10px; place-items: stretch; position: relative; overflow: hidden; }
 .tile--alien::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,255,65,.045) 0 1px, transparent 1px 3px); pointer-events: none; }
 .tile--alien .alien { font-family: var(--mono); font-size: 11px; line-height: 1.6; letter-spacing: .06em; color: var(--green); text-shadow: 0 0 8px rgba(0,255,65,.45); margin: 0; white-space: pre-wrap; word-break: break-all; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+.division--solo { grid-template-columns: 1fr; }
+.division--solo .target { max-width: 720px; }
+a.target__tag { pointer-events: auto; cursor: none; }
+a.target__tag:hover { background: #fff; color: var(--red); }
+.callout__status { color: var(--ghost); }
