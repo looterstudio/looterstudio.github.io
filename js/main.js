@@ -168,7 +168,7 @@ const PRODUCTS = [
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'just a tung tung tung sahur pic', priceLabel: 'USD 100,000' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
-  { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'Source Code Library (1-10) Da\'ath incl.', price: 7.52 },
+  { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', text: '10x', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
@@ -233,7 +233,9 @@ function initMarket() {
   document.querySelector('.sr__logout')?.addEventListener('click', (e) => { e.preventDefault(); flashMsg('THERE IS NO LOGOUT.', 'is-error'); });
 }
 
-/* Binary rain inside a tile (Matrix curtains of 0/1) */
+const ALIEN_GLYPHS = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟⵀⵁⵂⵃⵄⵅⵆⵇⵈⵉⵊⵋⵌⵍⵎⵏ∀∂∃∅∇∈∉∋∏∑√∞∠∧∨∩∪∫≈≠≡⊂⊃⊕⊗01';
+
+/* Alien rain inside a tile (curtains of glyphs) */
 function matrixRain(tile) {
   const c = document.createElement('canvas');
   tile.innerHTML = ''; tile.appendChild(c);
@@ -248,14 +250,14 @@ function matrixRain(tile) {
     ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(0, 0, c.width, c.height);
     ctx.font = `${fs}px "JetBrains Mono", monospace`;
     drops.forEach((y, i) => {
-      const ch = Math.random() < 0.5 ? '0' : '1';
+      const ch = ALIEN_GLYPHS[Math.floor(Math.random() * ALIEN_GLYPHS.length)];
       ctx.fillStyle = Math.random() < 0.08 ? '#fff' : '#00ff41';
       ctx.fillText(ch, i * fs, y * fs);
       drops[i] = y * fs > c.height && Math.random() > 0.975 ? 0 : y + 0.5 + Math.random() * 0.4;
     });
     requestAnimationFrame(tick);
   };
-  if (!REDUCED) tick(); else { ctx.fillStyle = '#00ff41'; ctx.font = `${fs}px monospace`; for (let y = fs; y < c.height; y += fs) ctx.fillText('0101101001010100110'.slice(0, Math.ceil(c.width / 7)), 0, y); }
+  if (!REDUCED) tick(); else { ctx.fillStyle = '#00ff41'; ctx.font = `${fs}px monospace`; for (let y = fs; y < c.height; y += fs) ctx.fillText(ALIEN_GLYPHS.slice(0, Math.ceil(c.width / 7)), 0, y); }
 }
 
 /* Aura: layered energy glows breathing around a core, additive light, grain */
