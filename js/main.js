@@ -775,32 +775,6 @@ function initXPPresence() {
     xp.addEventListener('mouseleave', arm);
     arm();
   }
-  // it notices what you look at
-  const seen = new Set();
-  const notice = (sel, text) => {
-    document.querySelectorAll(sel).forEach((el) => el.addEventListener('mouseenter', () => {
-      if (seen.has(text) || XP.paused) return; seen.add(text);
-      const msg = $('xpMsg'), mini = $('xpMini');
-      XP.paused = true;
-      scramble(msg, text, { onSet: (t) => { msg.dataset.text = t; if (mini) mini.textContent = t; } });
-      setTimeout(() => { XP.paused = false; }, 3500);
-    }, { once: true }));
-  };
-  notice('.target--brier', 'LOOT IS WATCHING BRIER.');
-  notice('.target--stat', 'LOOT IS WATCHING STAT.');
-  notice('.tile--tung', 'LOOT IS NOT SELLING THAT.');
-  notice('.tile--logo', 'LOOT IS NOT FOR SALE TO YOU.');
-  notice('.tile--seized', 'LOOT WAS THERE.');
-  // colourway changes get announced, quietly
-  let lastVariant = document.body.dataset.variant;
-  setInterval(() => {
-    const v = document.body.dataset.variant;
-    if (v && v !== lastVariant) { lastVariant = v; if (!XP.paused && !seen.has('v' + v)) { seen.add('v' + v); const msg = $('xpMsg'), mini = $('xpMini'); XP.paused = true; const t = `LOOT IS ${v.toUpperCase()}.`; scramble(msg, t, { onSet: (x) => { msg.dataset.text = x; if (mini) mini.textContent = x; } }); setTimeout(() => { XP.paused = false; }, 3000); } }
-  }, 500);
-  // boredom
-  let lastMove = performance.now();
-  ['mousemove', 'touchstart', 'scroll', 'keydown'].forEach((ev) => addEventListener(ev, () => { lastMove = performance.now(); }, { passive: true }));
-  setInterval(() => { if (performance.now() - lastMove > 45000 && !XP.paused && !seen.has('bored')) { seen.add('bored'); const msg = $('xpMsg'), mini = $('xpMini'); XP.paused = true; scramble(msg, 'LOOT IS BORED.', { onSet: (x) => { msg.dataset.text = x; if (mini) mini.textContent = x; } }); setTimeout(() => { XP.paused = false; }, 3500); } }, 5000);
 }
 
 /* ─── Restore clearance from a previous ACCEPT ─── */
