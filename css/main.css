@@ -560,6 +560,7 @@ a.target__tag:hover { background: #fff; color: var(--red); }
 .tile--club span { font-size: inherit; }
 
 /* ─── The gate: nothing exists until you ACCEPT ─── */
-body.is-gated .main, body.is-gated .dvd { visibility: hidden; }
+body.is-gated .main { visibility: hidden; }
+body.is-gated .dvd { opacity: .9; }
 body.is-gated .xp { top: 50% !important; left: 50% !important; right: auto !important; bottom: auto !important; translate: -50% -50%; width: min(600px, 92vw); }
 body.is-gated .xp__min { visibility: hidden; }

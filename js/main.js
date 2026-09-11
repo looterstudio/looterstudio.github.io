@@ -122,7 +122,8 @@ function initXP() {
     XP.accepted = false; try { localStorage.removeItem('loot.clr'); } catch (_) {}
     xp.classList.remove('is-min', 'is-collapsed');
     document.body.classList.remove('deny-flash'); void document.body.offsetWidth; document.body.classList.add('deny-flash');
-    const text = XP.denies >= 3 ? 'LOOT IS NOT FOR POORS.' : 'HAHAHA LOOT IS NOT FOR YOU THEN.';
+    const DENIALS = ['HAHAHA LOOT IS NOT FOR YOU THEN.', 'LOOT IS NOT FOR POORS.', 'LOOT MAYBE NOT FOR YOU.', 'LOOT WILL EXPLODE YOUR HEAD.', 'LOOT IS NOT FOR YOU. STILL.'];
+    const text = DENIALS[Math.min(XP.denies - 1, DENIALS.length - 1)];
     hold(text, 'is-error', 2600);
     errorCascade(XP.denies >= 3 ? 8 : 5, text);
   };
@@ -807,7 +808,7 @@ function restoreClearance() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (!XP.accepted) document.body.classList.add('is-gated');
+  document.body.classList.add('is-gated'); // every visit starts at the door
   initDrag();
   initXPPresence();
   restoreClearance();
