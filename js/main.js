@@ -248,16 +248,11 @@ const ALIEN_GLYPHS = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖ�
 /* Alien terminal: two voices talking, never translated. A decrypt bar that never finishes. */
 function alienBlock(tile) {
   tile.innerHTML = '';
-  const hd = document.createElement('div'); hd.className = 'alien-hd';
   const pre = document.createElement('pre'); pre.className = 'alien';
-  tile.appendChild(hd); tile.appendChild(pre);
+  tile.appendChild(pre);
   const G = ALIEN_GLYPHS.slice(0, -2);
   const word = () => Array.from({ length: 2 + Math.floor(Math.random() * 6) }, () => G[Math.floor(Math.random() * G.length)]).join('');
   const sentence = () => Array.from({ length: 1 + Math.floor(Math.random() * 4) }, word).join(' ') + (Math.random() < 0.3 ? ' ?' : '');
-  const freq = (41 + Math.random() * 9).toFixed(1);
-  let dec = 0, decDir = 1;
-  const header = () => { hd.innerHTML = `<span>SIGNAL · ${freq} MHz</span><span>DECRYPT ${String(dec).padStart(2, '0')}%</span>`; };
-  header();
   const lines = [];
   let voice = 0, cur = '', target = sentence(), i = 0;
   const esc = (t) => t.replace(/</g, '&lt;');
@@ -273,9 +268,6 @@ function alienBlock(tile) {
       if (Math.random() < 0.22) lines.push(`<span class="noise">${esc(Array.from({ length: 18 }, () => Math.random() < 0.5 ? '?' : G[Math.floor(Math.random() * G.length)]).join(''))}</span>`);
       while (lines.length > 7) lines.shift();
       voice = voice ? 0 : 1; cur = ''; target = sentence(); i = 0; render();
-      // decrypt creeps up, then collapses. always.
-      dec += decDir * (1 + Math.floor(Math.random() * 4)); if (dec >= 23) decDir = -1; if (dec <= 0) { dec = 0; decDir = 1; }
-      header();
       if (Math.random() < 0.3) { tile.classList.remove('is-burst'); void tile.offsetWidth; tile.classList.add('is-burst'); }
       setTimeout(tick, 300 + Math.random() * 700);
     }, 700 + Math.random() * 1400);
