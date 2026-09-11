@@ -481,3 +481,18 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--idea { background: #000; }
 .tile--idea span::after { content: none; }
 .tile--beer img { width: 100%; height: 100%; object-fit: cover; }
+/* seized: the candle burns behind an evidence stamp */
+.tile--club img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.8); }
+.tile--seized { position: relative; }
+.seized { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-14deg); z-index: 2;
+  font-family: var(--brand); font-weight: 900; font-size: 30px; letter-spacing: .12em; color: #ff2a3c;
+  border: 4px solid #ff2a3c; padding: 4px 14px; mix-blend-mode: screen; opacity: .9;
+  box-shadow: inset 0 0 0 1px rgba(255,42,60,.5); text-shadow: 0 0 10px rgba(255,42,60,.6); }
+.tile--seized::after { content: 'LOOTERSTUDIO · EVIDENCE · MMXXVI'; position: absolute; left: 0; right: 0; bottom: 8px; text-align: center;
+  font-family: var(--mono); font-size: 8px; letter-spacing: .3em; color: rgba(255,42,60,.85); }
+/* riddles: alien glyphs and question marks, nothing else */
+.tile--riddle { background: #000; outline: 1px solid #222; }
+.tile--riddle span { font-family: var(--mono); font-size: 26px; letter-spacing: .1em; color: var(--ghost); animation: riddle 3s steps(2) infinite; }
+.tile--alien { background: #000; outline: 1px solid #222; }
+.tile--alien span { font-family: var(--mono); font-size: 18px; letter-spacing: .18em; color: var(--green-dim); text-shadow: 0 0 12px rgba(0,255,65,.35); animation: riddle 2.2s steps(2) infinite; }
+@keyframes riddle { 50% { opacity: .55; } }

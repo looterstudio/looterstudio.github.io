@@ -174,9 +174,9 @@ const PRODUCTS = [
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea. 100% original. one per buyer', priceLabel: '9 USDC', buy: 'idea' },
-  { id: 'club',   cat: ['capital', 'custom'],  tile: 'club',  text: 'PRIVATE', title: 'Seat at the private club. sense of belonging [Link] 1 yr', price: 41.94 },
-  { id: 'obj',    cat: ['objects', 'art'],     tile: 'objects', text: 'OBJ_01', title: 'OBJECT 01. one of one. proof of taste', price: 33.30, note: 'soon' },
-  { id: 'event',  cat: ['events', 'custom'],   tile: 'events', text: 'DOOR', title: 'A night. location disclosed at the door', price: 5.55, note: 'soon' },
+  { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO BEACH CLUB. classified', priceLabel: 'SEIZED' },
+  { id: 'obj',    cat: ['objects', 'art'],     tile: 'riddle', text: '??????????', title: '??????????', priceLabel: '?' },
+  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: 'ᛚᛟᛟᛏ ⵉⵙ ᚹᚨᛏᚲᚺᛁᚾᚷ', title: '????? ?? ??? ????', priceLabel: '???' },
   { id: 'redact', cat: ['custom'], tile: 'redacted', text: '███████', title: '███████ ████ ██████ [CLASSIFIED]', price: NaN },
 ];
 
@@ -191,7 +191,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}">${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.seized ? '<b class="seized">SEIZED</b>' : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -224,6 +224,8 @@ function initMarket() {
     if (e.target.closest('.sr__offer')) return;
     if (p.buy) { runBuy(card.querySelector('.sr__buy')); return; }
     if (p.offer) { window.open(p.offer, '_blank', 'noopener'); return; }
+    if (p.seized) { flashMsg('SEIZED. DO NOT ASK.', 'is-error'); errorCascade(2, 'EVIDENCE.'); return; }
+    if (p.tile === 'riddle' || p.tile === 'alien') { flashMsg('??????????', 'is-error'); return; }
     if (p.price === 0) {
       cart++; orders++;
       $('srCartCount').textContent = cart; $('srOrders').textContent = orders;
