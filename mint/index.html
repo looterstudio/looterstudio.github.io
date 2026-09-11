@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LooterStudio® · mint</title>
+  <link rel="icon" type="image/png" href="../assets/loot-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bone: #f2f2f2; --ghost: #9a9a9a; --dim: #555; --line: #1c1c1c; --green: #00ff41; --green-dim: #00aa00; --red: #ff003c; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: var(--bone); font-family: 'JetBrains Mono', monospace; font-weight: 300; font-size: 14px; min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+    .card { width: min(520px, 100%); display: grid; gap: 22px; }
+    .card img { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--line); }
+    h1 { font-family: Arial, Helvetica, sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -.02em; }
+    .meta { display: grid; gap: 6px; font-size: 12px; letter-spacing: .1em; color: var(--ghost); }
+    .meta div { display: flex; justify-content: space-between; border-bottom: 1px dotted var(--line); padding-bottom: 6px; }
+    .meta b { font-weight: 400; color: var(--bone); }
+    button { font: inherit; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; padding: 14px 18px; border: 1px solid var(--green-dim); background: #000; color: var(--green); cursor: pointer; width: 100%; }
+    button:hover:not(:disabled) { background: var(--green); color: #000; }
+    button:disabled { opacity: .35; cursor: default; }
+    .log { font-size: 12px; line-height: 1.7; color: var(--ghost); white-space: pre-wrap; word-break: break-all; border-top: 1px solid var(--line); padding-top: 14px; min-height: 60px; }
+    .log b { color: var(--green); font-weight: 400; }
+    .log i { color: var(--red); font-style: normal; }
+    a { color: var(--green-dim); }
+    .small { font-size: 11px; color: var(--dim); letter-spacing: .08em; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img src="../assets/tung.jpg" alt="just a tung tung tung sahur pic">
+    <h1>just a tung tung tung sahur pic</h1>
+    <div class="meta">
+      <div><span>EDITION</span><b>1 of 1</b></div>
+      <div><span>STANDARD</span><b>Metaplex Core · Solana mainnet</b></div>
+      <div><span>ASKING</span><b>USD 100,000</b></div>
+      <div><span>MINT COST</span><b id="cost">~0.002 SOL (rent) · paid by you</b></div>
+      <div><span>WALLET</span><b id="wallet">not connected</b></div>
+      <div><span>BALANCE</span><b id="balance">—</b></div>
+    </div>
+    <button id="btn" disabled>loading…</button>
+    <div class="log" id="log">Metaplex Core via esm.sh. Nothing leaves this page except the signed transaction.</div>
+    <p class="small">After minting, list it on <a href="https://www.tensor.trade" target="_blank" rel="noopener">Tensor</a> at 100,000 USDC. Offers will show there.</p>
+  </main>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "@metaplex-foundation/umi": "https://esm.sh/@metaplex-foundation/umi@1.2.0",
+      "@metaplex-foundation/umi/": "https://esm.sh/@metaplex-foundation/umi@1.2.0/",
+      "@metaplex-foundation/umi-bundle-defaults": "https://esm.sh/@metaplex-foundation/umi-bundle-defaults@1.2.0?external=@metaplex-foundation/umi",
+      "@metaplex-foundation/umi-signer-wallet-adapters": "https://esm.sh/@metaplex-foundation/umi-signer-wallet-adapters@1.2.0?external=@metaplex-foundation/umi",
+      "@metaplex-foundation/mpl-core": "https://esm.sh/@metaplex-foundation/mpl-core@1.4.1?external=@metaplex-foundation/umi"
+    }
+  }
+  </script>
+  <script type="module">
+    import { generateSigner } from '@metaplex-foundation/umi';
+    import { createUmi } from '@metaplex-foundation/umi-bundle-defaults';
+    import { walletAdapterIdentity } from '@metaplex-foundation/umi-signer-wallet-adapters';
+    import { create, mplCore } from '@metaplex-foundation/mpl-core';
+
+    const RPCS = ['https://solana-rpc.publicnode.com', 'https://api.mainnet-beta.solana.com'];
+    const URI = 'https://b3njaminfuentes.github.io/looterstudio/assets/tung.json';
+    const NAME = 'just a tung tung tung sahur pic';
+
+    const $ = (id) => document.getElementById(id);
+    const log = (html) => { $('log').innerHTML += `\n${html}`; };
+    const btn = $('btn');
+
+    let umi = null, provider = null;
+
+    const getProvider = () => window.phantom?.solana?.isPhantom ? window.phantom.solana : (window.solana?.isPhantom ? window.solana : null);
+
+    async function balance(pubkey) {
+      for (const rpc of RPCS) {
+        try {
+          const r = await fetch(rpc, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getBalance', params: [pubkey] }) });
+          const j = await r.json();
+          if (j.result) return j.result.value / 1e9;
+        } catch (_) {}
+      }
+      return null;
+    }
+
+    async function connect() {
+      provider = getProvider();
+      if (!provider) { log('<i>Phantom not found.</i> Install it, then reload.'); window.open('https://phantom.com/download', '_blank'); return; }
+      const res = await provider.connect();
+      const pk = res.publicKey.toString();
+      $('wallet').textContent = pk.slice(0, 4) + '…' + pk.slice(-4);
+      const bal = await balance(pk);
+      $('balance').textContent = bal === null ? 'rpc unavailable' : `${bal.toFixed(4)} SOL`;
+      umi = createUmi(RPCS[0]).use(mplCore()).use(walletAdapterIdentity(provider));
+      log(`connected <b>${pk}</b>`);
+      if (bal !== null && bal < 0.0025) log('<i>Balance is tight.</i> A Core asset needs ~0.002 SOL. If it fails, add a little SOL and retry.');
+      btn.textContent = 'mint 1 of 1';
+      btn.onclick = mint;
+    }
+
+    async function mint() {
+      btn.disabled = true; btn.textContent = 'sign in phantom…';
+      try {
+        const asset = generateSigner(umi);
+        log(`asset address will be <b>${asset.publicKey}</b>`);
+        const tx = await create(umi, { asset, name: NAME, uri: URI }).sendAndConfirm(umi, { confirm: { commitment: 'confirmed' } });
+        const sig = umi.transactions.deserialize ? null : null;
+        log(`<b>minted.</b> it is in your wallet now.`);
+        log(`solscan: <a target="_blank" rel="noopener" href="https://solscan.io/token/${asset.publicKey}">solscan.io/token/${asset.publicKey}</a>`);
+        log(`tensor: <a target="_blank" rel="noopener" href="https://www.tensor.trade/item/${asset.publicKey}">tensor.trade/item/${asset.publicKey}</a>`);
+        log(`send this address to Alfred: <b>${asset.publicKey}</b>`);
+        btn.textContent = 'minted';
+      } catch (e) {
+        console.error(e);
+        log(`<i>failed:</i> ${e?.message || e}`);
+        btn.disabled = false; btn.textContent = 'retry mint';
+      }
+    }
+
+    btn.disabled = false; btn.textContent = 'connect phantom'; btn.onclick = connect;
+    log('modules loaded.');
+  </script>
+</body>
+</html>
