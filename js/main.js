@@ -131,7 +131,7 @@ function initXP() {
   /* ACCEPT → access granted + target mode */
   const accept = () => {
     XP.accepted = true;
-    if (document.body.classList.contains('is-gated')) { document.body.classList.remove('is-gated'); tearFlash(); xp.classList.remove('is-min'); }
+    if (document.body.classList.contains('is-gated')) { document.body.classList.remove('is-gated'); window.scrollTo(0, 0); tearFlash(); xp.classList.remove('is-min'); setTimeout(() => dispatchEvent(new Event('resize')), 100); }
     hold('ACCESS GRANTED. CLR: LEVEL_6.', 'is-ok', 2600, () => {
       document.querySelectorAll('.silk__item--locked').forEach((el) => {
         el.classList.add('is-unlocked');
