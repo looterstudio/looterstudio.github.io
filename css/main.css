@@ -438,6 +438,10 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .sr__user { justify-items: start; text-align: left; }
   .sr__grid { grid-template-columns: 1fr; }
   .sr__cats ul { columns: 2; } .sr__cats ul ul { columns: 1; }
+  .sr__products { grid-template-columns: repeat(2, 1fr); gap: 16px 10px; }
+  .sr__p-title { font-size: 11px; }
+  .sr__p-price { font-size: 13px; }
+  .sr__search input { max-width: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .xp, .target__img { animation: none !important; transition: none !important; }
