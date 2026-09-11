@@ -672,7 +672,7 @@ const TOUCH = window.matchMedia('(hover: none)').matches;
 function swapToImage(v) {
   if (!v || v.dataset.swapped) return;
   const img = document.createElement('img');
-  img.src = 'assets/loot-360.webp'; img.alt = ''; img.className = v.className;
+  img.src = 'assets/loot-360-alpha.webp'; img.alt = ''; img.className = v.className;
   img.dataset.swapped = '1';
   v.replaceWith(img);
 }
