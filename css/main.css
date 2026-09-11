@@ -113,31 +113,17 @@ body.is-shake { animation: shake .18s steps(2); }
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 
-/* ─── Variants: the mark in every colourway. Click one, the house wears it. ─── */
+/* ─── Colourways (auto-rotating) ─── */
 :root { --logo-filter: brightness(1.35) contrast(1.05); }
-.trio { min-height: calc(100vh - 40px); display: grid; grid-template-columns: repeat(5, 1fr); gap: 4vh 2vw; align-content: center; padding: 6vh 0; }
-.trio__logo { width: 100%; aspect-ratio: 1; height: auto; object-fit: cover; mix-blend-mode: screen; filter: var(--logo-filter); }
-.obj { position: relative; display: grid; justify-items: center; gap: 8px; cursor: none; }
-.obj__name { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; color: var(--dim); opacity: 0; transition: opacity .2s, color .2s; }
-.obj:hover .obj__name, .obj.is-active .obj__name { opacity: 1; }
-.obj.is-active .obj__name { color: var(--bone); }
-.obj.is-active::after { content: ''; position: absolute; left: 50%; bottom: -12px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); }
-.obj:hover .trio__logo { transform: scale(1.04); }
-.trio__logo { transition: transform .3s; }
-
+.trio__logo { object-fit: cover; mix-blend-mode: screen; filter: var(--logo-filter); transition: filter 1.6s ease; }
 /* colourways */
-.obj[data-variant="original"] .trio__logo { filter: brightness(1.35) contrast(1.05); }
-.obj[data-variant="chrome"] .trio__logo { filter: grayscale(1) contrast(1.7) brightness(1.75) sepia(.25) hue-rotate(185deg) saturate(1.5); }
 body[data-variant="chrome"] { --logo-filter: grayscale(1) contrast(1.7) brightness(1.75) sepia(.25) hue-rotate(185deg) saturate(1.5); }
-.obj[data-variant="platinum"] .trio__logo { filter: grayscale(1) contrast(1.4) brightness(1.6); }
-.obj[data-variant="led"] .trio__logo { filter: sepia(1) saturate(7) hue-rotate(190deg) brightness(1.1); }
-.obj[data-variant="red"] .trio__logo { filter: sepia(1) saturate(7) hue-rotate(-45deg) brightness(1.1); }
 
 /* the chosen colourway dresses the rest of the house */
 body[data-variant="platinum"] { --logo-filter: grayscale(1) contrast(1.4) brightness(1.6); }
 body[data-variant="led"] { --logo-filter: sepia(1) saturate(7) hue-rotate(190deg) brightness(1.1); }
 body[data-variant="red"] { --logo-filter: sepia(1) saturate(7) hue-rotate(-45deg) brightness(1.1); }
-.sr__brand-logo, .tile--logo video { filter: var(--logo-filter); }
+.sr__brand-logo, .tile--logo video { filter: var(--logo-filter); transition: filter 1.6s ease; }
 
 /* ─── Outro: one quiet line ─── */
 .outro { margin-top: 18vh; padding: 28px 0 4vh; border-top: 1px solid var(--line); }
@@ -414,7 +400,6 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   body:not(.market-scaled) .sr__news { grid-column: 1 / -1; }
 }
 @media (max-width: 900px) {
-  .trio { min-height: 0; padding: 8vh 0 4vh; grid-template-columns: repeat(3, 1fr); gap: 20px 10px; }
   .outro { margin-top: 10vh; }
   .outro__row { flex-direction: column; align-items: flex-start; gap: 20px; }
   .tags { text-align: left; }

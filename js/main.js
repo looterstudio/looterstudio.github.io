@@ -568,7 +568,7 @@ function initCursor() {
   const armedAt = performance.now() + 800; // ignore synthetic clicks during load
   const shoot = (e, clientX, clientY, pageX, pageY) => {
     if (performance.now() < armedAt) return;
-    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .trio .obj, .xp')) return;
+    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .xp')) return;
     // recoil + flash + shake
     c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
     if (!REDUCED) {
@@ -673,19 +673,18 @@ function initDrag() {
   addEventListener('resize', () => { const r = xp.getBoundingClientRect(); if (xp.style.left) place(r.left, r.top); });
 }
 
-/* ─── Colourways: click a variant, the whole house wears it ─── */
+/* ─── Colourways: the house changes colour on its own, every so often ─── */
 function initVariants() {
-  const figs = document.querySelectorAll('.trio .obj[data-variant]');
-  if (!figs.length) return;
-  const apply = (v) => {
-    document.body.dataset.variant = v;
-    figs.forEach((f) => f.classList.toggle('is-active', f.dataset.variant === v));
-    try { localStorage.setItem('loot.variant', v); } catch (_) {}
+  const ORDER = ['original', 'platinum', 'led', 'red', 'chrome'];
+  let i = 0;
+  document.body.dataset.variant = ORDER[0];
+  if (REDUCED) return;
+  const step = () => {
+    i = (i + 1) % ORDER.length;
+    document.body.dataset.variant = ORDER[i];
+    setTimeout(step, 14000 + Math.random() * 10000);
   };
-  figs.forEach((f) => f.addEventListener('click', () => { apply(f.dataset.variant); tearFlash(); }));
-  let saved = 'original';
-  try { saved = localStorage.getItem('loot.variant') || 'original'; } catch (_) {}
-  apply(saved);
+  setTimeout(step, 12000);
 }
 
 /* ─── Small screens: show the whole desktop market, scaled to the phone ─── */
@@ -706,7 +705,6 @@ function initMarketScale() {
   apply();
   addEventListener('resize', apply, { passive: true });
   document.addEventListener('loot:stats', () => setTimeout(apply, 50));
-  // products render after fonts/images; settle a few times
   [300, 1200, 3000].forEach((t) => setTimeout(apply, t));
 }
 
