@@ -540,18 +540,18 @@ a.target__tag:hover { background: #fff; color: var(--red); }
 
 /* ─── LOOT.exe: calmer, minimizable, context-aware ─── */
 .xp__title { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.xp__mini { display: none; font-style: normal; font-weight: 400; font-size: 12px; opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 52vw; }
+.xp__mini { display: none; font-style: normal; font-weight: 400; font-size: 13px; opacity: .95; white-space: nowrap; padding-right: 14px; }
 .xp__ctl { display: flex; gap: 4px; }
 .xp__min { width: 21px; height: 21px; border: 1px solid #fff; border-radius: 3px; background: linear-gradient(180deg, #4d8dff, #1f5fd6); color: #fff; font-size: 11px; line-height: 1; }
-.xp.is-min { width: auto; max-width: 70vw; }
+.xp.is-min { width: max-content; max-width: 92vw; }
 .xp.is-min .xp__body, .xp.is-min .xp__actions { display: none; }
 .xp.is-min .xp__mini { display: inline; }
-.xp.is-min .xp__bar { border-radius: 7px; }
+.xp.is-min .xp__bar { border-radius: 7px; gap: 16px; padding-right: 8px; }
 .xp.is-min { border-radius: 8px; box-shadow: 0 0 0 1px #0054e3 inset, 4px 4px 0 rgba(0,0,0,.35); }
 @media (max-width: 900px) {
   .xp { bottom: 10px; }
-  .xp.is-min { left: auto; right: 4vw; width: auto; max-width: 92vw; }
-  .xp__mini { max-width: 60vw; }
+  .xp.is-min { left: auto; right: 4vw; width: max-content; max-width: 92vw; }
+  .xp.is-min .xp__mini { font-size: 12px; overflow: hidden; text-overflow: ellipsis; max-width: 62vw; }
   .xp__msg { font-size: 15px; min-height: 40px; }
   .xp__body { padding: 16px 14px 8px; }
   .xp__actions { padding: 4px 14px 12px; }
