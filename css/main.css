@@ -457,3 +457,5 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--leverage b { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #fff; font-weight: 900; font-size: 34px; letter-spacing: -.05em; text-shadow: 0 0 14px rgba(0,0,0,.8); pointer-events: none; }
 .sr__brand i { display: block; min-height: 1.3em; transition: color .2s; }
 .sr__brand i.is-glitch { color: var(--bone); text-shadow: 2px 0 var(--red), -2px 0 var(--cyan); }
+.sr__offer { display: inline-block; margin-top: 4px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--green); border: 1px solid var(--green-dim); padding: 6px 8px; }
+.sr__offer:hover { background: var(--green); color: #000; }
