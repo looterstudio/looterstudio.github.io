@@ -197,7 +197,7 @@ function initMarket() {
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
         ${p.buy ? `<button class="sr__offer sr__buy" data-buy="${p.buy}" type="button">BUY</button><span class="sr__count" data-count="${p.buy}"></span>` : ''}
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
-    grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
+    if (TOUCH) swapVideos(grid); else grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
     grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
   };
@@ -615,8 +615,22 @@ function initReveal() {
 }
 
 
+/* ─── 360 on phones: animated WebP instead of video (autoplay is unreliable there) ─── */
+const TOUCH = window.matchMedia('(hover: none)').matches;
+function swapToImage(v) {
+  if (!v || v.dataset.swapped) return;
+  const img = document.createElement('img');
+  img.src = 'assets/loot-360.webp'; img.alt = ''; img.className = v.className;
+  img.dataset.swapped = '1';
+  v.replaceWith(img);
+}
+function swapVideos(root = document) {
+  root.querySelectorAll('video[src$="loot-360.mp4"]').forEach(swapToImage);
+}
+
 /* ─── Videos: keep spinning after tab switches ─── */
 function initVideos() {
+  if (TOUCH) { swapVideos(); return; }
   const vids = document.querySelectorAll('video');
   // the trio spins out of phase
   document.querySelectorAll('.trio__logo').forEach((v) => {
@@ -627,6 +641,8 @@ function initVideos() {
   const play = () => vids.forEach((v) => v.play().catch(() => {}));
   document.addEventListener('visibilitychange', () => { if (!document.hidden) play(); });
   play();
+  // if a browser still refuses to play, fall back to the animated image
+  setTimeout(() => vids.forEach((v) => { if (v.paused && /loot-360\.mp4$/.test(v.currentSrc || v.src)) swapToImage(v); }), 2500);
 }
 
 /* ─── Ambient tears ─── */
