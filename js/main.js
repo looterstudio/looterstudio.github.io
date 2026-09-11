@@ -437,7 +437,7 @@ function initCursor() {
   const HITTABLE = [
     ['.target--stat',  () => flashMsg('HIT. STAT NEUTRALIZED.', 'is-error')],
     ['.target--brier', () => flashMsg('HIT. BRIER NEUTRALIZED.', 'is-error')],
-    ['.brand',   () => flashMsg('HIT. THE MAN OF THE FUTURE.', 'is-error')],
+    ['.outro__brand', () => flashMsg('HIT. THE MAN OF THE FUTURE.', 'is-error')],
     ['.xp',            () => { XP.denies++; flashMsg('YOU SHOT LOOT.exe. WRONG DECISION.', 'is-error'); errorCascade(4, 'WRONG DECISION.'); }],
     ['.silk__item--locked', () => { flashMsg('CLASSIFIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(2, 'ACCESS DENIED.'); }],
     ['.sr__p',         null], // market handles its own clicks
