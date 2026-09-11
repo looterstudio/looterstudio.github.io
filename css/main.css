@@ -404,6 +404,10 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 @media (max-width: 900px) {
   .outro { margin-top: 10vh; }
   .outro__row { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .outro__brand { gap: 6px; max-width: 100%; }
+  .outro__logo { width: 96px; height: 96px; margin: -16px 0; }
+  .outro__word { font-size: clamp(26px, 9.5vw, 44px); white-space: nowrap; }
+  .outro__word sup { font-size: 12px; top: 3px; }
   .tags { text-align: left; }
   .silk__list { flex-direction: column; gap: 6px; }
   .division { grid-template-columns: 1fr; gap: 20px; margin-top: 9vh; }
@@ -423,6 +427,7 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .dvd { width: 220px; height: 220px; }
   .market { margin-top: 10vh; }
   /* phone market: the web layout, compressed. sidebar + grid + news, same order. */
+  .main { padding-left: 14px; padding-right: 14px; }
   .market { margin-top: 3vh; font-size: 11px; }
   .sr__head { grid-template-columns: auto 1fr; gap: 10px 14px; padding-bottom: 8px; }
   .sr__brand { grid-column: 1 / -1; gap: 4px; }
@@ -435,17 +440,17 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
   .sr__search input { max-width: none; padding: 5px 6px; }
   .sr__user { grid-column: 1 / -1; display: flex; gap: 8px 14px; align-items: center; justify-items: start; text-align: left; font-size: 11px; }
   .sr__user small { display: none; }
-  .sr__grid { grid-template-columns: 92px 1fr; gap: 10px; padding-top: 10px; }
+  .sr__grid { grid-template-columns: 78px 1fr; gap: 8px; padding-top: 10px; }
   .sr__cats-title { font-size: 9px; padding: 1px 4px; }
   .sr__cats ul { padding-top: 4px; }
   .sr__cats ul ul { padding-left: 8px; }
-  .sr__cats a { font-size: 10.5px; padding: 1px 0; }
+  .sr__cats a { font-size: 10px; padding: 1px 0; }
   .sr__cats a i { font-size: 8px; margin-left: 2px; }
-  .sr__products { grid-template-columns: repeat(2, 1fr); gap: 12px 8px; }
-  .sr__p-title { font-size: 10px; min-height: 0; line-height: 1.25; }
-  .sr__p-price { font-size: 12px; }
+  .sr__products { grid-template-columns: repeat(3, 1fr); gap: 10px 6px; }
+  .sr__p-title { font-size: 9px; min-height: 0; line-height: 1.25; }
+  .sr__p-price { font-size: 11px; }
   .sr__p-price small { font-size: 9px; margin-left: 4px; }
-  .sr__offer, .sr__buy { font-size: 8px; padding: 5px 6px; letter-spacing: .1em; }
+  .sr__offer, .sr__buy { font-size: 7px; padding: 4px 5px; letter-spacing: .08em; }
   .sr__news { grid-column: 1 / -1; margin-top: 14px; padding: 8px 10px; }
   .sr__news li { font-size: 11px; }
   .tile--riddle .rq { font-size: 9px; } .tile--riddle .rq__big { font-size: 56px; }
