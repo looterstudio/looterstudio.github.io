@@ -174,7 +174,7 @@ const PRODUCTS = [
   { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
-  { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO BEACH CLUB. classified', priceLabel: 'SEIZED BY LOOT' },
+  { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®' },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'riddle', text: '??????????', title: '??????????', priceLabel: '?' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
   { id: 'redact', cat: ['custom'], tile: 'riddle', text: '??????????', title: '?????????? [CLASSIFIED]', priceLabel: '??????' },
@@ -191,7 +191,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.seized ? `<i class="tape tape--a">${'SEIZED BY LOOT · DO NOT CROSS · '.repeat(6)}</i><i class="tape tape--b">${'SEIZED BY LOOT · DO NOT CROSS · '.repeat(6)}</i>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.seized ? `<i class="tape tape--a"><span>${'SEIZED BY LooterStudio® · DO NOT CROSS · '.repeat(8)}</span></i><i class="tape tape--b"><span>${'SEIZED BY LooterStudio® · DO NOT CROSS · '.repeat(8)}</span></i>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
