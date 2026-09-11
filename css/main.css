@@ -109,8 +109,11 @@ body.is-shake { animation: shake .18s steps(2); }
 .obj figcaption { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--bone); text-align: center; display: grid; gap: 4px; }
 .obj figcaption span { font-size: 10px; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
 .obj figcaption a { color: var(--green-dim); text-decoration: underline; }
-.obj--variant .trio__logo { filter: brightness(1.35) hue-rotate(120deg); }
-.obj--archive .trio__logo { filter: brightness(1.4) grayscale(1); }
+.obj--red .trio__logo { filter: brightness(1.35) hue-rotate(60deg) saturate(1.3); }
+.obj--ice .trio__logo { filter: brightness(1.4) hue-rotate(270deg); }
+.obj--gold .trio__logo { filter: brightness(1.4) hue-rotate(100deg) saturate(1.4); }
+.obj--acid .trio__logo { filter: brightness(1.4) hue-rotate(180deg) saturate(1.5); }
+.obj--mono .trio__logo { filter: brightness(1.45) grayscale(1); }
 .obj--sale { justify-self: end; justify-items: end; }
 .obj--sale figcaption { text-align: right; }
 .obj--sale .trio__logo { width: clamp(140px, 16vw, 260px); height: clamp(140px, 16vw, 260px); }
