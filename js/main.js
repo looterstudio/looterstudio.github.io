@@ -118,6 +118,8 @@ function initXP() {
   /* DENY → wrong decision + error cascade */
   const deny = () => {
     XP.denies++;
+    XP.accepted = false; try { localStorage.removeItem('loot.clr'); } catch (_) {}
+    xp.classList.remove('is-min', 'is-collapsed');
     document.body.classList.remove('deny-flash'); void document.body.offsetWidth; document.body.classList.add('deny-flash');
     const text = XP.denies >= 3 ? 'LOOT IS NOT FOR POORS.' : 'HAHAHA LOOT IS NOT FOR YOU THEN.';
     hold(text, 'is-error', 2600);
