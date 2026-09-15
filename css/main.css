@@ -643,7 +643,8 @@ body.is-gated .xp__min { visibility: hidden; }
 .tile--logo canvas { width: 74%; height: 74%; }
 .tile--logo img { width: 150%; height: 150%; max-width: none; object-fit: contain; }
 
-/* cherry bomb: the sequin cupid on white, love as a business */
-.tile--cherry { background: #fff; }
+/* cherry bomb: the candy heart, and the sequin cupid taking its turn */
+.tile--cherry { background: #c8102e; }
 .tile--cherry img { width: 100%; height: 100%; object-fit: cover; }
-.tile--cherry::after { content: 'LOVE YOU'; position: absolute; left: 8px; bottom: 6px; font: 900 9px/1 var(--brand); letter-spacing: .3em; color: #d40b2a; background: #ffd1dc; padding: 4px 6px; }
+.tile--cherry::after { content: ''; position: absolute; inset: 0; background: #fff url('../assets/cherry-cupid.jpg') center / cover no-repeat; animation: cherryTurn 7s ease-in-out infinite; }
+@keyframes cherryTurn { 0%, 42% { opacity: 0; } 50%, 92% { opacity: 1; } 100% { opacity: 0; } }
