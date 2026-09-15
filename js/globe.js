@@ -68,7 +68,7 @@
     tail: [], life: 0, span: 900 + Math.random() * 900,
   });
   const SHOOTERS = Array.from({ length: 4 }, mkShooter);
-  const SATS = Array.from({ length: 90 }, () => ({
+  const SATS = Array.from({ length: 0 }, () => ({
     incl: (Math.random() * 160 - 80) * Math.PI / 180,
     phase: Math.random() * Math.PI * 2,
     speed: (0.15 + Math.random() * 0.25) * (Math.random() < 0.5 ? 1 : -1),
