@@ -360,6 +360,32 @@ function alienBlock(tile) {
   rain(); tick();
 }
 
+/* Keyed 360: the logo video has a black background; on paper we draw it to a
+   canvas and drop everything near black, so the stars spin with no square. */
+function keyVideo(video) {
+  const c = document.createElement('canvas');
+  c.className = video.className.replace('k360', 'k360-out');
+  const S = 512; c.width = S; c.height = S;
+  const ctx = c.getContext('2d', { willReadFrequently: true });
+  video.insertAdjacentElement('afterend', c);
+  video.style.position = 'absolute'; video.style.width = '1px'; video.style.height = '1px'; video.style.opacity = '0'; video.style.pointerEvents = 'none';
+  const tick = () => {
+    if (!c.isConnected) return;
+    if (video.readyState >= 2) {
+      ctx.drawImage(video, 176, 114, 382, 382, 0, 0, S, S);
+      const f = ctx.getImageData(0, 0, S, S), d = f.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const m = Math.max(d[i], d[i + 1], d[i + 2]);
+        d[i + 3] = m < 22 ? 0 : m < 70 ? Math.round((m - 22) * 5.3) : 255;
+      }
+      ctx.putImageData(f, 0, 0);
+    }
+    requestAnimationFrame(tick);
+  };
+  video.play().catch(() => {});
+  tick();
+}
+
 /* Verified human: a fingerprint drawn from arcs, unique per visit */
 function fingerprint(tile) {
   const c = document.createElement('canvas'); tile.innerHTML = ''; tile.appendChild(c);
@@ -905,3 +931,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initVideos();
 });
+
+/* Keyed 360 logos (paper theme) */
+document.querySelectorAll('video.k360').forEach(keyVideo);
