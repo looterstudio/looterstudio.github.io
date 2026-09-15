@@ -186,7 +186,7 @@
       });
     }
 
-    // signal arcs HQ → world, a pulse travelling along each
+    // signal arcs HQ → world
     const centre0 = [-rot[0], -rot[1]];
     interp.forEach((ip, i) => {
       const arc = { type: 'LineString', coordinates: d3.range(0, 1.0001, 0.04).map(ip) };
@@ -256,7 +256,6 @@
       if (d > Math.PI / 2 - 0.05) return;
       const [px, py] = projection([lon, lat]);
       const fade = Math.min(1, (Math.PI / 2 - d) * 2.2);
-      const pulse = 0.5 + 0.5 * Math.sin(t * 0.05 + i);
       // HQ: a solid marker with a label
       const ink = INK ? '17,17,17' : '255,255,255';
       ctx.fillStyle = `rgba(${ink},${fade})`;
