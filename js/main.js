@@ -730,10 +730,10 @@ function crackGlass(px, py, blood = 0) {
 function initCursor() {
   const c = $('cursor') || document.createElement('div');
   const HOVER = !window.matchMedia('(hover: none)').matches;
-  let mx = -100, my = -100, cx = -100, cy = -100;
-  addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
-  const tick = () => { cx += (mx - cx) * 0.35; cy += (my - cy) * 0.35; c.style.transform = `translate(${cx - c.offsetWidth / 2}px, ${cy - c.offsetHeight / 2}px)`; requestAnimationFrame(tick); };
-  tick();
+  // 1:1 with the mouse, no easing and no layout reads: the sight is centered by CSS
+  let mx = -100, my = -100, queued = false;
+  const paint = () => { queued = false; c.style.transform = `translate(${mx}px, ${my}px)`; };
+  addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; if (!queued) { queued = true; requestAnimationFrame(paint); } }, { passive: true });
 
   let hits = 0, shots = 0;
   const HITTABLE = [
