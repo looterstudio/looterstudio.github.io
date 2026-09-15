@@ -104,7 +104,7 @@ body.v-d .motto b { display: block; margin-top: 6px; font-style: normal; font-fa
 /* ─── Forum: every row is one big link. Hover flips it to ink. ─── */
 body.v-d .forum { margin-top: 10vh; font-family: Georgia, 'Times New Roman', serif; }
 body.v-d .forum__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 12px; }
-body.v-d .forum__head b { font-family: var(--brand); font-weight: 900; font-size: 28px; letter-spacing: -.04em; }
+body.v-d .forum__logo { height: 34px; width: auto; }
 body.v-d .forum__head span { font: 400 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #555; }
 body.v-d .forum__list { border: 1px solid #111; background: #faf8f3; }
 body.v-d .forum__row { display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center; padding: 20px 22px; color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.15); transition: background .15s, color .15s; }
@@ -126,3 +126,4 @@ body.v-d .forum__row:hover .forum__cta { background: #b8111d; border-color: #b81
 body.v-d .byline { margin: 28px 0 0; text-align: center; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #555; }
 body.v-d .byline a { color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.35); }
 body.v-d .byline a:hover { color: #b8111d; border-color: #b8111d; }
+body.v-d .forum__likes { color: #b8111d; }

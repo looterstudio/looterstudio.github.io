@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The barrier just fell · LooterStudio® Forum</title>
+  <title>The barrier just fell · LOOTCHAN</title>
   <meta name="description" content="Every time a barrier to knowledge falls, the people who built their identity around it get exposed. This time the barrier is the cost of learning itself.">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="LooterStudio®">
@@ -17,13 +17,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/forum.css?v=202609150028">
+  <link rel="stylesheet" href="../css/forum.css?v=202609150031">
 </head>
 <body>
   <div class="board">
     <div class="board__nav">[ <a href="../">home</a> / <a href="../#market">market</a> / <a href="https://brier.world" target="_blank" rel="noopener">brier</a> / <a href="../#stat">stat</a> / <b>loot</b> ] [ <a href="https://x.com/loot16z" target="_blank" rel="noopener">x</a> ]</div>
     <header class="board__head">
-      <img class="board__logo" src="../assets/loot-logo-alpha.svg" alt="">
+      <a class="board__brand" href="../#forum"><img class="board__logo" src="../assets/lootchan.svg?v=1" alt="lootchan"></a>
       <h1>/loot/ - Delusional Mindset</h1>
       <div class="board__sub">The Dread Pirate Looter writes. Replies are on X.</div>
     </header>
@@ -37,6 +37,7 @@
           <time datetime="2026-09-09">09/09/26(Tue)</time>
           <span class="post__no">No.0001</span>
           <a class="post__reply" href="https://x.com/loot16z/status/2097522171316703649" target="_blank" rel="noopener">[Reply on X]</a>
+          <button class="like" data-like="0001" type="button" title="like this thread"><span class="like__heart">♥</span> <b class="like__n">12</b></button>
         </div>
         <article class="post__body">
       <p>Every time in history a barrier to knowledge falls, the people who built their whole identity around that barrier get exposed. The printing press ended the monopoly scribes had over books. The steam engine ended the need for manual, local labor. Each time, the people who spent their whole life mastering the old way were the last ones to see it coming.</p>
@@ -66,7 +67,7 @@
 
       <div class="post post--reply">
         <div class="post__info"><span class="post__name">Anonymous</span> <time>09/15/26(Mon)</time> <span class="post__no">No.0002</span></div>
-        <div class="post__body post__body--small"><span class="quote">&gt;&gt;0001</span><br><span class="green">&gt;always early, never wrong</span><br>replies go on X. this board is read only.</div>
+        <div class="post__body post__body--small"><span class="quote">&gt;&gt;0001</span><br><span class="green">&gt;always early, never wrong</span><br>replies go on X. likes stay here.</div>
       </div>
     </div>
 
@@ -76,5 +77,22 @@
       <div>And remember<br><b>always early, never wrong.</b><small>by <a href="https://x.com/loot16z" target="_blank" rel="noopener">Loot16z</a>, <a href="https://x.com/zzzfmss" target="_blank" rel="noopener">zzzfmss</a> and <a href="https://x.com/zazymadness" target="_blank" rel="noopener">zazyy</a></small></div>
     </div>
   </div>
+  <script>
+    /* likes live in the market worker: one per reader per day */
+    (function () {
+      var W = 'https://loot-market.looterstudio.workers.dev';
+      document.querySelectorAll('[data-like]').forEach(function (b) {
+        var id = b.dataset.like, n = b.querySelector('.like__n');
+        fetch(W + '/likes/' + id).then(function (r) { return r.json(); }).then(function (j) { if (j.likes != null) n.textContent = j.likes; }).catch(function () {});
+        if (localStorage.getItem('liked:' + id)) b.classList.add('is-liked');
+        b.addEventListener('click', function () {
+          if (b.classList.contains('is-liked')) return;
+          b.classList.add('is-liked'); n.textContent = Number(n.textContent) + 1;
+          try { localStorage.setItem('liked:' + id, '1'); } catch (e) {}
+          fetch(W + '/likes/' + id, { method: 'POST' }).then(function (r) { return r.json(); }).then(function (j) { if (j.likes != null) n.textContent = j.likes; }).catch(function () {});
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

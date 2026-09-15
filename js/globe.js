@@ -72,7 +72,6 @@
   const projection = d3.geoOrthographic().clipAngle(90);
   const path = d3.geoPath(projection, ctx);
   const graticule = d3.geoGraticule10();
-  const fine = d3.geoGraticule().step([5, 5]);
   const sphere = { type: 'Sphere' };
   let land = null, borders = null;
   let W = 0, H = 0, R = 0, dpr = 1;
@@ -84,7 +83,7 @@
   let x = innerWidth * 0.6, y = innerHeight * 0.55, vx = 0.9, vy = 0.7;
 
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 2);
+    dpr = Math.min(devicePixelRatio || 1, 1.5);
     W = dvd.clientWidth; H = dvd.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     R = Math.min(W, H) * 0.36;
@@ -128,26 +127,24 @@
     ctx.beginPath(); path(sphere);
     ctx.lineWidth = INK ? 1.4 : 1; ctx.strokeStyle = `rgba(${rgb},${0.8 + glow * 0.2})`; ctx.stroke();
 
-    if (ATLAS) { ctx.beginPath(); path(fine); ctx.lineWidth = 0.25; ctx.strokeStyle = `rgba(${rgb},${INK ? 0.1 : 0.08})`; ctx.stroke(); }
     ctx.beginPath(); path(graticule);
     ctx.lineWidth = 0.4; ctx.strokeStyle = `rgba(${rgb},${INK ? 0.22 : 0.18})`; ctx.stroke();
 
     if (land) {
       ctx.beginPath(); path(land);
       ctx.fillStyle = `rgba(${rgb},${INK ? 0.07 : 0.08})`; ctx.fill();
+      ctx.lineWidth = INK ? 1.3 : 1.1; ctx.strokeStyle = RED;
+      if (!INK) { ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; }
+      ctx.stroke(); ctx.shadowBlur = 0;
       if (ATLAS) {
-        // engraved land: diagonal hatching clipped to the continents
-        ctx.save(); ctx.beginPath(); path(land); ctx.clip();
+        // engraved land: diagonal hatching clipped to the continents (same path, no second traversal)
+        ctx.save(); ctx.clip();
         ctx.strokeStyle = `rgba(${rgb},${INK ? 0.28 : 0.22})`; ctx.lineWidth = 0.5;
         const step = 4.5, off = (t * 0.15) % step;
         ctx.beginPath();
         for (let d = -H; d < W + H; d += step) { ctx.moveTo(d + off, 0); ctx.lineTo(d + off - H, H); }
         ctx.stroke(); ctx.restore();
-        ctx.beginPath(); path(land); // the path is not part of the saved state: rebuild it for the outline
       }
-      ctx.lineWidth = INK ? 1.3 : 1.1; ctx.strokeStyle = RED;
-      if (!INK) { ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; }
-      ctx.stroke(); ctx.shadowBlur = 0;
     }
     if (borders) {
       ctx.beginPath(); path(borders);
@@ -263,11 +260,13 @@
     dvd.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
   }
 
+  let odd = false;
   function frame() {
     if (!REDUCED) rot[0] += 0.12;
     t++;
     move();
-    draw();
+    odd = !odd;
+    if (odd || REDUCED) draw();
     requestAnimationFrame(frame);
   }
 

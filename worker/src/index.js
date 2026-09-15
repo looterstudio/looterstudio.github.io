@@ -102,6 +102,24 @@ async function claim(env, { sig, kind }) {
   return out;
 }
 
+/* LOOTCHAN likes: one counter per thread, seeded, one like per reader per day (hashed IP). */
+const LIKE_SEED = { '0001': 12 };
+async function likes(env, id) {
+  const stored = await env.LOOT.get(`likes:${id}`);
+  return stored === null ? (LIKE_SEED[id] || 0) : Number(stored);
+}
+async function like(env, request, id) {
+  if (!/^\d{4}$/.test(id)) return { error: 'bad thread' };
+  const ip = request.headers.get('CF-Connecting-IP') || '0';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${id}:${ip}:${new Date().toISOString().slice(0, 10)}`));
+  const key = `liked:${id}:${[...new Uint8Array(buf)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('')}`;
+  const count = await likes(env, id);
+  if (await env.LOOT.get(key)) return { id, likes: count, liked: true };
+  await env.LOOT.put(key, '1', { expirationTtl: 86400 });
+  await env.LOOT.put(`likes:${id}`, String(count + 1));
+  return { id, likes: count + 1, liked: true };
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -109,6 +127,9 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors(env) });
     try {
       if (url.pathname === '/stats') return json(env, await stats(env));
+      const m = url.pathname.match(/^\/likes\/(\d{4})$/);
+      if (m && request.method === 'GET') return json(env, { id: m[1], likes: await likes(env, m[1]) });
+      if (m && request.method === 'POST') { const out = await like(env, request, m[1]); return json(env, out, out.error ? 400 : 200); }
       if (url.pathname === '/claim' && request.method === 'POST') {
         const body = await request.json().catch(() => ({}));
         const out = await claim(env, body);
