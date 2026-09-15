@@ -1,0 +1,23 @@
+/* ─── Forum: one essay per page, on paper ─── */
+:root { --paper: #f4f1ea; --ink: #111; --red: #b8111d; --mono: 'JetBrains Mono', ui-monospace, monospace; --brand: Arial, Helvetica, sans-serif; --serif: Georgia, 'Times New Roman', serif; }
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.post { max-width: 680px; margin: 0 auto; padding: 8vh 24px 12vh; }
+.post__back { display: inline-block; font: 700 11px/1 var(--mono); letter-spacing: .2em; text-transform: uppercase; text-decoration: none; margin-bottom: 40px; }
+.post__back:hover { color: var(--red); }
+.post__meta { display: flex; flex-wrap: wrap; gap: 10px; font: 400 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #555; margin-bottom: 18px; }
+.post__meta a { text-decoration: underline; }
+.post h1 { font-family: var(--brand); font-weight: 900; font-size: clamp(40px, 7vw, 68px); letter-spacing: -.05em; line-height: .95; margin: 0 0 14px; }
+.post__by { font-style: italic; font-size: 17px; margin: 0 0 40px; padding-bottom: 28px; border-bottom: 1px solid rgba(17,17,17,.2); }
+.post__by b { font-style: normal; }
+.post__body { font-size: clamp(18px, 2.1vw, 20px); line-height: 1.55; }
+.post__body p { margin: 0 0 1.3em; }
+.post__body p:first-child::first-letter { font-family: var(--brand); font-weight: 900; font-size: 3.4em; float: left; line-height: .82; padding: 6px 10px 0 0; }
+.post__punch { font-family: var(--brand); font-weight: 900; font-size: 1.35em; letter-spacing: -.03em; line-height: 1.1; margin: 1.4em 0 !important; }
+.post__foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid rgba(17,17,17,.2); display: flex; align-items: center; gap: 24px; }
+.post__seal { width: 110px; filter: invert(1) contrast(1.15); transform: rotate(-4deg); opacity: .95; }
+.post__foot p { margin: 0; font-style: italic; font-size: 18px; }
+.post__foot b { display: block; font-style: normal; font-family: var(--brand); font-weight: 900; font-size: 1.3em; letter-spacing: -.03em; margin-top: 4px; }
+@media (max-width: 600px) { .post { padding-top: 5vh; } .post__seal { width: 84px; } }
