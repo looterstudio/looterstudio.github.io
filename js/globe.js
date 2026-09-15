@@ -3,7 +3,7 @@
 /* ═══════════════════════════════════════════════════════════════
    LooterStudio® — globe.js
    The planet, DVD mode: a wireframe globe with real countries
-   (world-atlas 110m) that drifts behind the page and bounces
+   (world-atlas 110m; 50m looked better but cost 80 ms a frame) that drifts behind the page and bounces
    off the viewport edges. It never stops rotating.
    ═══════════════════════════════════════════════════════════════ */
 
@@ -300,13 +300,13 @@
     t++;
     move();
     odd = !odd;
-    if (odd || REDUCED) draw();
+    if (odd || REDUCED) { const t0 = performance.now(); draw(); const dt = performance.now() - t0; window.__globeMs = window.__globeMs ? window.__globeMs * 0.9 + dt * 0.1 : dt; }
     requestAnimationFrame(frame);
   }
 
   async function loadWorld() {
     try {
-      const res = await fetch(`https://cdn.jsdelivr.net/npm/world-atlas@2/countries-${ATLAS ? '50m' : '110m'}.json`);
+      const res = await fetch(`https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json`);
       const topo = await res.json();
       land = topojson.feature(topo, topo.objects.countries);
       borders = topojson.mesh(topo, topo.objects.countries, (a, b) => a !== b);
