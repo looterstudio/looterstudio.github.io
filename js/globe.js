@@ -125,7 +125,7 @@
     const bpm = alive ? 72 : 40;
     beat = Math.pow(Math.max(0, Math.sin(performance.now() / 1000 * bpm / 60 * Math.PI * 2)), 6) * (alive ? 0.5 : 0.2);
     const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.9, W / 2, H / 2, R * 1.18);
-    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.05 : 0.22) + glow * (INK ? 0.08 : 0.35) + beat * (INK ? 0 : 1)})`); g.addColorStop(0.6, `rgba(${rgb},${(INK ? 0.015 : 0.06) + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
+    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.05 : 0.22) + glow * (INK ? 0.08 : 0.35) })`); g.addColorStop(0.6, `rgba(${rgb},${(INK ? 0.015 : 0.06) + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     // equatorial ring (orbit lane)
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-0.35);
@@ -185,11 +185,6 @@
         if (d < 0.9) { ctx.fillStyle = INK ? `rgba(17,17,17,${0.45 * f})` : `rgba(255,255,255,${0.4 * f})`; ctx.fillText(name, px + 3, py - 3); }
       });
     }
-
-    // night side: everything more than 90° from the sun goes dark (a light wash on paper)
-    const night = d3.geoCircle().center(sunLonLat().map((v) => -v)).radius(90)();
-    ctx.beginPath(); path(night);
-    ctx.fillStyle = INK ? `rgba(${rgb},0.045)` : 'rgba(0,0,0,0.42)'; ctx.fill();
 
     // signal arcs HQ → world, a pulse travelling along each
     const centre0 = [-rot[0], -rot[1]];
