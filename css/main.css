@@ -605,7 +605,7 @@ body.is-gated .xp__min { visibility: hidden; }
 .tile--seized::after { content: none; }
 .tile--seized .cam, .tile--seized .cam__big { display: none; }
 .seizure { position: absolute; inset: 0; display: grid; grid-template-rows: auto 1fr auto auto auto; align-items: center; justify-items: center; text-align: center; padding: 0 0 8px; row-gap: 2px; z-index: 2; font-family: Georgia, 'Times New Roman', serif; }
-.seizure__band { width: 100%; background: #b8111d; color: #fff; font: 700 8px/1 var(--mono); letter-spacing: .32em; padding: 6px 0; box-shadow: 0 2px 0 #7a0a13; }
+.seizure__band { width: 100%; background: #b8111d; color: #fff; font: 900 8px/1 var(--brand); letter-spacing: .28em; padding: 6px 0; box-shadow: 0 2px 0 #7a0a13; white-space: nowrap; overflow: hidden; text-align: center; }
 .seizure__seal { width: 34%; max-width: 80px; align-self: center; opacity: .96; filter: drop-shadow(0 2px 6px rgba(0,0,0,.8)); }
 .seizure__big { color: #f2efe6; font-size: 13px; letter-spacing: .08em; line-height: 1.1; padding: 0 10px; text-shadow: 0 1px 2px #000; }
 .seizure__by { color: #cfc9bb; font-size: 7.5px; letter-spacing: .04em; line-height: 1.3; padding: 2px 8px 0; font-style: italic; white-space: nowrap; }
