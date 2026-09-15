@@ -607,7 +607,14 @@ body.is-gated .xp__min { visibility: hidden; }
 .seizure__big { color: #f2efe6; font-size: 13px; letter-spacing: .06em; line-height: 1.1; padding: 0 10px; }
 .seizure__by { color: #b9b4a7; font-size: 7.5px; letter-spacing: .04em; line-height: 1.35; padding: 3px 12px 0; font-style: italic; }
 .seizure__case { color: #ff2a3c; font: 700 8px/1 var(--mono); letter-spacing: .18em; margin-top: 4px; }
-@media (max-width: 720px) { .seizure__big { font-size: 10px; } .seizure__by { display: none; } .seizure__seal { width: 30%; } }
+@media (max-width: 720px) {
+  .seizure { grid-template-rows: auto 1fr auto auto; padding-bottom: 6px; row-gap: 3px; }
+  .seizure__band { font-size: 6.5px; letter-spacing: .22em; padding: 4px 0; }
+  .seizure__seal { width: 40%; max-width: 70px; align-self: center; }
+  .seizure__big { font-size: 9px; letter-spacing: .04em; padding: 0 6px; }
+  .seizure__by { display: none; }
+  .seizure__case { font-size: 6.5px; letter-spacing: .1em; white-space: nowrap; margin-top: 0; }
+}
 
 /* ─── ALIENS TALKING OVER RAIN ─── */
 .tile--alien { padding: 0; }
