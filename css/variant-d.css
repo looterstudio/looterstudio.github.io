@@ -94,3 +94,9 @@ body.v-d .tags li { color: #555; }
   body.v-d .creed__text { font-size: 26px; }
   body.v-d .dvd { width: 120vw; height: 120vw; opacity: .7; }
 }
+/* taste: one word, readable, no fog */
+body.v-d .sr__p .tile--taste { background: radial-gradient(circle at 50% 45%, #1b2a4a 0, #000 70%); }
+body.v-d .tile--taste span { font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: clamp(28px, 3.2vw, 44px); color: #f2efe6; text-shadow: 0 0 22px rgba(127,179,255,.55); letter-spacing: .02em; }
+/* the last line of the page */
+body.v-d .motto { margin: 8vh 0 0; padding-top: 24px; border-top: 1px solid rgba(17,17,17,.15); text-align: center; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: clamp(18px, 2vw, 26px); color: #111; }
+body.v-d .motto b { font-style: normal; font-family: var(--brand); font-weight: 900; letter-spacing: -.02em; }

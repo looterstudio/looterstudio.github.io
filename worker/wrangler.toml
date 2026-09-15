@@ -9,7 +9,7 @@ USDC_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"
 IDEAS_TOTAL = "100"
 PRICE_IDEA = "9"
 PRICE_BEER = "1"
-ALLOWED_ORIGIN = "https://looterstudio.github.io"
+ALLOWED_ORIGIN = "https://looterstudio.xyz"
 
 [[kv_namespaces]]
 binding = "LOOT"

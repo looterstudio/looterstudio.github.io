@@ -10,7 +10,7 @@ const RPCS = ['https://api.mainnet-beta.solana.com', 'https://solana-rpc.publicn
 
 let reqOrigin = '';
 const cors = (env, extra = {}) => ({
-  'Access-Control-Allow-Origin': [env.ALLOWED_ORIGIN, 'http://localhost:8080', 'https://looterstudio.com', 'https://www.looterstudio.com'].includes(reqOrigin) ? reqOrigin : env.ALLOWED_ORIGIN,
+  'Access-Control-Allow-Origin': [env.ALLOWED_ORIGIN, 'https://looterstudio.xyz', 'https://www.looterstudio.xyz', 'http://localhost:8080', 'https://looterstudio.com', 'https://www.looterstudio.com'].includes(reqOrigin) ? reqOrigin : env.ALLOWED_ORIGIN,
   'Vary': 'Origin',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
