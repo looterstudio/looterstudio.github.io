@@ -221,13 +221,13 @@ const PRODUCTS = [
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', img: 'assets/vibration.jpg', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'human',  cat: ['apparel', 'custom'],  tile: 'human', text: '', title: 'VERIFIED HUMAN · 1 of 8,100,000,000 · no refunds', price: 4.20 },
-  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. hoodie incl. no refunds', price: 4.20 },
+  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®' },
   { id: 'obj',    cat: ['objects', 'art'],     tile: 'alien', text: '', title: '??????????', priceLabel: '?' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
-  { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? [CLASSIFIED]', priceLabel: '??????' },
+  { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? ??????????', priceLabel: '??????' },
 ];
 
 function initMarket() {
@@ -242,7 +242,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">NOTICE OF SEIZURE</div><img class="seizure__seal" src="${AS}assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® pursuant to a warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.video ? `<video src="${AS}${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${AS}${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">NOTICE OF SEIZURE</div><img class="seizure__seal" src="${AS}assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® · warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.video ? `<video src="${AS}${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${AS}${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -306,8 +306,7 @@ function camClock(el) {
   tick();
 }
 
-/* Two aliens talking over a Matrix rain. Never translated, except for a flash. */
-const ALIEN_LEAKS = ['> they are early', '> observe the humans', '> do not run the source', '> the dot is in buenos aires', '> loot is listening', '> season zero begins', '> we were never wrong', '> level six confirmed'];
+/* Two aliens talking over a Matrix rain. Never translated. */
 function alienBlock(tile) {
   tile.innerHTML = '';
   const c = document.createElement('canvas'); tile.appendChild(c);
@@ -348,7 +347,7 @@ function alienBlock(tile) {
       // every so often one line decrypts for an instant, then goes back to glyphs
       if (Math.random() < 0.18) {
         const idx = lines.length - 1, saved = lines[idx];
-        lines[idx] = `<span class="leak">${esc(pick(ALIEN_LEAKS))}</span>`; render();
+        lines[idx] = `<span class="leak">⌬?&gt; ${esc(sentence())}</span>`; render();
         setTimeout(() => { lines[idx] = saved; render(); }, 900 + Math.random() * 900);
       }
       while (lines.length > 7) lines.shift();
