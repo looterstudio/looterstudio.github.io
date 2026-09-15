@@ -125,7 +125,7 @@
     const bpm = alive ? 72 : 40;
     beat = Math.pow(Math.max(0, Math.sin(performance.now() / 1000 * bpm / 60 * Math.PI * 2)), 6) * (alive ? 0.5 : 0.2);
     const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.9, W / 2, H / 2, R * 1.18);
-    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.04 : 0.22) + glow * (INK ? 0.08 : 0.35) + beat * (INK ? 0.25 : 1)})`); g.addColorStop(0.6, `rgba(${rgb},${(INK ? 0.015 : 0.06) + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
+    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.05 : 0.22) + glow * (INK ? 0.08 : 0.35) + beat * (INK ? 0 : 1)})`); g.addColorStop(0.6, `rgba(${rgb},${(INK ? 0.015 : 0.06) + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     // equatorial ring (orbit lane)
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-0.35);
@@ -309,7 +309,8 @@
     n++;
     if (n % every === 0 || REDUCED) {
       const t0 = performance.now(); draw(); const dt = performance.now() - t0;
-      cost = cost ? cost * 0.9 + dt * 0.1 : dt; every = cost > 18 ? 3 : 2; window.__globeMs = cost;
+      cost = cost ? cost * 0.9 + dt * 0.1 : dt; window.__globeMs = cost;
+      if (n === 120) every = cost > 18 ? 3 : 2;
     }
     requestAnimationFrame(frame);
   }
