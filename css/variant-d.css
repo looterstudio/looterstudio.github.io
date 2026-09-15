@@ -19,7 +19,11 @@ body.v-d .hero__down { position: absolute; bottom: 28px; left: 50%; transform: t
 body.v-d .dvd { position: fixed; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; width: min(96vw, 96vh); height: min(96vw, 96vh); z-index: 0; opacity: 1; }
 
 /* everything after the opening rides on paper over the globe */
-body.v-d .main { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
+body.v-d .main { position: relative; z-index: 1; max-width: 1480px; margin: 0 auto; }
+/* store: always four tiles across on a computer, three on a tablet, two on a phone */
+body.v-d .sr__products { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px 16px; }
+@media (max-width: 1100px) { body.v-d .sr__products { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) { body.v-d .sr__products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 10px; } body.v-d .sr__p-title { font-size: 12px; } }
 body.v-d .main { background: linear-gradient(180deg, rgba(244,241,234,0) 0, rgba(244,241,234,0) 70vh, rgba(244,241,234,.86) 105vh, rgba(244,241,234,.86) 100%); }
 body.v-d .market, body.v-d .division, body.v-d .outro { background: transparent; }
 body.v-d .sr__cats, body.v-d .sr__news { background: rgba(250,248,243,.85); }
