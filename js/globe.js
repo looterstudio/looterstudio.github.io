@@ -18,6 +18,8 @@
   const RED = THEME === 'ink-black' ? '#111111' : (INK ? '#b8111d' : '#ff2a3c');
   const rgb = THEME === 'ink-black' ? '17,17,17' : (INK ? '184,17,29' : '255,42,60');
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // On paper the globe is pinned to the centre by CSS: no DVD drift, and no bounce flash either.
+  const PINNED = window.GLOBE_PINNED != null ? !!window.GLOBE_PINNED : INK;
   // Detail: 'wire' (the original) or 'atlas' (50m coastlines, engraved land, limb shading, rim ticks, cities).
   const DETAIL = window.GLOBE_DETAIL || 'wire';
   const ATLAS = DETAIL === 'atlas';
@@ -268,6 +270,7 @@
   }
 
   function move() {
+    if (PINNED) return;
     if (REDUCED) { x = innerWidth - W - 24; y = innerHeight - H - 24; }
     else {
       x += vx; y += vy;
