@@ -9,7 +9,10 @@ body.v-d .hero__word, body.v-d .sr__brand > div b, body.v-d .outro__word, body.v
 
 /* opening shot: the globe fills the screen, the wordmark sits on it */
 body.v-d .hero { min-height: 100vh; display: grid; place-items: center; position: relative; text-align: center; z-index: 1; }
+body.v-d .hero__mark { width: clamp(90px, 11vw, 170px); margin: 0 auto 2vh; display: block; filter: invert(1); }
+body.v-d .hero__row { display: flex; align-items: center; justify-content: center; gap: clamp(12px, 2vw, 32px); }
 body.v-d .hero__word { font-weight: 900; font-size: clamp(56px, 12.5vw, 190px); letter-spacing: -.06em; color: #111; line-height: .9; }
+body.v-d .hero__360 { width: clamp(70px, 8vw, 130px); height: clamp(70px, 8vw, 130px); object-fit: contain; flex: none; transform: scale(2.6); margin: 0 1.5vw; }
 body.v-d .hero__word sup { font-size: .25em; vertical-align: top; }
 body.v-d .hero__down { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); font-size: 9px; letter-spacing: .4em; color: #777; animation: nudge 1.6s ease-in-out infinite; }
 @keyframes nudge { 50% { transform: translate(-50%, 6px); } }
@@ -17,7 +20,8 @@ body.v-d .dvd { position: fixed; left: 50% !important; top: 50% !important; tran
 
 /* everything after the opening rides on paper over the globe */
 body.v-d .main { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
-body.v-d .market, body.v-d .division, body.v-d .outro { background: rgba(244,241,234,.92); }
+body.v-d .market, body.v-d .division, body.v-d .outro { background: rgba(244,241,234,.72); }
+body.v-d .sr__cats, body.v-d .sr__news { background: rgba(250,248,243,.9); }
 body.v-d .market { padding: 6vh 24px 4vh; border-top: 3px double #111; }
 
 /* masthead like a filing, store like Silk Road */
