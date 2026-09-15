@@ -748,7 +748,7 @@ function initCursor() {
   const armedAt = performance.now() + 800; // ignore synthetic clicks during load
   const shoot = (e, clientX, clientY, pageX, pageY) => {
     if (performance.now() < armedAt) return;
-    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .xp')) return;
+    if (e.target.closest('button, input, a, .xp__bar, .sr__cats, .xp, .forum')) return;
     // recoil + flash + shake
     c.classList.add('is-recoil'); setTimeout(() => c.classList.remove('is-recoil'), 120);
     if (!REDUCED) {

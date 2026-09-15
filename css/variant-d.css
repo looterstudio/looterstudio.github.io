@@ -101,26 +101,25 @@ body.v-d .tile--taste span { font-family: Georgia, 'Times New Roman', serif; fon
 body.v-d .motto { margin: 8vh 0 0; padding-top: 24px; border-top: 1px solid rgba(17,17,17,.15); text-align: center; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: clamp(18px, 2vw, 26px); color: #111; }
 body.v-d .motto b { display: block; margin-top: 6px; font-style: normal; font-family: var(--brand); font-weight: 900; font-size: 1.35em; letter-spacing: -.03em; }
 
-/* ─── Forum: a thread list, Silk Road style, on paper ─── */
+/* ─── Forum: every row is one big link. Hover flips it to ink. ─── */
 body.v-d .forum { margin-top: 10vh; font-family: Georgia, 'Times New Roman', serif; }
-body.v-d .forum__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; }
+body.v-d .forum__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 12px; }
 body.v-d .forum__head b { font-family: var(--brand); font-weight: 900; font-size: 28px; letter-spacing: -.04em; }
 body.v-d .forum__head span { font: 400 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #555; }
-body.v-d .forum__table { width: 100%; border-collapse: collapse; border: 1px solid #111; background: #faf8f3; font-size: 14px; }
-body.v-d .forum__table th { text-align: left; font: 700 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #555; padding: 9px 12px; border-bottom: 1px solid #111; background: #f1ede3; }
-body.v-d .forum__table td { padding: 12px; vertical-align: top; border-bottom: 1px solid rgba(17,17,17,.15); }
-body.v-d .forum__table td:first-child, body.v-d .forum__table time { font-family: var(--mono); font-size: 11px; color: #555; white-space: nowrap; }
-body.v-d .forum__table td a { color: #111; font-weight: 700; font-size: 17px; text-decoration: none; }
-body.v-d .forum__table td a:hover { color: #b8111d; text-decoration: underline; }
-body.v-d .forum__table td small { display: block; color: #444; font-size: 13px; line-height: 1.45; margin-top: 4px; max-width: 60ch; }
-body.v-d .forum__table td:nth-child(3) { white-space: nowrap; font-style: italic; }
-body.v-d .forum__table td:last-child a { font-family: var(--mono); font-size: 11px; font-weight: 400; letter-spacing: .1em; }
+body.v-d .forum__list { border: 1px solid #111; background: #faf8f3; }
+body.v-d .forum__row { display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center; padding: 20px 22px; color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.15); transition: background .15s, color .15s; }
+body.v-d .forum__row:last-child { border-bottom: 0; }
+body.v-d .forum__row:hover { background: #111; color: #f4f1ea; }
+body.v-d .forum__no { font: 400 11px/1 var(--mono); letter-spacing: .12em; opacity: .6; }
+body.v-d .forum__title { display: block; font-family: var(--brand); font-weight: 900; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -.04em; line-height: 1; margin-bottom: 8px; }
+body.v-d .forum__desc { display: block; font-size: 15px; line-height: 1.45; max-width: 64ch; opacity: .85; }
+body.v-d .forum__meta { display: block; margin-top: 10px; font: 400 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .6; }
+body.v-d .forum__meta i { font-style: normal; }
+body.v-d .forum__cta { font: 700 11px/1 var(--mono); letter-spacing: .22em; border: 1px solid currentColor; padding: 12px 14px; white-space: nowrap; }
+body.v-d .forum__row:hover .forum__cta { background: #b8111d; border-color: #b8111d; color: #fff; }
 @media (max-width: 720px) {
-  body.v-d .forum__table th:nth-child(1), body.v-d .forum__table td:nth-child(1), body.v-d .forum__table th:nth-child(3), body.v-d .forum__table td:nth-child(3) { display: none; }
-  body.v-d .forum__table td { padding: 10px 8px; }
-  body.v-d .forum__table td a { font-size: 15px; }
-  body.v-d .forum__table td small { font-size: 12px; }
+  body.v-d .forum__row { grid-template-columns: 1fr; gap: 12px; padding: 16px 14px; }
+  body.v-d .forum__no { display: none; }
+  body.v-d .forum__desc { font-size: 14px; }
+  body.v-d .forum__cta { justify-self: start; }
 }
-body.v-d .byline { margin: 28px 0 0; text-align: center; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #555; }
-body.v-d .byline a { color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.35); }
-body.v-d .byline a:hover { color: #b8111d; border-color: #b8111d; }
