@@ -82,6 +82,17 @@
   const sphere = { type: 'Sphere' };
   let land = null, borders = null;
   let W = 0, H = 0, R = 0, dpr = 1;
+  let hatchPat = null, hatchDpr = 0;
+  const hatch = () => {
+    if (hatchPat && hatchDpr === dpr) return hatchPat;
+    const size = 6, c = document.createElement('canvas'); c.width = c.height = size * dpr;
+    const x = c.getContext('2d'); x.scale(dpr, dpr);
+    x.strokeStyle = `rgba(${rgb},${INK ? 0.3 : 0.22})`; x.lineWidth = 0.7; x.lineCap = 'square';
+    x.beginPath(); x.moveTo(-1, size + 1); x.lineTo(size + 1, -1); x.moveTo(-1, 1); x.lineTo(1, -1); x.moveTo(size - 1, size + 1); x.lineTo(size + 1, size - 1); x.stroke();
+    hatchPat = ctx.createPattern(c, 'repeat');
+    const m = new DOMMatrix(); m.a = 1 / dpr; m.d = 1 / dpr; hatchPat.setTransform(m);
+    hatchDpr = dpr; return hatchPat;
+  };
   let rot = [58, 34];
   let t = 0, glow = 0;
   const STARS = Array.from({ length: 70 }, () => [Math.random(), Math.random(), Math.random()]);
@@ -144,13 +155,8 @@
       if (!INK) { ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; }
       ctx.stroke(); ctx.shadowBlur = 0;
       if (ATLAS) {
-        // engraved land: diagonal hatching clipped to the continents (same path, no second traversal)
-        ctx.save(); ctx.clip();
-        ctx.strokeStyle = `rgba(${rgb},${INK ? 0.28 : 0.22})`; ctx.lineWidth = 0.5;
-        const step = 4.5, off = (t * 0.15) % step;
-        ctx.beginPath();
-        for (let d = -H; d < W + H; d += step) { ctx.moveTo(d + off, 0); ctx.lineTo(d + off - H, H); }
-        ctx.stroke(); ctx.restore();
+        // engraved land: a fixed diagonal hatch pattern, filled through the same path (no moving lines, no moiré)
+        ctx.save(); ctx.clip(); ctx.fillStyle = hatch(); ctx.fill(); ctx.restore();
       }
     }
     if (borders) {
@@ -183,7 +189,7 @@
     // night side: everything more than 90° from the sun goes dark (a light wash on paper)
     const night = d3.geoCircle().center(sunLonLat().map((v) => -v)).radius(90)();
     ctx.beginPath(); path(night);
-    ctx.fillStyle = INK ? `rgba(${rgb},0.07)` : 'rgba(0,0,0,0.42)'; ctx.fill();
+    ctx.fillStyle = INK ? `rgba(${rgb},0.045)` : 'rgba(0,0,0,0.42)'; ctx.fill();
 
     // signal arcs HQ → world, a pulse travelling along each
     const centre0 = [-rot[0], -rot[1]];
@@ -294,13 +300,17 @@
     dvd.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
   }
 
-  let odd = false;
+  // the globe redraws every 2nd frame; if a draw costs more than 18 ms on this device, every 3rd
+  let n = 0, every = 2, cost = 0;
   function frame() {
     if (!REDUCED) rot[0] += 0.12;
     t++;
     move();
-    odd = !odd;
-    if (odd || REDUCED) { const t0 = performance.now(); draw(); const dt = performance.now() - t0; window.__globeMs = window.__globeMs ? window.__globeMs * 0.9 + dt * 0.1 : dt; }
+    n++;
+    if (n % every === 0 || REDUCED) {
+      const t0 = performance.now(); draw(); const dt = performance.now() - t0;
+      cost = cost ? cost * 0.9 + dt * 0.1 : dt; every = cost > 18 ? 3 : 2; window.__globeMs = cost;
+    }
     requestAnimationFrame(frame);
   }
 
