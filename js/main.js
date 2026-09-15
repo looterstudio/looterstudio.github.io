@@ -247,6 +247,7 @@ function initMarket() {
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
         ${p.buy ? `<button class="sr__offer sr__buy" data-buy="${p.buy}" type="button">BUY</button>` : ''}
       </div>`).join('') : `<div class="sr__empty">No listings. LOOT IS WHATEVER COMES NEXT.</div>`;
+    grid.querySelectorAll('.tile--logo video').forEach((v) => window.keyed360 && window.keyed360.attach(v));
     if (TOUCH) swapVideos(grid); else grid.querySelectorAll('video').forEach((v) => v.play().catch(() => {}));
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
     grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
@@ -392,6 +393,10 @@ function keyVideos() {
     }
     requestAnimationFrame(tick);
   };
+  window.keyed360 = { attach(el) {
+    const c = document.createElement('canvas'); c.className = 'k360-out'; c.width = S; c.height = S;
+    el.replaceWith(c); outs.push(c);
+  } };
   const kick = () => video.play().catch(() => {});
   kick();
   ['touchstart', 'click', 'visibilitychange', 'pageshow'].forEach(e => document.addEventListener(e, kick, { passive: true }));
