@@ -360,29 +360,43 @@ function alienBlock(tile) {
   rain(); tick();
 }
 
-/* Keyed 360: the logo video has a black background; on paper we draw it to a
-   canvas and drop everything near black, so the stars spin with no square. */
-function keyVideo(video) {
-  const c = document.createElement('canvas');
-  c.className = video.className.replace('k360', 'k360-out');
-  const S = 512; c.width = S; c.height = S;
-  const ctx = c.getContext('2d', { willReadFrequently: true });
-  video.insertAdjacentElement('afterend', c);
-  video.style.position = 'absolute'; video.style.width = '1px'; video.style.height = '1px'; video.style.opacity = '0'; video.style.pointerEvents = 'none';
+/* Keyed 360: the logo video has a black background; on paper we decode it once,
+   drop everything near black, and blit the result to every .k360 slot. One
+   decoder means phones (which refuse to play three videos at once) still spin. */
+function keyVideos() {
+  const slots = [...document.querySelectorAll('video.k360')];
+  if (!slots.length) return;
+  const video = slots[0];
+  const S = 512, off = document.createElement('canvas'); off.width = S; off.height = S;
+  const octx = off.getContext('2d', { willReadFrequently: true });
+  const outs = slots.map(v => {
+    const c = document.createElement('canvas');
+    c.className = v.className.replace('k360', 'k360-out');
+    c.width = S; c.height = S;
+    v.insertAdjacentElement('afterend', c);
+    if (v !== video) v.remove();
+    return c;
+  });
+  Object.assign(video.style, { position: 'fixed', left: '0', top: '0', width: '2px', height: '2px', opacity: '0.01', pointerEvents: 'none' });
+  document.body.appendChild(video);
   const tick = () => {
-    if (!c.isConnected) return;
-    if (video.readyState >= 2) {
-      ctx.drawImage(video, 176, 114, 382, 382, 0, 0, S, S);
-      const f = ctx.getImageData(0, 0, S, S), d = f.data;
+    if (video.readyState >= 2 && !video.paused) {
+      octx.drawImage(video, 176, 114, 382, 382, 0, 0, S, S);
+      const f = octx.getImageData(0, 0, S, S), d = f.data;
       for (let i = 0; i < d.length; i += 4) {
         const m = Math.max(d[i], d[i + 1], d[i + 2]);
         d[i + 3] = m < 22 ? 0 : m < 70 ? Math.round((m - 22) * 5.3) : 255;
       }
-      ctx.putImageData(f, 0, 0);
+      octx.putImageData(f, 0, 0);
+      outs.forEach(c => { const x = c.getContext('2d'); x.clearRect(0, 0, S, S); x.drawImage(off, 0, 0); });
     }
     requestAnimationFrame(tick);
   };
-  video.play().catch(() => {});
+  const kick = () => video.play().catch(() => {});
+  kick();
+  ['touchstart', 'click', 'visibilitychange', 'pageshow'].forEach(e => document.addEventListener(e, kick, { passive: true }));
+  // a phone that refuses to decode at all gets the still image instead of a blank
+  setTimeout(() => { if (video.readyState < 2) outs.forEach(c => { const img = document.createElement('img'); img.src = (window.LOOT_ASSETS || '') + 'assets/loot-360-alpha.webp'; img.alt = ''; img.className = c.className; c.replaceWith(img); }); }, 4000);
   tick();
 }
 
@@ -779,7 +793,7 @@ function initReveal() {
 /* ─── 360 on phones: animated WebP instead of video (autoplay is unreliable there) ─── */
 const TOUCH = window.matchMedia('(hover: none)').matches;
 function swapToImage(v) {
-  if (!v || v.dataset.swapped) return;
+  if (!v || v.dataset.swapped || v.classList.contains('k360')) return;
   const img = document.createElement('img');
   img.src = 'assets/loot-360-alpha.webp'; img.alt = ''; img.className = v.className;
   img.dataset.swapped = '1';
@@ -933,4 +947,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* Keyed 360 logos (paper theme) */
-document.querySelectorAll('video.k360').forEach(keyVideo);
+keyVideos();

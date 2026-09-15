@@ -75,4 +75,18 @@ body.v-d .creed__stamp { display: inline-block; margin-top: 18px; font: 700 11px
 @media (max-width: 720px) { body.v-d .creed { grid-template-columns: 1fr; } }
 body.v-d .outro__word { color: #111; }
 body.v-d .tags li { color: #555; }
-@media (max-width: 720px) { body.v-d .hero__word { font-size: 17vw; } body.v-d .dvd { width: 120vw; height: 120vw; opacity: .7; } }
+@media (max-width: 720px) {
+  body.v-d, body.v-d .main { overflow-x: clip; }
+  /* phone: the 360 sits above the name, everything fits the width, nothing zooms out */
+  body.v-d .hero__row { flex-direction: column; gap: 0; width: 100%; }
+  body.v-d .hero__360 { order: -1; width: 46vw; height: 46vw; margin: 0 0 -4vw; }
+  body.v-d .hero__word { font-size: 16.5vw; white-space: nowrap; }
+  body.v-d .sr__360 { width: 96px; height: 96px; margin: -18px 0 -18px -6px; }
+  body.v-d .outro__brand { flex-direction: column; align-items: flex-start; gap: 0; }
+  body.v-d .outro__360 { width: 46vw; height: 46vw; margin: 0 0 -6vw -4vw; }
+  body.v-d .outro__word { font-size: 13.5vw; white-space: nowrap; }
+  body.v-d .creed { gap: 20px; }
+  body.v-d .creed__seal { width: 132px; }
+  body.v-d .creed__text { font-size: 26px; }
+  body.v-d .dvd { width: 120vw; height: 120vw; opacity: .7; }
+}
