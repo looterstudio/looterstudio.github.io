@@ -20,17 +20,18 @@ body.v-d .dvd { position: fixed; left: 50% !important; top: 50% !important; tran
 
 /* everything after the opening rides on paper over the globe */
 body.v-d .main { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
-body.v-d .main { background: linear-gradient(180deg, rgba(244,241,234,0) 0, rgba(244,241,234,0) 60vh, rgba(244,241,234,.55) 100vh, rgba(244,241,234,.55) 100%); }
+body.v-d .main { background: linear-gradient(180deg, rgba(244,241,234,0) 0, rgba(244,241,234,0) 70vh, rgba(244,241,234,.86) 105vh, rgba(244,241,234,.86) 100%); }
 body.v-d .market, body.v-d .division, body.v-d .outro { background: transparent; }
 body.v-d .sr__cats, body.v-d .sr__news { background: rgba(250,248,243,.85); }
 body.v-d .market { padding: 6vh 24px 4vh; }
 
 /* masthead like a filing, store like Silk Road */
-body.v-d .sr__head { border-bottom: 1px solid #111; padding: 12px 0; }
+body.v-d .sr__head { border-bottom: 0; padding: 12px 0 4px; }
+body.v-d .market::before, body.v-d .market::after, body.v-d .division::before, body.v-d .division::after { content: none; }
 body.v-d .sr__brand > div b { font-size: 40px; letter-spacing: -.05em; color: #111; }
 body.v-d .sr__brand > div i { font-style: italic; color: #555; }
 body.v-d .sr__brand-logo { display: none; }
-body.v-d .sr__mark { width: 64px; height: 64px; filter: invert(1); margin-right: 14px; }
+body.v-d .sr__360 { width: 74px; height: 74px; object-fit: contain; transform: scale(2.4); margin: 0 26px 0 14px; flex: none; }
 body.v-d .sr__search input { background: #fff; border: 1px solid #111; color: #111; }
 body.v-d .sr__search button, body.v-d .sr__cats-title { background: #111; color: #f4f1ea; border: 0; }
 body.v-d .filing { font-size: 9px; line-height: 1.7; letter-spacing: .08em; color: #555; text-transform: uppercase; margin: 6px 0 0; }
@@ -47,16 +48,16 @@ body.v-d .sr__offer:hover, body.v-d .sr__buy:hover { background: #111; color: #f
 
 /* divisions */
 body.v-d .division { border-top: 0; padding: 8vh 24px; }
-body.v-d .target--brier .target__img, body.v-d .target--stat .target__img { filter: none; background: #000; padding: 20px; }
-body.v-d .target__box { border-color: #111; }
+body.v-d .target--brier .target__img, body.v-d .target--stat .target__img { filter: none; background: #000; padding: 0; border: 1px solid #111; }
+body.v-d .target__box { display: none; }
+body.v-d .target__lead { display: none; }
 body.v-d .target__tag { background: #111; color: #f4f1ea; }
 body.v-d .callout__status { color: #111; letter-spacing: .3em; }
-body.v-d .callout__cta { background: #111; color: #f4f1ea; }
-body.v-d .callout__cta:hover { background: #b8111d; color: #fff; }
+body.v-d .callout__cta { display: none; }
 body.v-d .xp__bar { background: #7a7a7a !important; }
 body.v-d .outro { padding: 4vh 24px 8vh; }
 body.v-d .outro__logo { display: none; }
-body.v-d .outro__360 { width: 72px; height: 72px; object-fit: contain; transform: scale(2.6); margin-right: 26px; }
+body.v-d .outro__mark { width: 64px; height: 64px; filter: invert(1); margin-right: 18px; }
 body.v-d .outro__word { color: #111; }
 body.v-d .tags li { color: #555; }
 @media (max-width: 720px) { body.v-d .hero__word { font-size: 17vw; } body.v-d .dvd { width: 120vw; height: 120vw; opacity: .7; } }
