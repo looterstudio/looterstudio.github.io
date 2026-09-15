@@ -12,7 +12,11 @@
   const canvas = document.getElementById('globe');
   if (!dvd || !canvas || typeof d3 === 'undefined') return;
 
-  const RED = '#ff2a3c';
+  // Theme: 'screen' (red on black, the original) or 'ink' (drawn on paper: no black disc, lines only).
+  const THEME = window.GLOBE_THEME || 'screen';
+  const INK = THEME === 'ink' || THEME === 'ink-black';
+  const RED = THEME === 'ink-black' ? '#111111' : (INK ? '#b8111d' : '#ff2a3c');
+  const rgb = THEME === 'ink-black' ? '17,17,17' : (INK ? '184,17,29' : '255,42,60');
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ctx = canvas.getContext('2d');
 
@@ -82,8 +86,8 @@
     ctx.clearRect(0, 0, W, H);
     projection.rotate(rot);
 
-    // starfield
-    STARS.forEach(([sx, sy, sz], i) => {
+    // starfield (not on paper)
+    if (!INK) STARS.forEach(([sx, sy, sz], i) => {
       const tw = 0.4 + 0.6 * Math.abs(Math.sin(t * 0.02 + i));
       ctx.fillStyle = `rgba(255,255,255,${0.25 * tw})`;
       ctx.fillRect(sx * W, sy * H, sz > 0.8 ? 1.5 : 1, sz > 0.8 ? 1.5 : 1);
@@ -93,55 +97,56 @@
     const bpm = alive ? 72 : 40;
     beat = Math.pow(Math.max(0, Math.sin(performance.now() / 1000 * bpm / 60 * Math.PI * 2)), 6) * (alive ? 0.5 : 0.2);
     const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.9, W / 2, H / 2, R * 1.18);
-    g.addColorStop(0, `rgba(255,42,60,${0.22 + glow * 0.35 + beat})`); g.addColorStop(0.6, `rgba(255,42,60,${0.06 + glow * 0.1})`); g.addColorStop(1, 'rgba(255,42,60,0)');
+    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.12 : 0.22) + glow * 0.35 + beat})`); g.addColorStop(0.6, `rgba(${rgb},${0.06 + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     // equatorial ring (orbit lane)
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-0.35);
     ctx.beginPath(); ctx.ellipse(0, 0, R * 1.32, R * 0.22, 0, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(255,42,60,0.28)'; ctx.lineWidth = 0.8; ctx.stroke(); ctx.restore();
+    ctx.strokeStyle = `rgba(${rgb},0.28)`; ctx.lineWidth = 0.8; ctx.stroke(); ctx.restore();
 
     ctx.beginPath(); path(sphere);
-    ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fill();
-    ctx.lineWidth = 1; ctx.strokeStyle = `rgba(255,42,60,${0.8 + glow * 0.2})`; ctx.stroke();
+    ctx.fillStyle = INK ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.6)'; ctx.fill();
+    ctx.lineWidth = INK ? 1.4 : 1; ctx.strokeStyle = `rgba(${rgb},${0.8 + glow * 0.2})`; ctx.stroke();
 
     ctx.beginPath(); path(graticule);
-    ctx.lineWidth = 0.4; ctx.strokeStyle = 'rgba(255,42,60,0.18)'; ctx.stroke();
+    ctx.lineWidth = 0.4; ctx.strokeStyle = `rgba(${rgb},${INK ? 0.22 : 0.18})`; ctx.stroke();
 
     if (land) {
       ctx.beginPath(); path(land);
-      ctx.fillStyle = 'rgba(255,42,60,0.08)'; ctx.fill();
-      ctx.lineWidth = 1.1; ctx.strokeStyle = RED;
-      ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; ctx.stroke(); ctx.shadowBlur = 0;
+      ctx.fillStyle = `rgba(${rgb},${INK ? 0.10 : 0.08})`; ctx.fill();
+      ctx.lineWidth = INK ? 1.3 : 1.1; ctx.strokeStyle = RED;
+      if (!INK) { ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; }
+      ctx.stroke(); ctx.shadowBlur = 0;
     }
     if (borders) {
       ctx.beginPath(); path(borders);
-      ctx.lineWidth = 0.5; ctx.strokeStyle = 'rgba(255,42,60,0.5)'; ctx.stroke();
+      ctx.lineWidth = 0.5; ctx.strokeStyle = `rgba(${rgb},0.5)`; ctx.stroke();
     }
 
-    // night side: everything more than 90° from the sun goes dark
+    // night side: everything more than 90° from the sun goes dark (a light wash on paper)
     const night = d3.geoCircle().center(sunLonLat().map((v) => -v)).radius(90)();
     ctx.beginPath(); path(night);
-    ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.fill();
+    ctx.fillStyle = INK ? `rgba(${rgb},0.07)` : 'rgba(0,0,0,0.42)'; ctx.fill();
 
     // signal arcs HQ → world, a pulse travelling along each
     const centre0 = [-rot[0], -rot[1]];
     interp.forEach((ip, i) => {
       const arc = { type: 'LineString', coordinates: d3.range(0, 1.0001, 0.04).map(ip) };
       ctx.beginPath(); path(arc);
-      ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.stroke();
+      ctx.lineWidth = 0.7; ctx.strokeStyle = INK ? `rgba(${rgb},0.35)` : 'rgba(255,255,255,0.22)'; ctx.stroke();
       const ph = ((t * 0.006) + i / LINKS.length) % 1;
       const pt = ip(ph);
       if (d3.geoDistance(pt, centre0) < Math.PI / 2) {
         const [qx, qy] = projection(pt);
-        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.fillStyle = INK ? RED : 'rgba(255,255,255,0.9)';
         ctx.beginPath(); ctx.arc(qx, qy, 1.3, 0, Math.PI * 2); ctx.fill();
       }
       const end = LINKS[i];
       if (d3.geoDistance([end[1], end[2]], centre0) < Math.PI / 2 - 0.05) {
         const [ex, ey] = projection([end[1], end[2]]);
-        ctx.fillStyle = 'rgba(255,255,255,0.75)';
+        ctx.fillStyle = INK ? RED : 'rgba(255,255,255,0.75)';
         ctx.beginPath(); ctx.arc(ex, ey, 1.6, 0, Math.PI * 2); ctx.fill();
-        ctx.font = '7px "JetBrains Mono", monospace'; ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        ctx.font = '7px "JetBrains Mono", monospace'; ctx.fillStyle = INK ? 'rgba(17,17,17,0.6)' : 'rgba(255,255,255,0.45)';
         ctx.fillText(end[0], ex + 5, ey - 4);
       }
     });
@@ -159,9 +164,9 @@
       const a0 = a - 0.09;
       let tx = Math.cos(a0), ty = Math.sin(a0) * Math.cos(s.incl), tz = Math.sin(a0) * Math.sin(s.incl);
       [tx, tz] = [tx * cn - tz * sn, tx * sn + tz * cn];
-      ctx.strokeStyle = front ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.08)'; ctx.lineWidth = 0.8;
+      ctx.strokeStyle = INK ? (front ? 'rgba(17,17,17,0.35)' : 'rgba(17,17,17,0.1)') : (front ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.08)'); ctx.lineWidth = 0.8;
       ctx.beginPath(); ctx.moveTo(cx + tx * R * s.alt, cy + ty * R * s.alt); ctx.lineTo(px, py); ctx.stroke();
-      ctx.fillStyle = front ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.3)';
+      ctx.fillStyle = INK ? (front ? 'rgba(17,17,17,0.85)' : 'rgba(17,17,17,0.25)') : (front ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.3)');
       ctx.beginPath(); ctx.arc(px, py, front ? 1.4 : 0.8, 0, Math.PI * 2); ctx.fill();
     });
 
@@ -177,14 +182,15 @@
       // HQ: expanding pulse rings + solid marker
       for (let k = 0; k < 3; k++) {
         const ph = ((t * 0.02) + k / 3) % 1;
-        ctx.strokeStyle = `rgba(255,42,60,${(1 - ph) * 0.8 * fade})`; ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(${rgb},${(1 - ph) * 0.8 * fade})`; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.arc(px, py, 3 + ph * 22, 0, Math.PI * 2); ctx.stroke();
       }
-      ctx.fillStyle = `rgba(255,255,255,${fade})`;
+      const ink = INK ? '17,17,17' : '255,255,255';
+      ctx.fillStyle = `rgba(${ink},${fade})`;
       ctx.beginPath(); ctx.arc(px, py, 2.4, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = `rgba(255,255,255,${0.6 * fade})`; ctx.lineWidth = 1;
+      ctx.strokeStyle = `rgba(${ink},${0.6 * fade})`; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + 14, py - 14); ctx.lineTo(px + 22, py - 14); ctx.stroke();
-      ctx.fillStyle = `rgba(255,255,255,${0.8 * fade})`;
+      ctx.fillStyle = `rgba(${ink},${0.8 * fade})`;
       ctx.fillText(label, px + 25, py - 14);
     });
   }

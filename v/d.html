@@ -17,14 +17,15 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LooterStudio® · always early, never wrong">
   <meta name="twitter:image" content="https://looterstudio.xyz/assets/og.png">
-  <link rel="icon" type="image/svg+xml" href="assets/loot-monogram.svg">
-  <link rel="icon" type="image/png" href="assets/loot-logo.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/loot-monogram.svg">
+  <link rel="icon" type="image/png" href="../assets/loot-logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202609150002">
+  <link rel="stylesheet" href="../css/main.css?v=202609150002">
+  <link rel="stylesheet" href="../css/variant-d.css?v=202609150002">
 </head>
-<body>
+<body class="v-d ">
 
   <div class="tear" id="tear" aria-hidden="true"></div>
   <div class="fx" id="fx" aria-hidden="true"></div>
@@ -57,13 +58,18 @@
   </div>
 
   <main class="main" id="top">
+  <section class="hero" id="hero">
+    <div class="hero__word">LooterStudio<sup>®</sup></div>
+    <span class="hero__down">SCROLL</span>
+  </section>
+
 
     <!-- ═══════════ ANONYMOUS MARKET ═══════════ -->
     <section class="market sr" id="market">
       <header class="sr__head reveal">
         <div class="sr__brand">
-          <video src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture class="sr__brand-logo"></video>
-          <div><b>LooterStudio<sup>®</sup></b><i>always early, never wrong</i></div>
+          <video src="../assets/loot-360.mp4" poster="../assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture class="sr__brand-logo"></video>
+          <div><b>LooterStudio<sup>®</sup></b><i>always early, never wrong</i><p class="filing">Form LOOT-1 · Confidential offering memorandum · Not an offer to anyone</p></div>
         </div>
         <div class="sr__account">
           <div class="sr__stats">messages <b>1</b> <span>|</span> orders <b id="srOrders">0</b> <span>|</span> account <b id="srBalance">฿0.00</b></div>
@@ -120,7 +126,7 @@
     <!-- ═══════════ 01 · BRIER ═══════════ -->
     <section class="division" id="brier">
       <div class="target target--brier reveal">
-        <img src="assets/brier-logo.png" alt="Brier." class="target__img">
+        <img src="../assets/brier-logo.png" alt="Brier." class="target__img">
         <div class="target__box"><a class="target__tag" href="https://brier.world" target="_blank" rel="noopener">brier.world</a><i>0.97</i><b class="target__lead"></b></div>
       </div>
       <aside class="callout reveal">
@@ -132,7 +138,7 @@
     <!-- ═══════════ 02 · STAT ═══════════ -->
     <section class="division division--flip" id="stat">
       <div class="target target--stat reveal">
-        <img src="assets/stat-logo.png" alt="stat" class="target__img">
+        <img src="../assets/stat-logo.png" alt="stat" class="target__img">
         <div class="target__box"><span class="target__tag">stat</span><i>0.98</i><b class="target__lead"></b></div>
       </div>
       <aside class="callout reveal">
@@ -145,7 +151,7 @@
     <section class="outro">
       <div class="outro__row reveal">
         <div class="outro__brand">
-          <video class="outro__logo trio__logo" src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture data-offset="9.5"></video>
+          <video class="outro__logo trio__logo" src="../assets/loot-360.mp4" poster="../assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture data-offset="9.5"></video>
           <span class="outro__word">LooterStudio<sup>®</sup></span>
         </div>
         <ul class="tags">
@@ -161,9 +167,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202609150002" defer></script>
-  <script src="js/globe.js?v=202609150002" defer></script>
-  <script>window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
-  <script type="module" src="js/pay.js?v=202609111415"></script>
+  <script src="../js/main.js?v=202609150002" defer></script>
+  <script src="../js/globe.js?v=202609150002" defer></script>
+  <script>window.GLOBE_THEME = "ink";window.LOOT_ASSETS = "../";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
+  <script type="module" src="../js/pay.js?v=202609111415"></script>
 </body>
 </html>

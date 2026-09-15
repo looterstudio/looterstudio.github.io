@@ -1,0 +1,17 @@
+/* ═══ VARIANT F · NEWSPRINT RED ═══
+   Paper all the way, but the globe keeps its red and the page bleeds red at the edges: a printed dossier. */
+body.v-f { background: #f1ede3; }
+body.v-f .dvd { opacity: 1; }
+body.v-f .hero__word { color: #111; }
+body.v-f .hero__word sup { color: #b8111d; }
+body.v-f .market, body.v-f .division, body.v-f .outro { background: rgba(241,237,227,.94); }
+body.v-f .market { border-top: 6px solid #b8111d; }
+body.v-f .sr__head { border-bottom: 2px solid #b8111d; }
+body.v-f .sr__cats-title, body.v-f .sr__search button { background: #b8111d; }
+body.v-f .sr__p:hover .tile { outline: 2px solid #111; }
+body.v-f .sr__news { border-color: #b8111d; }
+body.v-f .sr__news-title { color: #b8111d; }
+body.v-f .callout__cta { background: #b8111d; color: #fff; }
+body.v-f .callout__cta:hover { background: #111; }
+body.v-f .division { border-top: 2px solid #b8111d; }
+body.v-f .stamp { position: absolute; right: 24px; top: 24px; font: 700 11px/1 var(--mono); letter-spacing: .3em; color: #b8111d; border: 2px solid #b8111d; padding: 8px 10px; transform: rotate(-8deg); opacity: .8; z-index: 2; }

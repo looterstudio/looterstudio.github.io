@@ -1,0 +1,11 @@
+/* ═══ VARIANT E · BLACK OPENING, PAPER BODY ═══
+   The opening shot stays cinematic (black, red globe, white wordmark); the store is the paper filing. */
+body.v-e { background: #000; }
+body.v-e .hero { background: #000; }
+body.v-e .hero__word { color: #f4f1ea; mix-blend-mode: difference; }
+body.v-e .hero__down { color: #888; }
+body.v-e .dvd { mix-blend-mode: normal; filter: none; opacity: .95; }
+
+body.v-e .main { background: linear-gradient(180deg, transparent 0, #f4f1ea 100vh); }
+body.v-e .market { border-top: 3px double #111; box-shadow: 0 -40px 80px rgba(0,0,0,.6); }
+body.v-e .market, body.v-e .division, body.v-e .outro { background: #f4f1ea; }
