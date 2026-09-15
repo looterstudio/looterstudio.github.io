@@ -123,3 +123,6 @@ body.v-d .forum__row:hover .forum__cta { background: #b8111d; border-color: #b81
   body.v-d .forum__desc { font-size: 14px; }
   body.v-d .forum__cta { justify-self: start; }
 }
+body.v-d .byline { margin: 28px 0 0; text-align: center; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #555; }
+body.v-d .byline a { color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.35); }
+body.v-d .byline a:hover { color: #b8111d; border-color: #b8111d; }

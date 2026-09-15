@@ -1,0 +1,26 @@
+/* ═══ I · DARK ROOM ═══ The paper goes black. Bone ink, the red planet glows, everything else stays put. */
+body.v-i { background: #0c0c0b; color: #efeae0; }
+body.v-i .main { background: linear-gradient(180deg, rgba(12,12,11,0) 0, rgba(12,12,11,0) 70vh, rgba(12,12,11,.9) 105vh, rgba(12,12,11,.9) 100%); }
+body.v-i .hero__word, body.v-i .outro__word, body.v-i .sr__brand > div b, body.v-i .creed__text, body.v-i .motto, body.v-i .forum__head b, body.v-i .forum__row, body.v-i .creed__text b, body.v-i .sr__cats a, body.v-i .sr__news a, body.v-i .sr__p-title, body.v-i .sr__stats, body.v-i .sr__search label, body.v-i .sr__user, body.v-i .callout, body.v-i .callout *, body.v-i .tags, body.v-i .byline, body.v-i .byline a, body.v-i .sr__brand > div i { color: #efeae0 !important; }
+body.v-i .sr__cats, body.v-i .sr__news, body.v-i .forum__list { background: #121211; border-color: #efeae0; }
+body.v-i .sr__cats-title, body.v-i .sr__search button { background: #efeae0; color: #0c0c0b; }
+body.v-i .sr__search input { background: #0c0c0b; color: #efeae0; border-color: #efeae0; }
+body.v-i .sr__p .tile { outline: 1px solid #2a2a28; }
+body.v-i .sr__p:hover .tile { outline: 2px solid #ff2a3c; }
+body.v-i .sr__p-price, body.v-i .sr__cats a.is-active { color: #ff2a3c !important; }
+body.v-i .sr__offer, body.v-i .sr__buy { border-color: #efeae0; color: #efeae0; }
+body.v-i .sr__offer:hover, body.v-i .sr__buy:hover { background: #efeae0; color: #0c0c0b; }
+body.v-i .forum__row { border-color: rgba(239,234,224,.15); }
+body.v-i .forum__row:hover { background: #efeae0; color: #0c0c0b !important; }
+body.v-i .forum__cta { border-color: currentColor; }
+body.v-i .target__box { border-color: #ff2a3c; box-shadow: 0 0 0 6px rgba(255,42,60,.1), 0 0 24px rgba(255,42,60,.25); }
+body.v-i .target__box i, body.v-i .callout__status { color: #ff2a3c !important; }
+body.v-i .target__lead, body.v-i .target__lead::after { background: #ff2a3c; box-shadow: 0 0 12px #ff2a3c; }
+body.v-i .target__tag { background: #ff2a3c; color: #fff; }
+body.v-i .target--brier .target__img, body.v-i .target--stat .target__img { border-color: #2a2a28; box-shadow: 0 0 40px rgba(255,42,60,.15); }
+body.v-i .creed { border-color: rgba(239,234,224,.2); }
+body.v-i .creed__seal { filter: none; opacity: .95; }
+body.v-i .motto { border-color: rgba(239,234,224,.2); }
+body.v-i .sr__news li::before, body.v-i .sr__news time, body.v-i .sr__cats i, body.v-i .forum__head span, body.v-i .forum__meta, body.v-i .forum__no { color: #8a877e !important; }
+body.v-i .dvd { opacity: 1; }
+body.v-i .xp { filter: none; }

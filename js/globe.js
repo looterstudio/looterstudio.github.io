@@ -18,7 +18,17 @@
   const RED = THEME === 'ink-black' ? '#111111' : (INK ? '#b8111d' : '#ff2a3c');
   const rgb = THEME === 'ink-black' ? '17,17,17' : (INK ? '184,17,29' : '255,42,60');
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Detail: 'wire' (the original) or 'atlas' (50m coastlines, engraved land, limb shading, rim ticks, cities).
+  const DETAIL = window.GLOBE_DETAIL || 'wire';
+  const ATLAS = DETAIL === 'atlas';
   const ctx = canvas.getContext('2d');
+  // more of the world, as small dots: the places a signal passes through
+  const CITIES = [
+    ['LOS ANGELES', -118.24, 34.05], ['MEXICO CITY', -99.13, 19.43], ['BOGOTÁ', -74.07, 4.71], ['LIMA', -77.04, -12.05], ['SANTIAGO', -70.65, -33.45],
+    ['RIO', -43.17, -22.91], ['MIAMI', -80.19, 25.76], ['TORONTO', -79.38, 43.65], ['PARIS', 2.35, 48.86], ['BERLIN', 13.40, 52.52], ['MADRID', -3.70, 40.42],
+    ['LAGOS', 3.38, 6.52], ['CAPE TOWN', 18.42, -33.93], ['NAIROBI', 36.82, -1.29], ['CAIRO', 31.24, 30.04], ['DUBAI', 55.27, 25.20], ['MUMBAI', 72.88, 19.08],
+    ['SHANGHAI', 121.47, 31.23], ['HONG KONG', 114.17, 22.32], ['SEOUL', 126.98, 37.57], ['SYDNEY', 151.21, -33.87], ['JAKARTA', 106.85, -6.21], ['MOSCOW', 37.62, 55.76], ['ISTANBUL', 28.98, 41.01],
+  ];
 
   const NODES = [['LOOTERSTUDIO HQ · BUENOS AIRES', -58.38, -34.60]];
   // Where the signal goes: the server, and the markets it talks to.
@@ -62,6 +72,7 @@
   const projection = d3.geoOrthographic().clipAngle(90);
   const path = d3.geoPath(projection, ctx);
   const graticule = d3.geoGraticule10();
+  const fine = d3.geoGraticule().step([5, 5]);
   const sphere = { type: 'Sphere' };
   let land = null, borders = null;
   let W = 0, H = 0, R = 0, dpr = 1;
@@ -106,14 +117,34 @@
 
     ctx.beginPath(); path(sphere);
     ctx.fillStyle = INK ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.6)'; ctx.fill();
+    if (ATLAS) {
+      // limb shading: the sphere reads as a solid, lit from the upper left
+      const lim = ctx.createRadialGradient(W / 2 - R * 0.35, H / 2 - R * 0.35, R * 0.2, W / 2, H / 2, R);
+      lim.addColorStop(0, INK ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.05)');
+      lim.addColorStop(0.7, 'rgba(0,0,0,0)');
+      lim.addColorStop(1, INK ? `rgba(${rgb},0.16)` : 'rgba(0,0,0,0.55)');
+      ctx.beginPath(); path(sphere); ctx.fillStyle = lim; ctx.fill();
+    }
+    ctx.beginPath(); path(sphere);
     ctx.lineWidth = INK ? 1.4 : 1; ctx.strokeStyle = `rgba(${rgb},${0.8 + glow * 0.2})`; ctx.stroke();
 
+    if (ATLAS) { ctx.beginPath(); path(fine); ctx.lineWidth = 0.25; ctx.strokeStyle = `rgba(${rgb},${INK ? 0.1 : 0.08})`; ctx.stroke(); }
     ctx.beginPath(); path(graticule);
     ctx.lineWidth = 0.4; ctx.strokeStyle = `rgba(${rgb},${INK ? 0.22 : 0.18})`; ctx.stroke();
 
     if (land) {
       ctx.beginPath(); path(land);
       ctx.fillStyle = `rgba(${rgb},${INK ? 0.07 : 0.08})`; ctx.fill();
+      if (ATLAS) {
+        // engraved land: diagonal hatching clipped to the continents
+        ctx.save(); ctx.beginPath(); path(land); ctx.clip();
+        ctx.strokeStyle = `rgba(${rgb},${INK ? 0.28 : 0.22})`; ctx.lineWidth = 0.5;
+        const step = 4.5, off = (t * 0.15) % step;
+        ctx.beginPath();
+        for (let d = -H; d < W + H; d += step) { ctx.moveTo(d + off, 0); ctx.lineTo(d + off - H, H); }
+        ctx.stroke(); ctx.restore();
+        ctx.beginPath(); path(land); // the path is not part of the saved state: rebuild it for the outline
+      }
       ctx.lineWidth = INK ? 1.3 : 1.1; ctx.strokeStyle = RED;
       if (!INK) { ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; }
       ctx.stroke(); ctx.shadowBlur = 0;
@@ -121,6 +152,28 @@
     if (borders) {
       ctx.beginPath(); path(borders);
       ctx.lineWidth = 0.5; ctx.strokeStyle = `rgba(${rgb},0.5)`; ctx.stroke();
+    }
+    if (ATLAS) {
+      // rim ticks every 10°, longer every 30°, like a bezel
+      ctx.save(); ctx.translate(W / 2, H / 2);
+      for (let a = 0; a < 360; a += 10) {
+        const r0 = R + 3, r1 = R + (a % 30 === 0 ? 10 : 6), th = a * Math.PI / 180;
+        ctx.strokeStyle = `rgba(${rgb},${a % 30 === 0 ? 0.6 : 0.3})`; ctx.lineWidth = a % 30 === 0 ? 1 : 0.6;
+        ctx.beginPath(); ctx.moveTo(Math.cos(th) * r0, Math.sin(th) * r0); ctx.lineTo(Math.cos(th) * r1, Math.sin(th) * r1); ctx.stroke();
+      }
+      ctx.restore();
+      // cities: a dot and, when near the centre, a whisper of a name
+      const c0 = [-rot[0], -rot[1]];
+      ctx.font = '6px "JetBrains Mono", monospace';
+      CITIES.forEach(([name, lon, lat]) => {
+        const d = d3.geoDistance([lon, lat], c0);
+        if (d > Math.PI / 2 - 0.05) return;
+        const [px, py] = projection([lon, lat]);
+        const f = Math.min(1, (Math.PI / 2 - d) * 1.6);
+        ctx.fillStyle = INK ? `rgba(17,17,17,${0.7 * f})` : `rgba(255,255,255,${0.7 * f})`;
+        ctx.beginPath(); ctx.arc(px, py, 1, 0, Math.PI * 2); ctx.fill();
+        if (d < 0.9) { ctx.fillStyle = INK ? `rgba(17,17,17,${0.45 * f})` : `rgba(255,255,255,${0.4 * f})`; ctx.fillText(name, px + 3, py - 3); }
+      });
     }
 
     // night side: everything more than 90° from the sun goes dark (a light wash on paper)
@@ -220,7 +273,7 @@
 
   async function loadWorld() {
     try {
-      const res = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+      const res = await fetch(`https://cdn.jsdelivr.net/npm/world-atlas@2/countries-${ATLAS ? '50m' : '110m'}.json`);
       const topo = await res.json();
       land = topojson.feature(topo, topo.objects.countries);
       borders = topojson.mesh(topo, topo.objects.countries, (a, b) => a !== b);

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LooterStudio® · always early, never wrong</title>
+  <title>LooterStudio® · variant H</title>
   <meta name="description" content="LooterStudio®. An independent studio in Buenos Aires. Brier, stat, and whatever comes next. Always early, never wrong.">
   <meta name="theme-color" content="#000000">
   <meta property="og:type" content="website">
@@ -25,8 +25,9 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css?v=202609150030">
   <link rel="stylesheet" href="../css/variant-d.css?v=202609150030">
+  <link rel="stylesheet" href="../css/variant-h.css?v=202609150030">
 </head>
-<body class="v-d is-gated">
+<body class="v-d v-h is-gated">
   <script>/* safety: if the scripts never arrive, open the door anyway */setTimeout(function(){if(!document.querySelector(".xp"))document.body.classList.remove("is-gated")},5000);</script>
 
   <div class="tear" id="tear" aria-hidden="true"></div>
@@ -59,6 +60,9 @@
     </div>
   </div>
 
+  <div class="mast">
+    <div class="mast__row"><span>VOL. I · No. 1</span><span>LOOTERSTUDIO® · BUENOS AIRES EDITION</span><span>TUESDAY, SEPTEMBER 15, 2026 · ฿0.00</span></div>
+  </div>
   <main class="main" id="top">
   <section class="hero" id="hero">
     <div>
@@ -169,7 +173,7 @@
     </section>
 
     <!-- ═══════════ OUTRO ═══════════ -->
-    <section class="outro">
+    <section class="outro" id="creed">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="3" seed="3" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.3 -.2" result="m"/><feComposite in="d" in2="m" operator="out"/></filter></svg>
       <div class="creed reveal">
         <img class="creed__seal" src="../assets/seal-verified.svg?v=2" alt="">
@@ -198,7 +202,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
   <script src="../js/main.js?v=202609150030" defer></script>
   <script src="../js/globe.js?v=202609150030" defer></script>
-  <script>window.GLOBE_THEME = "ink";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "../";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
+  <script>window.GLOBE_THEME = "ink-black";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "../";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="../js/pay.js?v=202609111415"></script>
 </body>
 </html>

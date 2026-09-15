@@ -1,0 +1,29 @@
+/* ═══ G · ATLAS ═══ Same paper, more editorial. Numbered sections, a fixed index, paper grain, engraved planet. */
+body.v-g { background: #f2eee6; }
+body.v-g::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 200; opacity: .35; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .18 0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>"); }
+/* fixed index, right edge */
+body.v-g .idx { position: fixed; right: 22px; top: 50%; transform: translateY(-50%); z-index: 40; display: grid; gap: 14px; font: 500 10px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; }
+body.v-g .idx a { color: #111; text-decoration: none; display: flex; align-items: center; gap: 10px; opacity: .55; transition: opacity .2s; }
+body.v-g .idx a:hover { opacity: 1; color: #b8111d; }
+body.v-g .idx i { font-style: normal; font-size: 9px; opacity: .6; }
+body.v-g.is-gated .idx { display: none; }
+/* numbered sections with a hairline and a running head */
+body.v-g .market, body.v-g .forum, body.v-g .division, body.v-g .outro { position: relative; padding-top: 6vh; margin-top: 8vh; border-top: 1px solid #111; }
+body.v-g .market::before, body.v-g .forum::before, body.v-g #brier::before, body.v-g #stat::before, body.v-g .outro::before { position: absolute; top: 10px; left: 0; font: 500 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #111; }
+body.v-g .market::before { content: '01 · Anonymous market'; }
+body.v-g .forum::before { content: '02 · Forum'; }
+body.v-g #brier::before { content: '03 · Division · Brier'; }
+body.v-g #stat::before { content: '04 · Division · stat'; }
+body.v-g .outro::before { content: '05 · Creed'; }
+body.v-g .forum__head { display: none; }
+body.v-g .market::after, body.v-g .forum::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { content: 'LooterStudio® · Buenos Aires'; position: absolute; top: 10px; right: 0; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #777; }
+/* type: bigger hero, tighter store */
+body.v-g .hero__word { font-size: clamp(60px, 14vw, 220px); }
+body.v-g .sr__brand > div b { font-size: 48px; }
+body.v-g .sr__p-title { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; }
+body.v-g .callout__title, body.v-g .callout h2 { font-size: clamp(14px, 1.4vw, 18px); letter-spacing: .3em; }
+body.v-g .creed { border-top: 0; margin-top: 0; }
+body.v-g .creed__text { font-size: clamp(26px, 3.6vw, 54px); max-width: 24ch; }
+@media (max-width: 1240px) { body.v-g .idx { display: none; } }
+@media (max-width: 900px) { body.v-g .market::after, body.v-g .forum::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { display: none; } }

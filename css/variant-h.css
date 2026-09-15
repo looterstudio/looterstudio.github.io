@@ -1,0 +1,42 @@
+/* ═══ H · BROADSHEET ═══ A newspaper. Masthead, double rules, figures with captions, an etched planet in black ink. */
+body.v-h { background: #f6f3ec; }
+body.v-h .mast { position: relative; z-index: 2; max-width: 1480px; margin: 0 auto; padding: 10px 24px 0; }
+body.v-h .mast__row { display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-top: 3px double #111; border-bottom: 1px solid #111; font: 500 10px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: #111; }
+body.v-h.is-gated .mast { display: none; }
+body.v-h .main { padding-top: 0; }
+body.v-h .hero { min-height: 82vh; }
+body.v-h .hero__word { font-size: clamp(60px, 13vw, 210px); }
+body.v-h .market { border-top: 3px double #111; border-bottom: 1px solid #111; padding-top: 12px; padding-bottom: 24px; }
+body.v-h .sr__cats, body.v-h .sr__news { border: 0; border-left: 1px solid #111; background: transparent; }
+body.v-h .sr__cats { border-left: 0; border-right: 1px solid #111; }
+body.v-h .sr__cats-title, body.v-h .sr__news-title { font-family: Georgia, serif; font-weight: 700; font-size: 13px; background: transparent; color: #111; border: 0; border-bottom: 1px solid #111; padding: 0 0 4px; }
+body.v-h .sr__p-title { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; line-height: 1.35; }
+body.v-h .sr__p .tile { outline: 1px solid #111; }
+/* forum as the front-page lead */
+body.v-h .forum { margin-top: 6vh; }
+body.v-h .forum__head b { font-family: Georgia, serif; font-weight: 700; letter-spacing: -.02em; }
+body.v-h .forum__list { border: 0; border-top: 3px double #111; border-bottom: 1px solid #111; background: transparent; }
+body.v-h .forum__row { grid-template-columns: 1fr auto; padding: 22px 0; }
+body.v-h .forum__no { display: none; }
+body.v-h .forum__title { font-family: Georgia, serif; font-weight: 700; font-size: clamp(30px, 4vw, 52px); letter-spacing: -.03em; max-width: 20ch; }
+body.v-h .forum__desc { font-size: 17px; max-width: 58ch; }
+body.v-h .forum__desc::first-letter { font-family: Georgia, serif; font-weight: 700; font-size: 2.6em; float: left; line-height: .8; padding: 4px 8px 0 0; }
+body.v-h .forum__row:hover { background: transparent; color: #111; }
+body.v-h .forum__row:hover .forum__title { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+/* divisions as figures */
+body.v-h .division { border-top: 1px solid #111; padding-top: 5vh; position: relative; }
+body.v-h .target { border: 1px solid #111; padding: 18px; background: #fbf9f4; }
+body.v-h .target__box { border-color: #111; box-shadow: none; }
+body.v-h .target__box i { color: #111; }
+body.v-h .target__lead, body.v-h .target__lead::after { background: #111; box-shadow: none; }
+body.v-h .target__tag { background: #111; }
+body.v-h #brier .target::after, body.v-h #stat .target::after { position: absolute; left: 0; bottom: -28px; font: italic 400 12px/1 Georgia, serif; color: #333; }
+body.v-h #brier .target::after { content: 'Fig. 1 · Brier, decentralizing quantitative funds.'; }
+body.v-h #stat .target::after { content: 'Fig. 2 · stat, human status competition.'; }
+body.v-h .callout__title, body.v-h .callout h2 { font-family: Georgia, serif; letter-spacing: .12em; }
+/* creed as an editorial */
+body.v-h .creed { border-top: 3px double #111; }
+body.v-h .creed__text { font-size: clamp(24px, 3.2vw, 46px); }
+body.v-h .creed__seal { filter: invert(1) contrast(1.2) grayscale(1) url(#ink); }
+body.v-h .motto { border-top: 1px solid #111; }
+@media (max-width: 720px) { body.v-h .mast__row { flex-direction: column; gap: 4px; align-items: center; text-align: center; } body.v-h .mast__row span:first-child, body.v-h .mast__row span:last-child { display: none; } }
