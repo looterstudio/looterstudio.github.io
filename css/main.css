@@ -578,7 +578,6 @@ a.target__tag:hover { background: #fff; color: var(--red); }
 .tile--riddle .rq__cur { font-style: normal; animation: blink 1s steps(1) infinite; }
 
 /* ─── SEIZED · camera ─── */
-.tile--seized img { filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(2.4) brightness(.8) contrast(1.1); image-rendering: pixelated; animation: none; }
 .tile--seized::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.28) 0 2px, transparent 2px 4px); pointer-events: none; }
 .tile .cam { position: absolute; z-index: 2; font: 700 9px var(--mono); letter-spacing: .22em; color: var(--green); text-shadow: 0 0 6px rgba(0,255,65,.8); }
 .cam--tl { left: 10px; top: 10px; } .cam--tr { right: 10px; top: 10px; } .cam--bl { left: 10px; bottom: 10px; } .cam--br { right: 10px; bottom: 10px; }
