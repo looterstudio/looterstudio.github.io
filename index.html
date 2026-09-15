@@ -22,10 +22,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202609150010">
-  <link rel="stylesheet" href="css/variant-d.css?v=202609150010">
+  <link rel="stylesheet" href="css/main.css?v=202609150012">
+  <link rel="stylesheet" href="css/variant-d.css?v=202609150012">
 </head>
-<body class="v-d ">
+<body class="v-d is-gated">
 
   <div class="tear" id="tear" aria-hidden="true"></div>
   <div class="fx" id="fx" aria-hidden="true"></div>
@@ -152,10 +152,12 @@
 
     <!-- ═══════════ OUTRO ═══════════ -->
     <section class="outro">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="3" seed="3" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.3 -.2" result="m"/><feComposite in="d" in2="m" operator="out"/></filter></svg>
       <div class="creed reveal">
         <img class="creed__seal" src="assets/seal-verified.svg" alt="">
         <div>
-          <p class="creed__text"><b>LooterStudio</b> is for people that aim for delusional shit with taste. Everything we do may not be for you, because we don't do things for losers.</p>
+          <p class="creed__text"><b>LooterStudio</b> is for people that aim for delusional shit with taste. Everything we do may not be for you, because we don't do things for losers. <b>Always early. Never wrong.</b></p>
+          <small class="creed__sign">LOOTERSTUDIO® · BUENOS AIRES · 2026</small>
         </div>
       </div>
       <div class="outro__row reveal">
@@ -176,8 +178,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202609150010" defer></script>
-  <script src="js/globe.js?v=202609150010" defer></script>
+  <script src="js/main.js?v=202609150012" defer></script>
+  <script src="js/globe.js?v=202609150012" defer></script>
   <script>window.GLOBE_THEME = "ink";window.LOOT_ASSETS = "";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="js/pay.js?v=202609111415"></script>
 </body>
