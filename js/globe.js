@@ -192,13 +192,6 @@
       const arc = { type: 'LineString', coordinates: d3.range(0, 1.0001, 0.04).map(ip) };
       ctx.beginPath(); path(arc);
       ctx.lineWidth = 0.7; ctx.strokeStyle = INK ? `rgba(${rgb},0.35)` : 'rgba(255,255,255,0.22)'; ctx.stroke();
-      const ph = ((t * 0.006) + i / LINKS.length) % 1;
-      const pt = ip(ph);
-      if (d3.geoDistance(pt, centre0) < Math.PI / 2) {
-        const [qx, qy] = projection(pt);
-        ctx.fillStyle = INK ? RED : 'rgba(255,255,255,0.9)';
-        ctx.beginPath(); ctx.arc(qx, qy, 1.3, 0, Math.PI * 2); ctx.fill();
-      }
       const end = LINKS[i];
       if (d3.geoDistance([end[1], end[2]], centre0) < Math.PI / 2 - 0.05) {
         const [ex, ey] = projection([end[1], end[2]]);
@@ -264,12 +257,7 @@
       const [px, py] = projection([lon, lat]);
       const fade = Math.min(1, (Math.PI / 2 - d) * 2.2);
       const pulse = 0.5 + 0.5 * Math.sin(t * 0.05 + i);
-      // HQ: expanding pulse rings + solid marker
-      for (let k = 0; k < 3; k++) {
-        const ph = ((t * 0.02) + k / 3) % 1;
-        ctx.strokeStyle = `rgba(${rgb},${(1 - ph) * 0.8 * fade})`; ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.arc(px, py, 3 + ph * 22, 0, Math.PI * 2); ctx.stroke();
-      }
+      // HQ: a solid marker with a label
       const ink = INK ? '17,17,17' : '255,255,255';
       ctx.fillStyle = `rgba(${ink},${fade})`;
       ctx.beginPath(); ctx.arc(px, py, 2.4, 0, Math.PI * 2); ctx.fill();
