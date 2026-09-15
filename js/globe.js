@@ -97,7 +97,7 @@
     const bpm = alive ? 72 : 40;
     beat = Math.pow(Math.max(0, Math.sin(performance.now() / 1000 * bpm / 60 * Math.PI * 2)), 6) * (alive ? 0.5 : 0.2);
     const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.9, W / 2, H / 2, R * 1.18);
-    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.12 : 0.22) + glow * 0.35 + beat})`); g.addColorStop(0.6, `rgba(${rgb},${0.06 + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
+    g.addColorStop(0, `rgba(${rgb},${(INK ? 0.04 : 0.22) + glow * (INK ? 0.08 : 0.35) + beat * (INK ? 0.25 : 1)})`); g.addColorStop(0.6, `rgba(${rgb},${(INK ? 0.015 : 0.06) + glow * 0.1})`); g.addColorStop(1, `rgba(${rgb},0)`);
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     // equatorial ring (orbit lane)
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-0.35);
@@ -105,7 +105,7 @@
     ctx.strokeStyle = `rgba(${rgb},0.28)`; ctx.lineWidth = 0.8; ctx.stroke(); ctx.restore();
 
     ctx.beginPath(); path(sphere);
-    ctx.fillStyle = INK ? 'rgba(255,255,255,0.28)' : 'rgba(0,0,0,0.6)'; ctx.fill();
+    ctx.fillStyle = INK ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.6)'; ctx.fill();
     ctx.lineWidth = INK ? 1.4 : 1; ctx.strokeStyle = `rgba(${rgb},${0.8 + glow * 0.2})`; ctx.stroke();
 
     ctx.beginPath(); path(graticule);
@@ -113,7 +113,7 @@
 
     if (land) {
       ctx.beginPath(); path(land);
-      ctx.fillStyle = `rgba(${rgb},${INK ? 0.10 : 0.08})`; ctx.fill();
+      ctx.fillStyle = `rgba(${rgb},${INK ? 0.07 : 0.08})`; ctx.fill();
       ctx.lineWidth = INK ? 1.3 : 1.1; ctx.strokeStyle = RED;
       if (!INK) { ctx.shadowColor = RED; ctx.shadowBlur = 6 + glow * 12; }
       ctx.stroke(); ctx.shadowBlur = 0;
