@@ -1,0 +1,42 @@
+/* ═══ VARIANT A · TERMINAL CORP ═══
+   A Bloomberg terminal bought by a cult. One phosphor green, the red of the globe, nothing else. */
+body.v-a { --bone: #d9ffe1; }
+body.v-a::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 59; background: repeating-linear-gradient(0deg, rgba(0,255,65,.035) 0 1px, transparent 1px 3px); }
+
+/* ticker */
+.ticker { position: sticky; top: 0; z-index: 70; background: #000; border-bottom: 1px solid #0f3d17; overflow: hidden; height: 26px; font: 700 10px/26px var(--mono); letter-spacing: .14em; color: var(--green); }
+.ticker__track { display: inline-flex; gap: 48px; white-space: nowrap; padding-left: 100%; animation: tick 60s linear infinite; }
+.ticker__track span i { color: var(--ghost); font-style: normal; margin-right: 8px; }
+.ticker__track span b { color: #fff; }
+.ticker__track span.up b { color: var(--green); } .ticker__track span.down b { color: var(--red); }
+@keyframes tick { to { transform: translateX(-100%); } }
+
+/* brand block: bigger, colder */
+body.v-a .sr__brand > div b { font-size: 44px; letter-spacing: -.05em; }
+body.v-a .sr__brand > div i { font-family: var(--mono); font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--green); }
+body.v-a .sr__head { border-bottom: 1px solid #0f3d17; padding-bottom: 14px; }
+body.v-a .sr__stats b { color: var(--green); }
+
+/* products as lots */
+body.v-a .sr__products { counter-reset: lot; }
+body.v-a .sr__p { position: relative; border: 1px solid #0f3d17; padding: 8px; background: #020402; }
+body.v-a .sr__p::before { counter-increment: lot; content: 'LOT #' counter(lot, decimal-leading-zero); position: absolute; top: -1px; left: -1px; z-index: 3; font: 700 8px/1 var(--mono); letter-spacing: .2em; color: #000; background: var(--green); padding: 4px 6px; }
+body.v-a .sr__p::after { content: 'LooterStudio® CERTIFIED'; position: absolute; right: 8px; bottom: 8px; font: 700 7px/1 var(--mono); letter-spacing: .18em; color: #2f6b2f; }
+body.v-a .sr__p:hover .tile { outline-color: #fff; }
+body.v-a .sr__p-price { color: var(--green); }
+
+/* sidebars as panels */
+body.v-a .sr__cats, body.v-a .sr__news { border: 1px solid #0f3d17; background: #020402; }
+body.v-a .sr__cats-title, body.v-a .sr__news-title { font: 700 9px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; color: #000; background: var(--green); display: inline-block; padding: 4px 6px; }
+
+/* divisions */
+body.v-a .division { border-top: 1px solid #0f3d17; padding-top: 6vh; position: relative; }
+body.v-a .division::before { position: absolute; top: -1px; left: 0; font: 700 9px/1 var(--mono); letter-spacing: .3em; color: #000; background: var(--green); padding: 5px 8px; }
+body.v-a #brier::before { content: 'DIV 01 · BRIER · LIVE'; }
+body.v-a #stat::before { content: 'DIV 02 · STAT · SEASON 0'; }
+body.v-a .callout__status { font-family: var(--mono); letter-spacing: .3em; }
+
+/* corporate footer */
+body.v-a .outro__row { border-top: 1px solid #0f3d17; padding-top: 24px; }
+body.v-a .corp { margin-top: 18px; font: 9px/1.8 var(--mono); letter-spacing: .22em; color: #2f6b2f; text-transform: uppercase; }
+body.v-a .corp b { color: var(--green); }

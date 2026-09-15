@@ -1,0 +1,53 @@
+/* ═══ VARIANT B · REMILIA WEB 1.0 ═══
+   Off-white paper, black type, a leaked SEC filing with an auction catalogue inside. */
+body.v-b { --black: #f4f1ea; --bone: #111; --ghost: #555; --dim: #777; --green: #0a5c2a; --green-dim: #2f7a47; --red: #b8111d; background: #f4f1ea; color: #111; }
+body.v-b::after { content: none; }
+body.v-b .fx, body.v-b .tear { display: none; }
+body.v-b, body.v-b * { font-family: Georgia, 'Times New Roman', Times, serif; }
+body.v-b code, body.v-b pre, body.v-b .sr__stats, body.v-b .sr__p-price, body.v-b .callout__status, body.v-b .sr__cats i, body.v-b .sr__news time, body.v-b .sr__offer, body.v-b .sr__buy, body.v-b .tags, body.v-b .xp, body.v-b .xp * , body.v-b .seizure__band, body.v-b .seizure__case, body.v-b .alien, body.v-b .catalog__meta { font-family: var(--mono) !important; }
+body.v-b .main { max-width: 1120px; margin: 0 auto; }
+
+/* masthead like a filing */
+body.v-b .sr__head { border-top: 3px double #111; border-bottom: 1px solid #111; padding: 18px 0 12px; }
+body.v-b .sr__brand > div b { font-size: 52px; letter-spacing: -.03em; color: #111; font-weight: 400; }
+body.v-b .sr__brand > div i { font-style: italic; color: #555; }
+body.v-b .sr__brand-logo { filter: invert(1) contrast(1.2) !important; mix-blend-mode: multiply; }
+body.v-b .sr__search input { background: #fff; border: 1px solid #111; color: #111; }
+body.v-b .sr__search button, body.v-b .sr__cats-title { background: #111; color: #f4f1ea; border: 0; }
+body.v-b .filing { font: 10px/1.7 var(--mono); letter-spacing: .08em; color: #555; text-transform: uppercase; margin: 10px 0 0; display: flex; gap: 22px; flex-wrap: wrap; }
+
+/* catalogue */
+body.v-b .sr__products { counter-reset: lot; gap: 26px 22px; }
+body.v-b .sr__p { border-bottom: 1px solid #c9c3b6; padding-bottom: 12px; }
+body.v-b .sr__p::before { counter-increment: lot; content: 'LOT ' counter(lot); display: block; font: 700 10px/1 var(--mono); letter-spacing: .24em; color: #111; margin-bottom: 8px; }
+body.v-b .sr__p .tile { outline: 1px solid #111; background: #000; }
+body.v-b .sr__p:hover .tile { outline: 2px solid #b8111d; }
+body.v-b .sr__p-title { color: #111; font-size: 14px; line-height: 1.35; margin-top: 8px; }
+body.v-b .sr__p-price { color: #b8111d; }
+body.v-b .sr__p-price::before { content: 'ESTIMATE  '; color: #777; font-size: 9px; letter-spacing: .18em; }
+body.v-b .sr__offer, body.v-b .sr__buy { border-color: #111; color: #111; background: transparent; }
+body.v-b .sr__offer:hover, body.v-b .sr__buy:hover { background: #111; color: #f4f1ea; }
+
+body.v-b .sr__cats, body.v-b .sr__news { border: 1px solid #111; background: #faf8f3; }
+body.v-b .sr__cats a, body.v-b .sr__news a { color: #111; }
+body.v-b .sr__cats a.is-active { color: #b8111d; }
+body.v-b .sr__news li::before { color: #111; }
+
+/* offerings */
+body.v-b .division { border-top: 1px solid #111; padding-top: 5vh; }
+body.v-b .target__img { filter: invert(1); }
+body.v-b .target--brier .target__img { filter: none; mix-blend-mode: multiply; background: #000; padding: 20px; }
+body.v-b .target--stat .target__img { filter: none; mix-blend-mode: multiply; background: #000; padding: 20px; }
+body.v-b .target__box { border-color: #111; }
+body.v-b .target__tag { background: #111; color: #f4f1ea; }
+body.v-b .callout__status { color: #111; letter-spacing: .3em; }
+body.v-b .callout__cta { background: #111; color: #f4f1ea; }
+body.v-b .callout__cta:hover { background: #b8111d; color: #fff; }
+
+/* globe: ink on paper */
+body.v-b .dvd { mix-blend-mode: multiply; filter: grayscale(1) contrast(1.4); opacity: .8; }
+
+/* LOOT.exe: gray 95 on paper reads better than blue */
+body.v-b .xp__bar { background: #7a7a7a !important; }
+body.v-b .outro__word { color: #111; }
+body.v-b .tags li { color: #555; }

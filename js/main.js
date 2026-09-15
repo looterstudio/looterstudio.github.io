@@ -9,7 +9,6 @@ const MANIFESTO = [
   'LOOT IS AI WEAPONIZATION.',
   'LOOT IS A QUANTITATIVE FUND.',
   'LOOT IS A COLD BEER.',
-  'LOOT IS OPIUM.',
   'LOOT IS SOFTWARE.',
   'LOOT IS A RECORD LABEL.',
   'LOOT IS A PRIVATE CLUB.',
@@ -17,21 +16,17 @@ const MANIFESTO = [
   'LOOT IS AN ARTIST.',
   'LOOT IS A BANK.',
   'LOOT IS A CASINO.',
-  'LOOT IS A WEAPON.',
   'LOOT IS A CULT.',
-  'LOOT IS A COLLECTION.',
   'LOOT IS A MARKET.',
   'LOOT IS A GAME.',
   'LOOT IS A MOVEMENT.',
   'LOOT IS AN INTERNET COMPANY.',
   'LOOT IS A FUCKING IDEA.',
-  'LOOT IS NOT FOR POORS.',
   'LOOT IS TASTE.',
   'LOOT IS SPEED.',
   'LOOT IS OBSESSION.',
   'LOOT IS CAPITAL.',
   'LOOT IS CHAOS.',
-  'LOOT IS SEX.',
   'LOOT IS BEAUTY.',
   'LOOT IS RISK.',
   'LOOT IS LEVERAGE.',
@@ -39,16 +34,51 @@ const MANIFESTO = [
   'LOOT IS MOG.',
   'LOOT IS IQMAXING.',
   'LOOT IS BEING EARLY.',
-  'LOOT IS ILLUMINATI.',
   'LOOT IS CORPORATE LARP.',
-  'LOOT MAYBE NOT FOR YOU.',
-  'LOOT WILL EXPLODE YOUR HEAD.',
-  'LOOT IS FOR NEETS.',
   'LOOT IS FOR COMPETITIVE PEOPLE.',
   'LOOT IS A PRIVATE FUND.',
-  'LOOT IS COOLER THAN A BANK.',
   'LOOT IS A VENTURE CAPITAL.',
   'LOOT IS WHATEVER COMES NEXT.',
+  'LOOT IS A SOVEREIGN STATE.',
+  'LOOT IS TOO EARLY TO EXPLAIN.',
+  'LOOT IS A RUNNING CLUB.',
+  'LOOT IS A SEASON, NOT A YEAR.',
+  'LOOT IS 0.97 BRIER.',
+  'LOOT IS A DECOMMISSIONED SATELLITE.',
+  'LOOT IS HEADQUARTERED IN BUENOS AIRES.',
+  'LOOT IS A FAMILY OFFICE FOR PEOPLE WITHOUT A FAMILY.',
+  'LOOT IS THREE PEOPLE.',
+  'LOOT IS NOT HIRING.',
+  'LOOT IS PRE-REVENUE, POST-TASTE.',
+  'LOOT IS A VAULT NOBODY CAN OPEN.',
+  'LOOT IS A BOT THAT NEVER SLEEPS.',
+  'LOOT IS LISTED NOWHERE.',
+  'LOOT IS WORTH $1,000,000,000 (SOURCE: LOOT).',
+  'LOOT IS A LEADERBOARD.',
+  'LOOT IS WHO PASSED YOU.',
+  'LOOT IS 5 KM BEFORE WORK.',
+  'LOOT IS A RECORD LABEL WITH NO RECORDS.',
+  'LOOT IS AN ART SCHOOL WITH NO TEACHERS.',
+  'LOOT IS AUDITED BY NOBODY.',
+  'LOOT IS 100% VERIFIED HUMAN.',
+  "LOOT IS YOUR RIVAL'S FRAT.",
+  'LOOT IS A COLD START.',
+  'LOOT IS SIGNAL, NOT NOISE.',
+  'LOOT IS A SILK ROAD FOR IDEAS.',
+  'LOOT IS A 4 DOLLAR SERVER IN HELSINKI.',
+  'LOOT IS PROOF OF RUN.',
+  'LOOT IS THE DREAD PIRATE.',
+  'LOOT IS DECENTRALIZING.',
+  'LOOT IS CLR: LEVEL_6.',
+  'LOOT IS A TERMINAL.',
+  'LOOT IS NOT A CHARITY.',
+  'LOOT IS ALWAYS EARLY.',
+  'LOOT IS NEVER WRONG.',
+  'LOOT IS A GLOBE WITH ONE DOT.',
+  'LOOT IS SEIZED.',
+  'LOOT IS 1 OF 1.',
+  "LOOT IS WHATEVER YOU CAN'T BUY.",
+  'LOOT IS STILL LOADING.',
 ];
 
 
@@ -85,7 +115,7 @@ function scramble(el, target, { frames = 9, tick = 28, onSet } = {}) {
 /* ═══════════════════════════════════════════════════════════════
    LOOT.exe — manifesto cycler + ACCEPT / DENY consequences
    ═══════════════════════════════════════════════════════════════ */
-const XP = { idx: 0, paused: false, denies: 0, timer: null, accepted: false };
+const XP = { idx: 0, paused: false, denies: 0, timer: null, accepted: false, grants: 0, closes: 0 };
 try { XP.accepted = localStorage.getItem('loot.clr') === '6'; } catch (_) {}
 
 function initXP() {
@@ -122,7 +152,7 @@ function initXP() {
     XP.accepted = false; try { localStorage.removeItem('loot.clr'); } catch (_) {}
     xp.classList.remove('is-min', 'is-collapsed');
     document.body.classList.remove('deny-flash'); void document.body.offsetWidth; document.body.classList.add('deny-flash');
-    const DENIALS = ['HAHAHA LOOT IS NOT FOR YOU THEN.', 'LOOT IS NOT FOR POORS.', 'LOOT MAYBE NOT FOR YOU.', 'LOOT WILL EXPLODE YOUR HEAD.', 'LOOT IS NOT FOR YOU. STILL.'];
+    const DENIALS = ['HAHAHA LOOT IS NOT FOR YOU THEN.', 'LOOT NOTED YOUR ANSWER.', 'LOOT MAYBE NOT FOR YOU.', 'LOOT WILL EXPLODE YOUR HEAD.', 'LOOT IS NOT FOR YOU. STILL.'];
     const text = DENIALS[Math.min(XP.denies - 1, DENIALS.length - 1)];
     hold(text, 'is-error', 2600);
     errorCascade(XP.denies >= 3 ? 8 : 5, text);
@@ -132,7 +162,8 @@ function initXP() {
   const accept = () => {
     XP.accepted = true;
     if (document.body.classList.contains('is-gated')) { document.body.classList.remove('is-gated'); window.scrollTo(0, 0); tearFlash(); xp.classList.remove('is-min'); setTimeout(() => dispatchEvent(new Event('resize')), 100); }
-    hold('ACCESS GRANTED. CLR: LEVEL_6.', 'is-ok', 2600, () => {
+    const GRANTS = ['ACCESS GRANTED. CLR: LEVEL_6.', 'WELCOME BACK, OPERATOR.', 'YOUR SEAT IS RESERVED.', 'DO NOT RUN THE SOURCE.', 'SATELLITE 42 ACKNOWLEDGED.'];
+    hold(XP.accepted && XP.grants++ ? pick(GRANTS) : GRANTS[0], 'is-ok', 2600, () => {
       document.querySelectorAll('.silk__item--locked').forEach((el) => {
         el.classList.add('is-unlocked');
         const em = el.querySelector('em'); if (em) em.textContent = 'unlocked';
@@ -143,7 +174,17 @@ function initXP() {
 
   $('xpAccept')?.addEventListener('click', accept);
   $('xpDeny')?.addEventListener('click', deny);
-  $('xpClose')?.addEventListener('click', deny);
+  /* Three closes in a row: it minimizes for a minute so the page below can be read. It always comes back. */
+  $('xpClose')?.addEventListener('click', () => {
+    XP.closes++;
+    if (XP.closes >= 3) {
+      XP.closes = 0; XP.paused = true;
+      xp.classList.add('is-min');
+      setTimeout(() => { xp.classList.remove('is-min'); XP.paused = false; glitch(); }, 60000);
+      return;
+    }
+    deny();
+  });
 
 }
 
@@ -171,7 +212,7 @@ function errorCascade(n, text) {
    ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world', link: 'https://brier.world' },
-  { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS' },
+  { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS · SEASON 0', link: '#stat' },
   { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', price: 1e9 },
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'tung tung tung sahur · 1/1 · <b class="verified">LooterStudio verified ✓</b>', priceLabel: '100,000 USDC', offer: 'https://www.tensor.trade/item/Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7', mint: 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
@@ -179,13 +220,13 @@ const PRODUCTS = [
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', img: 'assets/vibration.jpg', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
-  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. no refunds', price: 4.20 },
+  { id: 'human',  cat: ['apparel', 'custom'],  tile: 'human', text: '', title: 'VERIFIED HUMAN · 1 of 8,100,000,000 · no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®' },
-  { id: 'obj',    cat: ['objects', 'art'],     tile: 'riddle', text: '', title: '??????????', priceLabel: '?' },
+  { id: 'obj',    cat: ['objects', 'art'],     tile: 'alien', text: '', title: '??????????', priceLabel: '?' },
   { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
-  { id: 'redact', cat: ['custom'], tile: 'riddle', text: '', title: '?????????? [CLASSIFIED]', priceLabel: '??????' },
+  { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? [CLASSIFIED]', priceLabel: '??????' },
 ];
 
 function initMarket() {
@@ -199,7 +240,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<span class="cam cam--tl"><i class="cam__rec"></i>REC</span><span class="cam cam--tr">CAM 03</span><span class="cam cam--bl cam__time">00:00:00</span><span class="cam cam--br">LOOT</span><div class="cam__big" data-text="SEIZED">SEIZED</div>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">NOTICE OF SEIZURE</div><img class="seizure__seal" src="assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® pursuant to a warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.video ? `<video src="${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -209,7 +250,7 @@ function initMarket() {
     grid.querySelectorAll('.tile--source').forEach(matrixRain);
     grid.querySelectorAll('.tile--leverage:not(:has(img))').forEach(vibrationField);
     grid.querySelectorAll('.tile--alien').forEach(alienBlock);
-    grid.querySelectorAll('.cam__time').forEach(camClock);
+    grid.querySelectorAll('.tile--human').forEach(fingerprint);
   };
   render();
 
@@ -245,7 +286,7 @@ function initMarket() {
     } else if (Number.isNaN(p.price)) {
       flashMsg('CLASSIFIED. CLR: LEVEL_6 REQUIRED.', 'is-error'); errorCascade(3, 'ACCESS DENIED.');
     } else {
-      flashMsg('INSUFFICIENT FUNDS. LOOT IS NOT FOR POORS.', 'is-error'); errorCascade(2, 'LOOT IS NOT FOR POORS.');
+      flashMsg('INSUFFICIENT FUNDS. LOOT IS NOT A CHARITY.', 'is-error'); errorCascade(2, 'LOOT IS NOT A CHARITY.');
     }
   });
   $('srCart')?.addEventListener('click', () => flashMsg(cart ? `CART: ${cart} × LOOT.exe. CHECKOUT: NEVER.` : 'CART EMPTY. LOOT IS A MARKET.', 'is-ok'));
@@ -262,36 +303,77 @@ function camClock(el) {
   tick();
 }
 
-/* Alien terminal: two voices talking, never translated. A decrypt bar that never finishes. */
+/* Two aliens talking over a Matrix rain. Never translated, except for a flash. */
+const ALIEN_LEAKS = ['> they are early', '> observe the humans', '> do not run the source', '> the dot is in buenos aires', '> loot is listening', '> season zero begins', '> we were never wrong', '> level six confirmed'];
 function alienBlock(tile) {
   tile.innerHTML = '';
-  const pre = document.createElement('pre'); pre.className = 'alien';
-  tile.appendChild(pre);
+  const c = document.createElement('canvas'); tile.appendChild(c);
+  const pre = document.createElement('pre'); pre.className = 'alien'; tile.appendChild(pre);
+  const ctx = c.getContext('2d');
+  const fs = 10;
+  let drops = [];
+  const size = () => { c.width = tile.clientWidth; c.height = tile.clientHeight; drops = Array.from({ length: Math.ceil(c.width / fs) }, () => Math.random() * -20); };
+  size();
+  const rain = () => {
+    if (!tile.isConnected) return;
+    if (c.width !== tile.clientWidth) size();
+    ctx.fillStyle = 'rgba(0,0,0,0.07)'; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.font = `${fs}px "JetBrains Mono", monospace`;
+    drops.forEach((y, i) => {
+      if (Math.random() < 0.15) return;
+      ctx.fillStyle = Math.random() < 0.06 ? 'rgba(200,255,210,0.95)' : 'rgba(0,255,65,0.55)';
+      ctx.fillText(ALIEN_GLYPHS[Math.floor(Math.random() * ALIEN_GLYPHS.length)], i * fs, y * fs);
+      drops[i] = y * fs > c.height && Math.random() > 0.97 ? 0 : y + 0.35 + Math.random() * 0.35;
+    });
+    requestAnimationFrame(rain);
+  };
   const G = ALIEN_GLYPHS.slice(0, -2);
   const word = () => Array.from({ length: 2 + Math.floor(Math.random() * 6) }, () => G[Math.floor(Math.random() * G.length)]).join('');
   const sentence = () => Array.from({ length: 1 + Math.floor(Math.random() * 4) }, word).join(' ') + (Math.random() < 0.3 ? ' ?' : '');
   const lines = [];
-  let voice = 0, cur = '', target = sentence(), i = 0;
+  let voice = 1, cur = '', target = sentence(), i = 0, thinking = false;
   const esc = (t) => t.replace(/</g, '&lt;');
   const render = () => {
     const cursor = Math.floor(performance.now() / 400) % 2 ? '_' : ' ';
-    pre.innerHTML = [...lines, `<span>&gt; ${esc(cur)}${cursor}</span>`].join('\n');
+    pre.innerHTML = [...lines, `<span class="v${voice}">⌬${voice}&gt; ${esc(cur)}${thinking ? '···' : cursor}</span>`].join('\n');
   };
   const tick = () => {
     if (!tile.isConnected) return;
-    if (i < target.length) { cur += target[i++]; render(); setTimeout(tick, 35 + Math.random() * 80); return; }
+    if (i < target.length) { cur += target[i++]; render(); setTimeout(tick, 30 + Math.random() * 70); return; }
     setTimeout(() => {
-      lines.push(`<span>&gt; ${esc(cur)}</span>`);
-      if (Math.random() < 0.22) lines.push(`<span class="noise">${esc(Array.from({ length: 18 }, () => Math.random() < 0.5 ? '?' : G[Math.floor(Math.random() * G.length)]).join(''))}</span>`);
+      lines.push(`<span class="v${voice}">⌬${voice}&gt; ${esc(cur)}</span>`);
+      // every so often one line decrypts for an instant, then goes back to glyphs
+      if (Math.random() < 0.18) {
+        const idx = lines.length - 1, saved = lines[idx];
+        lines[idx] = `<span class="leak">${esc(pick(ALIEN_LEAKS))}</span>`; render();
+        setTimeout(() => { lines[idx] = saved; render(); }, 900 + Math.random() * 900);
+      }
       while (lines.length > 7) lines.shift();
-      cur = ''; target = sentence(); i = 0; render();
+      voice = voice === 1 ? 2 : 1; cur = ''; target = sentence(); i = 0; thinking = true; render();
       if (Math.random() < 0.3) { tile.classList.remove('is-burst'); void tile.offsetWidth; tile.classList.add('is-burst'); }
-      setTimeout(tick, 300 + Math.random() * 700);
-    }, 700 + Math.random() * 1400);
+      setTimeout(() => { thinking = false; tick(); }, 400 + Math.random() * 900);
+    }, 600 + Math.random() * 1200);
   };
   render();
-  if (REDUCED) { pre.textContent = ['> ' + sentence(), '> ' + sentence(), '> ' + sentence()].join('\n'); return; }
-  tick();
+  if (REDUCED) { pre.textContent = ['⌬1> ' + sentence(), '⌬2> ' + sentence(), '⌬1> ' + sentence()].join('\n'); return; }
+  rain(); tick();
+}
+
+/* Verified human: a fingerprint drawn from arcs, unique per visit */
+function fingerprint(tile) {
+  const c = document.createElement('canvas'); tile.innerHTML = ''; tile.appendChild(c);
+  const label = document.createElement('b'); label.textContent = 'HUMAN'; tile.appendChild(label);
+  const ctx = c.getContext('2d');
+  const W = c.width = tile.clientWidth || 200, H = c.height = tile.clientHeight || 200;
+  const seed = Math.random() * 1000;
+  ctx.strokeStyle = '#e8e6e0'; ctx.lineWidth = 1.1; ctx.lineCap = 'round';
+  for (let r = 6; r < Math.min(W, H) * 0.42; r += 5) {
+    const gaps = 1 + Math.floor((Math.sin(seed + r) + 1) * 2);
+    for (let g = 0; g < gaps; g++) {
+      const a0 = (g / gaps) * Math.PI * 2 + Math.sin(seed * r) * 0.5, a1 = a0 + (Math.PI * 2 / gaps) * (0.55 + 0.35 * Math.abs(Math.cos(seed + r * g)));
+      ctx.beginPath(); ctx.ellipse(W / 2, H / 2, r, r * 1.25, Math.sin(seed) * 0.4, a0, a1); ctx.stroke();
+    }
+  }
 }
 
 /* Alien rain inside a tile (curtains of glyphs) */
@@ -392,7 +474,7 @@ function initTagline() {
     'ᚨᛚᚹᚨᛁᛊ ᛖᚨᚱᛚᛁ, ᚾᛖᚹᛖᚱ ᚹᚱᛟᚾᚷ',
     'ⴰⵍⵡⴰⵢⵙ ⴻⴰⵔⵍⵢ, ⵏⴻⵠⴻⵔ ⵡⵔⵓⵏⴳ',
     'תמיד מוקדם, אף פעם לא טועה',
-    '01100001 01101100 01110111',
+    '01100101 01100001 01110010 01101100 01111001',
     'ALWAYS EARLY, NEVER WRONG',
   ];
   const cycle = () => {
@@ -417,7 +499,7 @@ async function runBuy(btn) {
   } catch (err) {
     const m = String(err?.message || err);
     flashMsg(m.toUpperCase().slice(0, 60), 'is-error');
-    if (/USDC/i.test(m)) errorCascade(2, 'LOOT IS NOT FOR POORS.');
+    if (/USDC/i.test(m)) errorCascade(2, 'LOOT IS NOT A CHARITY.');
   } finally { btn.disabled = false; btn.textContent = label; }
 }
 

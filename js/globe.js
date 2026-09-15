@@ -17,6 +17,35 @@
   const ctx = canvas.getContext('2d');
 
   const NODES = [['LOOTERSTUDIO HQ · BUENOS AIRES', -58.38, -34.60]];
+  // Where the signal goes: the server, and the markets it talks to.
+  const LINKS = [
+    ['HELSINKI · SERVER', 24.94, 60.17], ['NEW YORK', -74.01, 40.71], ['LONDON', -0.13, 51.51],
+    ['TOKYO', 139.69, 35.69], ['SINGAPORE', 103.82, 1.35], ['SÃO PAULO', -46.63, -23.55],
+  ];
+  const HQ = [-58.38, -34.60];
+  const interp = LINKS.map(([, lon, lat]) => d3.geoInterpolate(HQ, [lon, lat]));
+  // ADAN's heartbeat: if brier.world answers, the halo beats with it; if not, it beats anyway.
+  let beat = 0, beatAt = 0;
+  const pollBeat = async () => {
+    try {
+      const r = await fetch('https://brier.world/api/bots/adan', { cache: 'no-store' });
+      const j = await r.json();
+      const hb = Date.parse(j.lastHeartbeatAt || 0);
+      if (Date.now() - hb < 120000) beatAt = performance.now();
+    } catch (_) {}
+    setTimeout(pollBeat, 60000);
+  };
+  pollBeat();
+  // Sun position for the day/night terminator (solar declination + hour angle, good to a degree).
+  const sunLonLat = () => {
+    const now = new Date();
+    const start = Date.UTC(now.getUTCFullYear(), 0, 0);
+    const day = (now - start) / 864e5;
+    const decl = -23.44 * Math.cos((2 * Math.PI / 365) * (day + 10));
+    const hours = now.getUTCHours() + now.getUTCMinutes() / 60;
+    const lon = (12 - hours) * 15;
+    return [lon, decl];
+  };
 
   const SATS = Array.from({ length: 90 }, () => ({
     incl: (Math.random() * 160 - 80) * Math.PI / 180,
@@ -59,9 +88,12 @@
       ctx.fillStyle = `rgba(255,255,255,${0.25 * tw})`;
       ctx.fillRect(sx * W, sy * H, sz > 0.8 ? 1.5 : 1, sz > 0.8 ? 1.5 : 1);
     });
-    // atmosphere
+    // atmosphere; the halo beats with ADAN (see pollBeat), 72 bpm
+    const alive = performance.now() - beatAt < 130000;
+    const bpm = alive ? 72 : 40;
+    beat = Math.pow(Math.max(0, Math.sin(performance.now() / 1000 * bpm / 60 * Math.PI * 2)), 6) * (alive ? 0.5 : 0.2);
     const g = ctx.createRadialGradient(W / 2, H / 2, R * 0.9, W / 2, H / 2, R * 1.18);
-    g.addColorStop(0, `rgba(255,42,60,${0.22 + glow * 0.35})`); g.addColorStop(0.6, `rgba(255,42,60,${0.06 + glow * 0.1})`); g.addColorStop(1, 'rgba(255,42,60,0)');
+    g.addColorStop(0, `rgba(255,42,60,${0.22 + glow * 0.35 + beat})`); g.addColorStop(0.6, `rgba(255,42,60,${0.06 + glow * 0.1})`); g.addColorStop(1, 'rgba(255,42,60,0)');
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     // equatorial ring (orbit lane)
     ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(-0.35);
@@ -85,6 +117,34 @@
       ctx.beginPath(); path(borders);
       ctx.lineWidth = 0.5; ctx.strokeStyle = 'rgba(255,42,60,0.5)'; ctx.stroke();
     }
+
+    // night side: everything more than 90° from the sun goes dark
+    const night = d3.geoCircle().center(sunLonLat().map((v) => -v)).radius(90)();
+    ctx.beginPath(); path(night);
+    ctx.fillStyle = 'rgba(0,0,0,0.42)'; ctx.fill();
+
+    // signal arcs HQ → world, a pulse travelling along each
+    const centre0 = [-rot[0], -rot[1]];
+    interp.forEach((ip, i) => {
+      const arc = { type: 'LineString', coordinates: d3.range(0, 1.0001, 0.04).map(ip) };
+      ctx.beginPath(); path(arc);
+      ctx.lineWidth = 0.7; ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.stroke();
+      const ph = ((t * 0.006) + i / LINKS.length) % 1;
+      const pt = ip(ph);
+      if (d3.geoDistance(pt, centre0) < Math.PI / 2) {
+        const [qx, qy] = projection(pt);
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        ctx.beginPath(); ctx.arc(qx, qy, 1.3, 0, Math.PI * 2); ctx.fill();
+      }
+      const end = LINKS[i];
+      if (d3.geoDistance([end[1], end[2]], centre0) < Math.PI / 2 - 0.05) {
+        const [ex, ey] = projection([end[1], end[2]]);
+        ctx.fillStyle = 'rgba(255,255,255,0.75)';
+        ctx.beginPath(); ctx.arc(ex, ey, 1.6, 0, Math.PI * 2); ctx.fill();
+        ctx.font = '7px "JetBrains Mono", monospace'; ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        ctx.fillText(end[0], ex + 5, ey - 4);
+      }
+    });
 
     const cx = W / 2, cy = H / 2;
     SATS.forEach((s) => {
