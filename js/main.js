@@ -221,6 +221,7 @@ const PRODUCTS = [
   { id: 'taste',  cat: ['art', 'ideas'],       tile: 'taste', text: 'taste', title: 'Taste. cannot be bought, only recognized', price: Infinity },
   { id: 'lev',    cat: ['capital', 'signals'], tile: 'leverage', img: 'assets/vibration.jpg', title: 'High Vibration 10x LEVERAGE. Handle with care', price: 67.32 },
   { id: 'human',  cat: ['apparel', 'custom'],  tile: 'human', text: '', title: 'VERIFIED HUMAN · 1 of 8,100,000,000 · no refunds', price: 4.20 },
+  { id: 'cult',   cat: ['apparel', 'custom'],  tile: 'cult',  img: 'assets/illuminati.jpg', title: 'ILLUMINATI MEMBERSHIP. hoodie incl. no refunds', price: 4.20 },
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®' },
@@ -758,8 +759,11 @@ function initCursor() {
     // shattered glass where it landed (page coords so it scrolls with content)
     shots++;
     const h = crackGlass(pageX, pageY, shots >= 2 ? shots - 1 : 0);
-    setTimeout(() => h.classList.add('is-fading'), 9000);
-    setTimeout(() => h.remove(), 11000);
+    setTimeout(() => h.classList.add('is-fading'), 3200);
+    setTimeout(() => h.remove(), 4400);
+    // never more than a handful of holes on screen: the oldest go first, so rapid fire can't choke the page
+    const holes = document.querySelectorAll('.crack');
+    for (let i = 0; i < holes.length - 6; i++) holes[i].remove();
     // what did we hit?
     for (const [sel, fn] of HITTABLE) {
       const el = e.target.closest(sel);

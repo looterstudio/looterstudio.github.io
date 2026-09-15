@@ -88,7 +88,7 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 @media (hover: none) { .cursor { display: none; } body, a, button { cursor: auto; } }
 
 /* shot effects: cracked screen glass */
-.crack { position: absolute; width: 420px; height: 420px; margin: -210px 0 0 -210px; pointer-events: none; z-index: 30; animation: crackIn .1s steps(2) both; transition: opacity 2s; }
+.crack { position: absolute; width: 420px; height: 420px; margin: -210px 0 0 -210px; pointer-events: none; z-index: 30; animation: crackIn .1s steps(2) both; transition: opacity 1.2s; }
 .crack.is-fading { opacity: 0; }
 .crack svg { display: block; }
 .crack .drip { transform-box: fill-box; clip-path: inset(0 0 100% 0); animation: drip 4s cubic-bezier(.55,0,.75,.6) forwards; }
