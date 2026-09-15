@@ -23,9 +23,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/main.css?v=202609150031">
-  <link rel="stylesheet" href="../css/variant-d.css?v=202609150031">
-  <link rel="stylesheet" href="../css/variant-g.css?v=202609150031">
+  <link rel="stylesheet" href="../css/main.css?v=202609150032">
+  <link rel="stylesheet" href="../css/variant-d.css?v=202609150032">
+  <link rel="stylesheet" href="../css/variant-g.css?v=202609150032">
 </head>
 <body class="v-d v-g is-gated">
   <script>/* safety: if the scripts never arrive, open the door anyway */setTimeout(function(){if(!document.querySelector(".xp"))document.body.classList.remove("is-gated")},5000);</script>
@@ -136,18 +136,19 @@
     </section>
 
     <section class="forum reveal" id="forum">
-      <div class="forum__head"><img class="forum__logo" src="../assets/lootchan.svg?v=1" alt="lootchan"><span>/loot/ · the Dread Pirate Looter writes · replies are on X</span></div>
-      <div class="forum__list">
-        <a class="forum__row" href="../f/the-barrier-just-fell.html">
-          <span class="forum__no">No.0001</span>
-          <span class="forum__main">
-            <b class="forum__title">The barrier just fell</b>
-            <span class="forum__desc">Every time a barrier to knowledge falls, the people who built their identity around it get exposed. This time the barrier is the cost of learning itself.</span>
-            <span class="forum__meta"><i>Dread Pirate Looter</i> · 2026-09-09 · 6 min read · <span class="forum__likes" data-likes="0001">♥ 12</span></span>
-          </span>
-          <span class="forum__cta">READ THREAD →</span>
-        </a>
-      </div>
+      <a class="chan" href="../f/the-barrier-just-fell.html">
+        <div class="chan__nav">[ <span>home</span> / <span>market</span> / <span>brier</span> / <span>stat</span> / <b>loot</b> ]</div>
+        <div class="chan__head">
+          <img class="chan__logo" src="../assets/lootchan.svg?v=1" alt="lootchan">
+          <div class="chan__board">/loot/ - Delusional Mindset</div>
+          <div class="chan__sub">The Dread Pirate Looter writes. Replies are on X.</div>
+        </div>
+        <div class="chan__thread">
+          <div class="chan__info"><span class="chan__subject">The barrier just fell</span> <span class="chan__name">Dread Pirate Looter</span><span class="chan__trip">!!LOOT16z</span> <span>09/09/26(Tue)</span> <span>No.0001</span> <span class="chan__likes" data-likes="0001">♥ 12</span></div>
+          <p class="chan__text">Every time in history a barrier to knowledge falls, the people who built their whole identity around that barrier get exposed. The printing press ended the monopoly scribes had over books. The steam engine ended the need for manual, local labor. Each time, the people who spent their whole life mastering the old way were the last ones to see it coming. And we are at that exact moment again. But this time the barrier falling is not distance or access to information. <b>It is the cost of learning itself.</b></p>
+          <div class="chan__more">[ Read thread · 6 min ]</div>
+        </div>
+      </a>
     </section>
 
     <!-- ═══════════ 01 · BRIER ═══════════ -->
@@ -200,8 +201,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="../js/main.js?v=202609150031" defer></script>
-  <script src="../js/globe.js?v=202609150031" defer></script>
+  <script src="../js/main.js?v=202609150032" defer></script>
+  <script src="../js/globe.js?v=202609150032" defer></script>
   <script>window.GLOBE_THEME = "ink";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "../";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="../js/pay.js?v=202609111415"></script>
 </body>

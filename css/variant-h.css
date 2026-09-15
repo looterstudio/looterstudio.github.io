@@ -12,17 +12,6 @@ body.v-h .sr__cats { border-left: 0; border-right: 1px solid #111; }
 body.v-h .sr__cats-title, body.v-h .sr__news-title { font-family: Georgia, serif; font-weight: 700; font-size: 13px; background: transparent; color: #111; border: 0; border-bottom: 1px solid #111; padding: 0 0 4px; }
 body.v-h .sr__p-title { font-family: Georgia, 'Times New Roman', serif; font-size: 14px; line-height: 1.35; }
 body.v-h .sr__p .tile { outline: 1px solid #111; }
-/* forum as the front-page lead */
-body.v-h .forum { margin-top: 6vh; }
-body.v-h .forum__head b { font-family: Georgia, serif; font-weight: 700; letter-spacing: -.02em; }
-body.v-h .forum__list { border: 0; border-top: 3px double #111; border-bottom: 1px solid #111; background: transparent; }
-body.v-h .forum__row { grid-template-columns: 1fr auto; padding: 22px 0; }
-body.v-h .forum__no { display: none; }
-body.v-h .forum__title { font-family: Georgia, serif; font-weight: 700; font-size: clamp(30px, 4vw, 52px); letter-spacing: -.03em; max-width: 20ch; }
-body.v-h .forum__desc { font-size: 17px; max-width: 58ch; }
-body.v-h .forum__desc::first-letter { font-family: Georgia, serif; font-weight: 700; font-size: 2.6em; float: left; line-height: .8; padding: 4px 8px 0 0; }
-body.v-h .forum__row:hover { background: transparent; color: #111; }
-body.v-h .forum__row:hover .forum__title { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
 /* divisions as figures */
 body.v-h .division { border-top: 1px solid #111; padding-top: 5vh; position: relative; }
 body.v-h .target { border: 1px solid #111; padding: 18px; background: #fbf9f4; }

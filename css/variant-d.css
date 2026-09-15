@@ -101,28 +101,27 @@ body.v-d .tile--taste span { font-family: Georgia, 'Times New Roman', serif; fon
 body.v-d .motto { margin: 8vh 0 0; padding-top: 24px; border-top: 1px solid rgba(17,17,17,.15); text-align: center; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: clamp(18px, 2vw, 26px); color: #111; }
 body.v-d .motto b { display: block; margin-top: 6px; font-style: normal; font-family: var(--brand); font-weight: 900; font-size: 1.35em; letter-spacing: -.03em; }
 
-/* ─── Forum: every row is one big link. Hover flips it to ink. ─── */
-body.v-d .forum { margin-top: 10vh; font-family: Georgia, 'Times New Roman', serif; }
-body.v-d .forum__head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 12px; }
-body.v-d .forum__logo { height: 34px; width: auto; }
-body.v-d .forum__head span { font: 400 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: #555; }
-body.v-d .forum__list { border: 1px solid #111; background: #faf8f3; }
-body.v-d .forum__row { display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center; padding: 20px 22px; color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.15); transition: background .15s, color .15s; }
-body.v-d .forum__row:last-child { border-bottom: 0; }
-body.v-d .forum__row:hover { background: #111; color: #f4f1ea; }
-body.v-d .forum__no { font: 400 11px/1 var(--mono); letter-spacing: .12em; opacity: .6; }
-body.v-d .forum__title { display: block; font-family: var(--brand); font-weight: 900; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -.04em; line-height: 1; margin-bottom: 8px; }
-body.v-d .forum__desc { display: block; font-size: 15px; line-height: 1.45; max-width: 64ch; opacity: .85; }
-body.v-d .forum__meta { display: block; margin-top: 10px; font: 400 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; opacity: .6; }
-body.v-d .forum__meta i { font-style: normal; }
-body.v-d .forum__cta { font: 700 11px/1 var(--mono); letter-spacing: .22em; border: 1px solid currentColor; padding: 12px 14px; white-space: nowrap; }
-body.v-d .forum__row:hover .forum__cta { background: #b8111d; border-color: #b8111d; color: #fff; }
-@media (max-width: 720px) {
-  body.v-d .forum__row { grid-template-columns: 1fr; gap: 12px; padding: 16px 14px; }
-  body.v-d .forum__no { display: none; }
-  body.v-d .forum__desc { font-size: 14px; }
-  body.v-d .forum__cta { justify-self: start; }
-}
+/* ─── LOOTCHAN on the landing: the board itself, as a card you can click into ─── */
+body.v-d .forum { margin-top: 10vh; }
+body.v-d .chan { display: block; max-width: 900px; margin: 0 auto; background: #ffffee; border: 1px solid #d9bfb7; box-shadow: 0 1px 0 #d9bfb7, 0 24px 60px -30px rgba(0,0,0,.35); color: #800000; text-decoration: none; font: 13px/1.4 Arial, Helvetica, sans-serif; padding: 6px 14px 16px; transition: transform .2s, box-shadow .2s; }
+body.v-d .chan:hover { transform: translateY(-2px); box-shadow: 0 1px 0 #d9bfb7, 0 30px 70px -30px rgba(0,0,0,.45); }
+body.v-d .chan__nav { font-size: 11px; color: #89a; }
+body.v-d .chan__nav b { color: #800000; }
+body.v-d .chan__head { text-align: center; margin: 18px 0 10px; padding-bottom: 12px; border-bottom: 1px solid #d9bfb7; }
+body.v-d .chan__logo { width: 260px; max-width: 70vw; height: auto; }
+body.v-d .chan__board { font: 700 24px/1.1 Tahoma, Arial, sans-serif; color: #af0a0f; letter-spacing: -1px; margin-top: 6px; }
+body.v-d .chan__sub { font-size: 12px; color: #34345c; margin-top: 4px; }
+body.v-d .chan__thread { background: #f0e0d6; border: 1px solid #d9bfb7; border-left: 0; border-top: 0; padding: 10px 14px 12px; margin-top: 6px; }
+body.v-d .chan__info { font-size: 12px; margin-bottom: 8px; }
+body.v-d .chan__subject { color: #cc1105; font-weight: 700; font-size: 15px; }
+body.v-d .chan__name { color: #117743; font-weight: 700; }
+body.v-d .chan__trip { color: #228854; }
+body.v-d .chan__likes { color: #dd0000; font-weight: 700; }
+body.v-d .chan__text { font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.5; color: #3b0000; margin: 0; max-width: 72ch; }
+body.v-d .chan__text b { font-family: Arial, Helvetica, sans-serif; font-weight: 900; color: #800000; }
+body.v-d .chan__more { margin-top: 10px; font-size: 12px; color: #34345c; text-decoration: underline; }
+body.v-d .chan:hover .chan__more { color: #dd0000; }
+@media (max-width: 720px) { body.v-d .chan { padding: 6px 10px 12px; } body.v-d .chan__text { font-size: 15px; } body.v-d .chan__board { font-size: 20px; } }
 body.v-d .byline { margin: 28px 0 0; text-align: center; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #555; }
 body.v-d .byline a { color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.35); }
 body.v-d .byline a:hover { color: #b8111d; border-color: #b8111d; }

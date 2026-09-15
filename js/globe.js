@@ -61,6 +61,13 @@
     return [lon, decl];
   };
 
+  // shooting stars: a few bright heads on fast tilted orbits, each dragging a long fading tail
+  const mkShooter = () => ({
+    incl: (Math.random() * 120 - 60) * Math.PI / 180, node: Math.random() * Math.PI * 2, phase: Math.random() * Math.PI * 2,
+    speed: (0.9 + Math.random() * 0.9) * (Math.random() < 0.5 ? 1 : -1), alt: 1.12 + Math.random() * 0.3, ecc: 0.75 + Math.random() * 0.25,
+    tail: [], life: 0, span: 900 + Math.random() * 900,
+  });
+  const SHOOTERS = Array.from({ length: 4 }, mkShooter);
   const SATS = Array.from({ length: 90 }, () => ({
     incl: (Math.random() * 160 - 80) * Math.PI / 180,
     phase: Math.random() * Math.PI * 2,
@@ -218,6 +225,33 @@
       ctx.beginPath(); ctx.moveTo(cx + tx * R * s.alt, cy + ty * R * s.alt); ctx.lineTo(px, py); ctx.stroke();
       ctx.fillStyle = INK ? (front ? 'rgba(17,17,17,0.85)' : 'rgba(17,17,17,0.25)') : (front ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.3)');
       ctx.beginPath(); ctx.arc(px, py, front ? 1.4 : 0.8, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // shooting stars
+    SHOOTERS.forEach((sh, k) => {
+      sh.life++;
+      if (sh.life > sh.span) Object.assign(sh, mkShooter(), { life: 0 });
+      const a = sh.phase + sh.life * sh.speed * 0.02;
+      let sx = Math.cos(a) * sh.alt, sy = Math.sin(a) * Math.cos(sh.incl) * sh.alt * sh.ecc, sz = Math.sin(a) * Math.sin(sh.incl) * sh.alt;
+      const cn = Math.cos(sh.node), sn = Math.sin(sh.node);
+      [sx, sz] = [sx * cn - sz * sn, sx * sn + sz * cn];
+      const front = sz > -0.1 || Math.hypot(sx, sy) > 1.02;
+      const px = cx + sx * R, py = cy + sy * R;
+      sh.tail.push([px, py, front]); if (sh.tail.length > 48) sh.tail.shift();
+      const fade = Math.min(1, sh.life / 40, (sh.span - sh.life) / 60);
+      for (let i = 1; i < sh.tail.length; i++) {
+        const [x0, y0, f0] = sh.tail[i - 1], [x1, y1, f1] = sh.tail[i];
+        if (!f0 || !f1) continue;
+        const q = i / sh.tail.length;
+        ctx.strokeStyle = INK ? `rgba(${rgb},${q * 0.9 * fade})` : `rgba(255,${200 + q * 55},${180 + q * 75},${q * fade})`;
+        ctx.lineWidth = q * 3; ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+      }
+      if (front) {
+        if (!INK) { ctx.shadowColor = '#fff'; ctx.shadowBlur = 12; }
+        ctx.fillStyle = INK ? RED : '#fff';
+        ctx.beginPath(); ctx.arc(px, py, 1.9, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+      }
     });
 
     ctx.font = '9px "JetBrains Mono", monospace';
