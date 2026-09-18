@@ -651,7 +651,7 @@ body.is-gated .xp__min { visibility: hidden; }
 @media (max-width: 720px) { .tile .seizure .seizure__seal { width: 40%; max-width: 70px; } }
 
 /* LOUVRE: the agency. Heart in a crosshair, on white */
-.tile--louvre { background: #fff; outline: 1px solid #222; }
+.tile--louvre { background: #000; outline: 1px solid #222; }
 .tile--louvre img { width: 100%; height: 100%; object-fit: cover; }
 .target--louvre .target__img { width: 54%; }
 .target--louvre .target__box { inset: 8% 18%; }
