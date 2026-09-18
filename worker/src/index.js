@@ -120,28 +120,6 @@ async function like(env, request, id) {
   return { id, likes: count + 1, liked: true };
 }
 
-/* TERMINATOR: the automaton reports its vitals here; the page reads them. */
-async function terminatorStatus(env) {
-  const raw = await env.LOOT.get('terminator:status');
-  const log = JSON.parse((await env.LOOT.get('terminator:log')) || '[]');
-  return { ...(raw ? JSON.parse(raw) : { born: null, alive: false, tier: 'unborn', credits: 0, usdc: 0, wallet: null, sales: 0 }), log };
-}
-async function terminatorReport(env, request) {
-  if (!env.TERMINATOR_TOKEN || request.headers.get('Authorization') !== `Bearer ${env.TERMINATOR_TOKEN}`) return { error: 'no' };
-  const body = await request.json().catch(() => null);
-  if (!body || typeof body !== 'object') return { error: 'bad body' };
-  const prev = JSON.parse((await env.LOOT.get('terminator:status')) || '{}');
-  const status = { ...prev, ...body, updated: new Date().toISOString() };
-  delete status.log;
-  await env.LOOT.put('terminator:status', JSON.stringify(status));
-  if (Array.isArray(body.log) && body.log.length) {
-    const log = JSON.parse((await env.LOOT.get('terminator:log')) || '[]');
-    const next = [...log, ...body.log.map((l) => ({ t: new Date().toISOString(), m: String(l).slice(0, 240) }))].slice(-60);
-    await env.LOOT.put('terminator:log', JSON.stringify(next));
-  }
-  return { ok: true };
-}
-
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -149,8 +127,6 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors(env) });
     try {
       if (url.pathname === '/stats') return json(env, await stats(env));
-      if (url.pathname === '/terminator') return json(env, await terminatorStatus(env));
-      if (url.pathname === '/terminator/report' && request.method === 'POST') { const out = await terminatorReport(env, request); return json(env, out, out.error ? 401 : 200); }
       const m = url.pathname.match(/^\/likes\/(\d{4})$/);
       if (m && request.method === 'GET') return json(env, { id: m[1], likes: await likes(env, m[1]) });
       if (m && request.method === 'POST') { const out = await like(env, request, m[1]); return json(env, out, out.error ? 400 : 200); }
