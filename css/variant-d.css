@@ -127,3 +127,8 @@ body.v-d .byline { margin: 28px 0 0; text-align: center; font: 400 10px/1 var(--
 body.v-d .byline a { color: #111; text-decoration: none; border-bottom: 1px solid rgba(17,17,17,.35); }
 body.v-d .byline a:hover { color: #b8111d; border-color: #b8111d; }
 body.v-d .forum__likes { color: #b8111d; }
+/* LUV Agency wordmark: Syne, wide and heavy */
+body.v-d .target--luvre .target__tag, body.v-d .target--louvre .target__tag { font-family: 'Syne', var(--brand); font-weight: 800; font-size: 15px; letter-spacing: -.03em; padding: 6px 12px; display: inline-flex; align-items: baseline; gap: 8px; }
+body.v-d .target--louvre .target__tag small { font-family: var(--mono); font-weight: 600; font-size: 8px; letter-spacing: .36em; opacity: .8; }
+body.v-d .tile--louvre::after { content: 'LUV'; position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: 'Syne', var(--brand); font-weight: 800; font-size: 22px; letter-spacing: -.04em; color: #111; }
+body.v-d .tile--louvre img { object-position: center 30%; height: 84%; }
