@@ -15,9 +15,8 @@ body.v-g .market::before { content: '01 · Anonymous market'; }
 body.v-g .forum::before { content: '02 · Lootchan'; }
 body.v-g #brier::before { content: '03 · Venture · Brier'; }
 body.v-g #louvre::before { content: '05 · Works · LUV Agency'; }
-body.v-g #terminator::before { content: '06 · Experiment · Terminator'; }
 body.v-g #stat::before { content: '04 · Venture · stat'; }
-body.v-g .outro::before { content: '07 · Creed'; }
+body.v-g .outro::before { content: '06 · Creed'; }
 
 body.v-g .market::after, body.v-g .forum::after, body.v-g #louvre::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { content: 'LooterStudio® · Buenos Aires'; position: absolute; top: 10px; right: 0; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #777; }
 /* type: bigger hero, tighter store */
