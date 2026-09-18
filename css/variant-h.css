@@ -19,8 +19,9 @@ body.v-h .target__box { border-color: #111; box-shadow: none; }
 body.v-h .target__box i { color: #111; }
 body.v-h .target__lead, body.v-h .target__lead::after { background: #111; box-shadow: none; }
 body.v-h .target__tag { background: #111; }
-body.v-h #brier .target::after, body.v-h #stat .target::after { position: absolute; left: 0; bottom: -28px; font: italic 400 12px/1 Georgia, serif; color: #333; }
+body.v-h #louvre .target::after, body.v-h #brier .target::after, body.v-h #stat .target::after { position: absolute; left: 0; bottom: -28px; font: italic 400 12px/1 Georgia, serif; color: #333; }
 body.v-h #brier .target::after { content: 'Fig. 1 · Brier, decentralizing quantitative funds.'; }
+body.v-h #louvre .target::after { content: 'Fig. 3 · LOUVRE, the agency.'; }
 body.v-h #stat .target::after { content: 'Fig. 2 · stat, human status competition.'; }
 body.v-h .callout__title, body.v-h .callout h2 { font-family: Georgia, serif; letter-spacing: .12em; }
 /* creed as an editorial */

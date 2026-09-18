@@ -53,6 +53,7 @@ body.v-d .sr__offer:hover, body.v-d .sr__buy:hover { background: #111; color: #f
 /* divisions */
 body.v-d .division { border-top: 0; padding: 8vh 24px; }
 body.v-d .target--brier .target__img, body.v-d .target--stat .target__img { filter: none; background: #000; padding: 0; border: 1px solid #111; }
+body.v-d .target--louvre .target__img { filter: none; background: #fff; padding: 0; border: 1px solid #111; }
 body.v-d .target__box { display: block; border-color: #b8111d; box-shadow: 0 0 0 6px rgba(184,17,29,.08); }
 body.v-d .target__box i { color: #b8111d; }
 body.v-d .target__lead { display: block; background: #b8111d; }

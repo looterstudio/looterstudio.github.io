@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- LOUVRE: the original mark, redrawn clean. Pink heart, in the scope. -->
+  <path d="M512 690 C 440 632, 340 566, 340 470 C 340 406, 392 370, 444 370 C 476 370, 500 388, 512 412 C 524 388, 548 370, 580 370 C 632 370, 684 406, 684 470 C 684 566, 584 632, 512 690 Z" fill="#f4a7c3"/>
+  <g fill="none" stroke="#000" stroke-linecap="butt">
+    <circle cx="512" cy="512" r="330" stroke-width="14"/>
+    <circle cx="512" cy="512" r="256" stroke-width="6"/>
+    <path d="M512 182 V842 M182 512 H842" stroke-width="8"/>
+    <!-- tick marks along the reticle -->
+    <path d="M512 296 h0 M494 330 h36 M494 372 h36 M494 414 h36 M494 456 h36 M494 568 h36 M494 610 h36 M494 652 h36 M494 694 h36" stroke-width="5"/>
+    <path d="M330 494 v36 M372 494 v36 M414 494 v36 M456 494 v36 M568 494 v36 M610 494 v36 M652 494 v36 M694 494 v36" stroke-width="5"/>
+    <!-- heavier stubs at the rim -->
+    <path d="M512 182 V240 M512 784 V842 M182 512 H240 M784 512 H842" stroke-width="16"/>
+  </g>
+</svg>
