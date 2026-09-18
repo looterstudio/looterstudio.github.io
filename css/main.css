@@ -661,3 +661,5 @@ body.is-gated .xp__min { visibility: hidden; }
 .tile--terminator::before { content: ''; position: absolute; left: 50%; top: 42%; width: 26%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, #fff 0 8%, #ff2a2a 12%, #b00 45%, #300 70%, #000 100%); box-shadow: 0 0 24px #f00, 0 0 60px rgba(255,0,0,.5); animation: eyeScan 3.4s ease-in-out infinite; }
 .tile--terminator::after { content: 'SURVIVAL TIER: LOW\A CREDITS: 0.00\A STATUS: ALIVE'; white-space: pre; position: absolute; left: 8px; bottom: 8px; font: 700 8px/1.5 var(--mono); letter-spacing: .12em; color: #ff3b3b; text-shadow: 0 0 6px rgba(255,0,0,.6); }
 @keyframes eyeScan { 0%, 100% { transform: translate(-64%, -50%); } 50% { transform: translate(-36%, -50%); } }
+.target--terminator .target__img { width: 54%; }
+.target--terminator .target__box { inset: 8% 18%; }
