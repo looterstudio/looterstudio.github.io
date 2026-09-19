@@ -318,11 +318,12 @@ function alienBlock(tile) {
   let drops = [];
   const size = () => { c.width = tile.clientWidth; c.height = tile.clientHeight; drops = Array.from({ length: Math.ceil(c.width / fs) }, () => Math.random() * -20); };
   size();
-  let onScreen = true;
+  let onScreen = true, rainN = 0;
   new IntersectionObserver((es) => { onScreen = es[0].isIntersecting; }).observe(tile);
   const rain = () => {
     if (!tile.isConnected) return;
-    if (!onScreen) { setTimeout(rain, 300); return; }
+    if (!onScreen || window.LOOT_LITE) { setTimeout(rain, 500); return; }
+    if ((rainN = (rainN || 0) + 1) % 2) { requestAnimationFrame(rain); return; }
     if (c.width !== tile.clientWidth) size();
     ctx.fillStyle = 'rgba(0,0,0,0.07)'; ctx.fillRect(0, 0, c.width, c.height);
     ctx.font = `${fs}px "JetBrains Mono", monospace`;
@@ -373,7 +374,7 @@ function keyVideos() {
   const slots = [...document.querySelectorAll('video.k360')];
   if (!slots.length) return;
   const video = slots[0];
-  const S = 360, off = document.createElement('canvas'); off.width = S; off.height = S;
+  const S = 288, off = document.createElement('canvas'); off.width = S; off.height = S;
   const octx = off.getContext('2d', { willReadFrequently: true });
   const outs = slots.map(v => {
     const c = document.createElement('canvas');
@@ -387,10 +388,10 @@ function keyVideos() {
   document.body.appendChild(video);
   const seen = new Set();
   const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
-  let odd = false;
+  let n = 0;
   const tick = () => {
-    odd = !odd;
-    if (odd && seen.size && video.readyState >= 2 && !video.paused) {
+    n++;
+    if (n % (window.LOOT_LITE ? 12 : 3) === 0 && seen.size && video.readyState >= 2 && !video.paused) {
       octx.drawImage(video, 176, 114, 382, 382, 0, 0, S, S);
       const f = octx.getImageData(0, 0, S, S), d = f.data;
       for (let i = 0; i < d.length; i += 4) {
@@ -441,11 +442,12 @@ function matrixRain(tile) {
   size();
   const fs = 11, cols = () => Math.ceil(c.width / fs);
   let drops = Array.from({ length: cols() }, () => Math.random() * -40);
-  let onScreen = true;
+  let onScreen = true, tickN = 0;
   new IntersectionObserver((es) => { onScreen = es[0].isIntersecting; }).observe(tile);
   const tick = () => {
     if (!tile.isConnected) return;
-    if (!onScreen) { setTimeout(tick, 300); return; }
+    if (!onScreen || window.LOOT_LITE) { setTimeout(tick, 500); return; }
+    if ((tickN = (tickN || 0) + 1) % 2) { requestAnimationFrame(tick); return; }
     if (c.width !== tile.clientWidth) { size(); drops = Array.from({ length: cols() }, () => Math.random() * -40); }
     ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(0, 0, c.width, c.height);
     ctx.font = `${fs}px "JetBrains Mono", monospace`;
@@ -516,7 +518,7 @@ function vibrationField(tile) {
     v.addColorStop(0, 'rgba(5,0,30,0)'); v.addColorStop(1, 'rgba(5,0,30,.85)');
     ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
     t++;
-    if (loop) { if (onScreen) requestAnimationFrame(() => draw(true)); else setTimeout(() => draw(true), 300); }
+    if (loop) { if (onScreen && !window.LOOT_LITE) requestAnimationFrame(() => draw(true)); else setTimeout(() => draw(true), 500); }
   };
   let onScreen = true;
   new IntersectionObserver((es) => { onScreen = es[0].isIntersecting; }).observe(tile);
@@ -976,3 +978,15 @@ keyVideos();
 document.querySelectorAll('[data-likes]').forEach((el) => {
   fetch(`${window.LOOT_WORKER || 'https://loot-market.looterstudio.workers.dev'}/likes/${el.dataset.likes}`).then((r) => r.json()).then((j) => { if (j.likes != null) el.textContent = `♥ ${j.likes}`; }).catch(() => {});
 });
+
+/* Lite mode: if this machine cannot hold 60 fps for the first seconds, the page
+   turns its own effects down instead of stuttering. Rains stop on a frame, the
+   360 stops spinning, the globe redraws less. Nothing visual disappears. */
+(function () {
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (REDUCED) { window.LOOT_LITE = true; document.body.classList.add('is-lite'); return; }
+  const f = []; let last = performance.now();
+  const g = (t) => { f.push(t - last); last = t; if (f.length < 150) requestAnimationFrame(g); else judge(); };
+  const judge = () => { f.sort((a, b) => a - b); const p75 = f[Math.floor(f.length * 0.75)]; if (p75 > 24) { window.LOOT_LITE = true; document.body.classList.add('is-lite'); } };
+  setTimeout(() => requestAnimationFrame(g), 2500);
+})();

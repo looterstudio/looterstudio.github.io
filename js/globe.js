@@ -103,8 +103,9 @@
   let x = innerWidth * 0.6, y = innerHeight * 0.55, vx = 0.9, vy = 0.7;
 
   function resize() {
-    dpr = Math.min(devicePixelRatio || 1, 1.5);
     W = dvd.clientWidth; H = dvd.clientHeight;
+    // pixel budget: never more than ~1000px of canvas on the long side, whatever the screen
+    dpr = Math.min(devicePixelRatio || 1, 1.5, 1000 / Math.max(W, H, 1));
     canvas.width = W * dpr; canvas.height = H * dpr;
     R = Math.min(W, H) * 0.36;
     projection.translate([W / 2, H / 2]).scale(R);
@@ -292,10 +293,10 @@
     t++;
     move();
     n++;
-    if (n % every === 0 || REDUCED) {
+    if (n % (window.LOOT_LITE ? Math.max(every, 4) : every) === 0 || REDUCED) {
       const t0 = performance.now(); draw(); const dt = performance.now() - t0;
       cost = cost ? cost * 0.9 + dt * 0.1 : dt; window.__globeMs = cost;
-      if (n === 120) every = cost > 18 ? 3 : 2;
+      if (n === 120 || n % 600 === 0) every = cost > 20 ? 4 : cost > 12 ? 3 : 2;
     }
     requestAnimationFrame(frame);
   }

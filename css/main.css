@@ -66,10 +66,10 @@ body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-in
 .dvd.is-bounce { opacity: 1; }
 
 /* ─── Cursor: sniper scope ─── */
-.cursor { position: fixed; top: -22px; left: -22px; width: 44px; height: 44px; pointer-events: none; z-index: 100; mix-blend-mode: difference; will-change: transform; transition: width .12s, height .12s; }
+.cursor { position: fixed; top: -22px; left: -22px; width: 44px; height: 44px; pointer-events: none; z-index: 100; will-change: transform; transition: width .12s, height .12s; }
 .cursor.is-recoil { top: -29px; left: -29px; }
-.cursor i { position: absolute; background: #fff; }
-.cursor__ring { inset: 0; background: none !important; border: 1px solid #fff; border-radius: 50%; }
+.cursor i { position: absolute; background: #111; }
+.cursor__ring { inset: 0; background: none !important; border: 1px solid #111; border-radius: 50%; }
 .cursor__ring--in { inset: 13px; border-width: 1px; opacity: .7; }
 .cursor__dot { left: 50%; top: 50%; width: 2px; height: 2px; margin: -1px 0 0 -1px; }
 .cursor__tick { width: 1px; height: 10px; left: 50%; margin-left: -.5px; }
