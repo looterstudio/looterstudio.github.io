@@ -657,12 +657,17 @@ body.is-gated .xp__min { visibility: hidden; }
 .target--louvre .target__box { inset: 8% 18%; }
 
 
-/* ═══ LOOTERIO: floats at the side of LOOTCHAN, a scanning ASCII sign that opens the search engine ═══ */
+/* ═══ LOOTERIO: a small search box floating beside LOOTCHAN. Google, 2001, in miniature. ═══ */
 .forum { position: relative; }
-.ltr-float { position: absolute; right: calc(50% - 450px - 150px); top: 50%; width: 220px; height: 64px; transform: translateY(-50%) rotate(-90deg); transform-origin: center; display: block; text-decoration: none; animation: ltrHover 5s ease-in-out infinite; }
-#ltr-pre { position: absolute; inset: 0; margin: 0; padding: 0; white-space: pre; line-height: 1em; font-family: 'Courier New', 'Lucida Console', monospace; font-size: 7px; color: var(--red, #ff003c); pointer-events: none; user-select: none; overflow: hidden; }
-.ltr-float__tag { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); margin-top: 6px; font: 700 9px/1 var(--mono); letter-spacing: .3em; text-transform: uppercase; color: var(--red, #ff003c); white-space: nowrap; opacity: .8; }
-.ltr-float:hover #ltr-pre { opacity: .75; }
-@keyframes ltrHover { 0%, 100% { margin-top: 0; } 50% { margin-top: -8px; } }
-@media (max-width: 1440px) { .ltr-float { right: 6px; } }
-@media (max-width: 1100px) { .ltr-float { position: relative; right: auto; top: auto; transform: none; width: 300px; height: 72px; margin: 18px auto 0; animation: none; } .ltr-float__tag { top: auto; bottom: -16px; } .forum { padding-bottom: 20px; } }
+.ltr-float { position: absolute; left: calc(50% + 450px + 28px); top: 50%; transform: translateY(-50%); width: 280px; background: #fff; border: 1px solid #c9c9c9; box-shadow: 0 1px 0 #fff inset, 4px 6px 0 rgba(0,0,0,.08); padding: 14px 14px 10px; font-family: Arial, Helvetica, sans-serif; animation: ltrHover 5s ease-in-out infinite; }
+.ltr-logo { display: block; margin: 0 auto 10px; max-width: 100%; }
+.ltr-logo span:nth-child(1) { color: #3369e8; } .ltr-logo span:nth-child(2) { color: #d50f25; } .ltr-logo span:nth-child(3) { color: #eeb211; } .ltr-logo span:nth-child(4) { color: #3369e8; } .ltr-logo span:nth-child(5) { color: #009925; } .ltr-logo span:nth-child(6) { color: #d50f25; } .ltr-logo span:nth-child(7) { color: #3369e8; } .ltr-logo span:nth-child(8) { color: #eeb211; }
+.ltr-row { display: flex; gap: 4px; }
+.ltr-row input { flex: 1; min-width: 0; font: 12px Arial, Helvetica, sans-serif; padding: 5px 6px; border: 1px solid #7f9db9; background: #fff; color: #000; cursor: text; }
+.ltr-row button { font: 11px Arial, Helvetica, sans-serif; padding: 4px 8px; border: 1px solid #999; background: linear-gradient(#fff, #ececec); color: #000; cursor: pointer; }
+.ltr-row button:hover { background: linear-gradient(#fff, #ddd); }
+.ltr-foot { margin-top: 8px; text-align: center; font-size: 10px; color: #666; }
+.ltr-foot a { color: #1a0dab; }
+@keyframes ltrHover { 0%, 100% { margin-top: 0; } 50% { margin-top: -6px; } }
+@media (max-width: 1440px) { .ltr-float { left: auto; right: 8px; } }
+@media (max-width: 1100px) { .ltr-float { position: relative; left: auto; right: auto; top: auto; transform: none; margin: 18px auto 0; animation: none; } }

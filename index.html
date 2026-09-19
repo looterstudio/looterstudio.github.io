@@ -22,9 +22,9 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202609190001">
-  <link rel="stylesheet" href="css/variant-d.css?v=202609190001">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=202609190003">
+  <link rel="stylesheet" href="css/variant-d.css?v=202609190003">
 </head>
 <body class="v-d is-gated">
   <script>/* safety: if the scripts never arrive, open the door anyway */setTimeout(function(){if(!document.querySelector(".xp"))document.body.classList.remove("is-gated")},5000);</script>
@@ -145,10 +145,11 @@
           <div class="chan__more">[ Read thread · 6 min ]</div>
         </div>
       </a>
-      <a class="ltr-float" id="ltr" href="looterio/" target="_blank" rel="noopener" aria-label="LOOTERIO, the search engine">
-        <pre id="ltr-pre" aria-label="LOOTERIO"></pre>
-        <span class="ltr-float__tag">looterio · search</span>
-      </a>
+      <form class="ltr-float" id="ltr" action="looterio/" method="get" target="_blank">
+        <canvas id="ltr-logo" class="ltr-logo" aria-label="LOOTERIO"></canvas>
+        <div class="ltr-row"><input name="q" type="text" placeholder="search the loot" autocomplete="off" aria-label="Search LOOTERIO"><button type="submit">Search</button></div>
+        <div class="ltr-foot">the Looter search engine · <a href="looterio/" target="_blank" rel="noopener">open</a></div>
+      </form>
     </section>
 
     <!-- ═══════════ 01 · BRIER ═══════════ -->
@@ -211,10 +212,10 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202609190001" defer></script>
-  <script src="js/globe.js?v=202609190001" defer></script>
+  <script src="js/main.js?v=202609190003" defer></script>
+  <script src="js/globe.js?v=202609190003" defer></script>
   <script>window.GLOBE_THEME = "ink";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="js/pay.js?v=202609111415"></script>
-  <script src="js/looterio.js?v=202609190001" defer></script>
+  <script src="js/looterio.js?v=202609190003" defer></script>
 </body>
 </html>
