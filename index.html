@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202609150054">
-  <link rel="stylesheet" href="css/variant-d.css?v=202609150054">
+  <link rel="stylesheet" href="css/main.css?v=202609190001">
+  <link rel="stylesheet" href="css/variant-d.css?v=202609190001">
 </head>
 <body class="v-d is-gated">
   <script>/* safety: if the scripts never arrive, open the door anyway */setTimeout(function(){if(!document.querySelector(".xp"))document.body.classList.remove("is-gated")},5000);</script>
@@ -145,15 +145,11 @@
           <div class="chan__more">[ Read thread · 6 min ]</div>
         </div>
       </a>
-    </section>
-
-    <!-- ═══════════ LOOTERIO ═══════════ -->
-    <div id="ltr-strip">
-      <div class="ltr-outer" id="ltr">
+      <a class="ltr-float" id="ltr" href="looterio/" target="_blank" rel="noopener" aria-label="LOOTERIO, the search engine">
         <pre id="ltr-pre" aria-label="LOOTERIO"></pre>
-        <a class="ltr-link" href="/looterio/" target="_blank" rel="noopener" aria-label="Open LOOTERIO search engine"></a>
-      </div>
-    </div>
+        <span class="ltr-float__tag">looterio · search</span>
+      </a>
+    </section>
 
     <!-- ═══════════ 01 · BRIER ═══════════ -->
     <section class="division" id="brier">
@@ -215,10 +211,10 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202609150054" defer></script>
-  <script src="js/globe.js?v=202609150054" defer></script>
+  <script src="js/main.js?v=202609190001" defer></script>
+  <script src="js/globe.js?v=202609190001" defer></script>
   <script>window.GLOBE_THEME = "ink";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="js/pay.js?v=202609111415"></script>
-  <script src="js/looterio.js" defer></script>
+  <script src="js/looterio.js?v=202609190001" defer></script>
 </body>
 </html>
