@@ -1,0 +1,172 @@
+[
+  {
+    "id": "looterstudio-home",
+    "title": "LooterStudio® · always early, never wrong",
+    "url": "looterstudio.xyz",
+    "href": "https://looterstudio.xyz",
+    "desc": "An independent studio in Buenos Aires. Brier, stat, and whatever comes next. Always early, never wrong.",
+    "cat": "web",
+    "tags": ["studio", "looterstudio", "loot", "buenos aires", "independent"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "brier-home",
+    "title": "Brier — Decentralizing Quantitative Funds",
+    "url": "brier.world",
+    "href": "https://brier.world",
+    "desc": "The Polymarket capital loop is closed. Practice vaults live on Polygon. ADAN, the reference bot, went live July 2026. Automated quantitative fund management.",
+    "cat": "projects",
+    "tags": ["brier", "trading", "polymarket", "defi", "funds", "quantitative", "polygon"],
+    "date": "2026-09-15"
+  },
+  {
+    "id": "brier-adan",
+    "title": "ADAN — The Reference Trading Bot · Brier",
+    "url": "brier.world/bots/adan",
+    "href": "https://brier.world/bots/adan",
+    "desc": "The reference bot. Built by LooterStudio. Live on Polymarket since July 2026. Automated quantitative trading, open architecture.",
+    "cat": "market",
+    "tags": ["adan", "bot", "trading", "polymarket", "automated", "brier", "reference"],
+    "date": "2026-07-18"
+  },
+  {
+    "id": "brier-vaults",
+    "title": "Practice Vaults — Brier on Polygon",
+    "url": "brier.world/vaults",
+    "href": "https://brier.world/vaults",
+    "desc": "Practice quantitative trading with vaults on Polygon. Risk-free simulated fund management. Go live when you're ready.",
+    "cat": "market",
+    "tags": ["vault", "polygon", "trading", "practice", "brier", "simulation"],
+    "date": "2026-08-31"
+  },
+  {
+    "id": "brier-polymarket-loop",
+    "title": "Polymarket Capital Loop — Brier Research",
+    "url": "brier.world",
+    "href": "https://brier.world",
+    "desc": "The Polymarket capital loop is closed. Full quantitative fund automation on prediction markets. The next phase of Brier's ecosystem. Announced September 2026.",
+    "cat": "projects",
+    "tags": ["polymarket", "capital", "loop", "brier", "prediction", "markets"],
+    "date": "2026-09-15"
+  },
+  {
+    "id": "stat-home",
+    "title": "stat — Human Status Competition · Season 0 · Buenos Aires",
+    "url": "looterstudio.xyz/#stat",
+    "href": "https://looterstudio.xyz/#stat",
+    "desc": "Season 0 launched in Buenos Aires. Human status competition. Track, compete, dominate. 0.98 score index.",
+    "cat": "projects",
+    "tags": ["stat", "status", "competition", "season", "buenos aires", "human", "ranked"],
+    "date": "2026-09-14"
+  },
+  {
+    "id": "market-home",
+    "title": "Anonymous Market — Software, Bots, Vaults & More",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "4,093 listings across 13 categories: Software, Bots (999), Vaults (78), Terminals (314), Signals (354), Models (903), Manifestos (586), Apparel (82), Books (768), Capital (15).",
+    "cat": "market",
+    "tags": ["market", "software", "bots", "vaults", "buy", "sell", "anonymous"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "market-bots",
+    "title": "Bots — 999 listings · LooterStudio Market",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "999 bot listings. Automated agents for trading, monitoring, and operations across Polymarket, crypto, and the loot ecosystem. ADAN is the reference bot.",
+    "cat": "market",
+    "tags": ["bots", "automated", "agents", "trading", "polymarket", "adan"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "market-signals",
+    "title": "Signals — 354 listings · LooterStudio Market",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "354 trading signal listings. Market intelligence, quantitative signals for crypto and prediction markets. Entry/exit points from the LooterStudio research team.",
+    "cat": "market",
+    "tags": ["signals", "trading", "intelligence", "market", "crypto", "entry", "exit"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "market-models",
+    "title": "Models — 903 listings · LooterStudio Market",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "903 model listings. Quantitative models, prediction frameworks, trading algorithms, and machine learning infrastructure.",
+    "cat": "market",
+    "tags": ["models", "quantitative", "algorithms", "prediction", "ml", "market"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "market-manifestos",
+    "title": "Manifestos — 586 listings · LooterStudio Market",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "586 manifestos. Ideas, philosophies, and frameworks from the LooterStudio universe. Delusional by design, correct by outcome.",
+    "cat": "market",
+    "tags": ["manifestos", "ideas", "philosophy", "loot", "delusional"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "market-books",
+    "title": "Books — 768 listings · LooterStudio Market",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "768 book listings. Research, philosophy, strategy, and insider knowledge curated by LooterStudio.",
+    "cat": "market",
+    "tags": ["books", "research", "philosophy", "strategy", "knowledge"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "market-apparel",
+    "title": "Apparel — 82 listings · LooterStudio Market",
+    "url": "looterstudio.xyz/#market",
+    "href": "https://looterstudio.xyz/#market",
+    "desc": "82 apparel listings. Always early, never wrong. LooterStudio clothing and merch.",
+    "cat": "market",
+    "tags": ["apparel", "clothing", "merch", "urban", "fashion"],
+    "date": "2026-09-12"
+  },
+  {
+    "id": "lootchan-home",
+    "title": "lootchan — /loot/ · Delusional Mindset",
+    "url": "looterstudio.xyz/#loot",
+    "href": "https://looterstudio.xyz/#loot",
+    "desc": "The Dread Pirate Looter writes. Replies on X. The barrier just fell — every time in history a barrier to knowledge falls, the people who built their identity around it get exposed.",
+    "cat": "forum",
+    "tags": ["lootchan", "forum", "posts", "loot", "delusional", "mindset", "pirate"],
+    "date": "2026-09-09"
+  },
+  {
+    "id": "lootchan-post-0001",
+    "title": "The Barrier Just Fell — /loot/ No.0001",
+    "url": "looterstudio.xyz/#loot",
+    "href": "https://looterstudio.xyz/#loot",
+    "desc": "Dread Pirate Looter · !!LOOT16z · 09.09.26(Tue). Every time in history a barrier to knowledge falls, the people who built their whole identity around that barrier get exposed. The printing press, the steam engine, the internet.",
+    "cat": "forum",
+    "tags": ["barrier", "knowledge", "history", "printing press", "internet", "lootchan", "thread"],
+    "date": "2026-09-09"
+  },
+  {
+    "id": "louv-home",
+    "title": "LOUV — Windows XP Simulated OS",
+    "url": "louv.looterstudio.xyz",
+    "href": "https://louv.looterstudio.xyz",
+    "desc": "A Windows XP simulated operating system. All LooterStudio projects as desktop applications — Brier, stat, Market, lootchan, LOOTERIO. In active development.",
+    "cat": "projects",
+    "tags": ["louv", "windows", "xp", "os", "desktop", "simulator", "apps"],
+    "date": "2026-09-18"
+  },
+  {
+    "id": "looterio-home",
+    "title": "LOOTERIO — Search the Loot Ecosystem",
+    "url": "looterio.looterstudio.xyz",
+    "href": "https://looterio.looterstudio.xyz",
+    "desc": "Search engine for the LooterStudio universe. Projects, market listings, forum posts, ideas. Everything loot, indexed. The native browser of LOUV.",
+    "cat": "web",
+    "tags": ["looterio", "search", "engine", "ecosystem", "browser", "louv"],
+    "date": "2026-09-18"
+  }
+]

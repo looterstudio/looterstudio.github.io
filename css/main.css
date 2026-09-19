@@ -656,3 +656,38 @@ body.is-gated .xp__min { visibility: hidden; }
 .target--louvre .target__img { width: 54%; }
 .target--louvre .target__box { inset: 8% 18%; }
 
+
+/* ═══ LOOTERIO STRIP ═══ */
+#ltr-strip {
+  margin: 0 auto;
+  width: 360px;
+  max-width: 84vw;
+  height: 88px;
+  position: relative;
+}
+.ltr-outer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+#ltr-pre {
+  position: absolute;
+  top: 0; left: 0;
+  margin: 0; padding: 0;
+  white-space: pre;
+  line-height: 1em;
+  font-family: 'Courier New', 'Lucida Console', monospace;
+  font-size: 7px;
+  color: var(--red, #ff003c);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+.ltr-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  cursor: pointer;
+}
+.ltr-outer:hover #ltr-pre { opacity: 0.7; }

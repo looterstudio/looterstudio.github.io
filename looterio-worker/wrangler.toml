@@ -1,0 +1,10 @@
+name = "looterio-search"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+
+[[kv_namespaces]]
+binding = "LOOTERIO_IDX"
+id = "PLACEHOLDER_RUN_wrangler_kv_namespace_create_looterio-idx"
+preview_id = "PLACEHOLDER_RUN_wrangler_kv_namespace_create_looterio-idx_preview"
+
+# Set secret via: wrangler secret put LOOTERIO_SECRET
