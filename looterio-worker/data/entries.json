@@ -6,7 +6,13 @@
     "href": "https://looterstudio.xyz",
     "desc": "An independent studio in Buenos Aires. Brier, stat, and whatever comes next. Always early, never wrong.",
     "cat": "web",
-    "tags": ["studio", "looterstudio", "loot", "buenos aires", "independent"],
+    "tags": [
+      "studio",
+      "looterstudio",
+      "loot",
+      "buenos aires",
+      "independent"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -16,7 +22,15 @@
     "href": "https://brier.world",
     "desc": "The Polymarket capital loop is closed. Practice vaults live on Polygon. ADAN, the reference bot, went live July 2026. Automated quantitative fund management.",
     "cat": "projects",
-    "tags": ["brier", "trading", "polymarket", "defi", "funds", "quantitative", "polygon"],
+    "tags": [
+      "brier",
+      "trading",
+      "polymarket",
+      "defi",
+      "funds",
+      "quantitative",
+      "polygon"
+    ],
     "date": "2026-09-15"
   },
   {
@@ -26,7 +40,15 @@
     "href": "https://brier.world/bots/adan",
     "desc": "The reference bot. Built by LooterStudio. Live on Polymarket since July 2026. Automated quantitative trading, open architecture.",
     "cat": "market",
-    "tags": ["adan", "bot", "trading", "polymarket", "automated", "brier", "reference"],
+    "tags": [
+      "adan",
+      "bot",
+      "trading",
+      "polymarket",
+      "automated",
+      "brier",
+      "reference"
+    ],
     "date": "2026-07-18"
   },
   {
@@ -36,7 +58,14 @@
     "href": "https://brier.world/vaults",
     "desc": "Practice quantitative trading with vaults on Polygon. Risk-free simulated fund management. Go live when you're ready.",
     "cat": "market",
-    "tags": ["vault", "polygon", "trading", "practice", "brier", "simulation"],
+    "tags": [
+      "vault",
+      "polygon",
+      "trading",
+      "practice",
+      "brier",
+      "simulation"
+    ],
     "date": "2026-08-31"
   },
   {
@@ -46,7 +75,14 @@
     "href": "https://brier.world",
     "desc": "The Polymarket capital loop is closed. Full quantitative fund automation on prediction markets. The next phase of Brier's ecosystem. Announced September 2026.",
     "cat": "projects",
-    "tags": ["polymarket", "capital", "loop", "brier", "prediction", "markets"],
+    "tags": [
+      "polymarket",
+      "capital",
+      "loop",
+      "brier",
+      "prediction",
+      "markets"
+    ],
     "date": "2026-09-15"
   },
   {
@@ -56,7 +92,15 @@
     "href": "https://looterstudio.xyz/#stat",
     "desc": "Season 0 launched in Buenos Aires. Human status competition. Track, compete, dominate. 0.98 score index.",
     "cat": "projects",
-    "tags": ["stat", "status", "competition", "season", "buenos aires", "human", "ranked"],
+    "tags": [
+      "stat",
+      "status",
+      "competition",
+      "season",
+      "buenos aires",
+      "human",
+      "ranked"
+    ],
     "date": "2026-09-14"
   },
   {
@@ -66,7 +110,15 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "4,093 listings across 13 categories: Software, Bots (999), Vaults (78), Terminals (314), Signals (354), Models (903), Manifestos (586), Apparel (82), Books (768), Capital (15).",
     "cat": "market",
-    "tags": ["market", "software", "bots", "vaults", "buy", "sell", "anonymous"],
+    "tags": [
+      "market",
+      "software",
+      "bots",
+      "vaults",
+      "buy",
+      "sell",
+      "anonymous"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -76,7 +128,14 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "999 bot listings. Automated agents for trading, monitoring, and operations across Polymarket, crypto, and the loot ecosystem. ADAN is the reference bot.",
     "cat": "market",
-    "tags": ["bots", "automated", "agents", "trading", "polymarket", "adan"],
+    "tags": [
+      "bots",
+      "automated",
+      "agents",
+      "trading",
+      "polymarket",
+      "adan"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -86,7 +145,15 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "354 trading signal listings. Market intelligence, quantitative signals for crypto and prediction markets. Entry/exit points from the LooterStudio research team.",
     "cat": "market",
-    "tags": ["signals", "trading", "intelligence", "market", "crypto", "entry", "exit"],
+    "tags": [
+      "signals",
+      "trading",
+      "intelligence",
+      "market",
+      "crypto",
+      "entry",
+      "exit"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -96,7 +163,14 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "903 model listings. Quantitative models, prediction frameworks, trading algorithms, and machine learning infrastructure.",
     "cat": "market",
-    "tags": ["models", "quantitative", "algorithms", "prediction", "ml", "market"],
+    "tags": [
+      "models",
+      "quantitative",
+      "algorithms",
+      "prediction",
+      "ml",
+      "market"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -106,7 +180,13 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "586 manifestos. Ideas, philosophies, and frameworks from the LooterStudio universe. Delusional by design, correct by outcome.",
     "cat": "market",
-    "tags": ["manifestos", "ideas", "philosophy", "loot", "delusional"],
+    "tags": [
+      "manifestos",
+      "ideas",
+      "philosophy",
+      "loot",
+      "delusional"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -116,7 +196,13 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "768 book listings. Research, philosophy, strategy, and insider knowledge curated by LooterStudio.",
     "cat": "market",
-    "tags": ["books", "research", "philosophy", "strategy", "knowledge"],
+    "tags": [
+      "books",
+      "research",
+      "philosophy",
+      "strategy",
+      "knowledge"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -126,7 +212,13 @@
     "href": "https://looterstudio.xyz/#market",
     "desc": "82 apparel listings. Always early, never wrong. LooterStudio clothing and merch.",
     "cat": "market",
-    "tags": ["apparel", "clothing", "merch", "urban", "fashion"],
+    "tags": [
+      "apparel",
+      "clothing",
+      "merch",
+      "urban",
+      "fashion"
+    ],
     "date": "2026-09-12"
   },
   {
@@ -136,7 +228,15 @@
     "href": "https://looterstudio.xyz/#loot",
     "desc": "The Dread Pirate Looter writes. Replies on X. The barrier just fell — every time in history a barrier to knowledge falls, the people who built their identity around it get exposed.",
     "cat": "forum",
-    "tags": ["lootchan", "forum", "posts", "loot", "delusional", "mindset", "pirate"],
+    "tags": [
+      "lootchan",
+      "forum",
+      "posts",
+      "loot",
+      "delusional",
+      "mindset",
+      "pirate"
+    ],
     "date": "2026-09-09"
   },
   {
@@ -146,17 +246,35 @@
     "href": "https://looterstudio.xyz/#loot",
     "desc": "Dread Pirate Looter · !!LOOT16z · 09.09.26(Tue). Every time in history a barrier to knowledge falls, the people who built their whole identity around that barrier get exposed. The printing press, the steam engine, the internet.",
     "cat": "forum",
-    "tags": ["barrier", "knowledge", "history", "printing press", "internet", "lootchan", "thread"],
+    "tags": [
+      "barrier",
+      "knowledge",
+      "history",
+      "printing press",
+      "internet",
+      "lootchan",
+      "thread"
+    ],
     "date": "2026-09-09"
   },
   {
-    "id": "louv-home",
-    "title": "LOUV — Windows XP Simulated OS",
-    "url": "louv.looterstudio.xyz",
-    "href": "https://louv.looterstudio.xyz",
-    "desc": "A Windows XP simulated operating system. All LooterStudio projects as desktop applications — Brier, stat, Market, lootchan, LOOTERIO. In active development.",
+    "id": "luv-home",
+    "title": "LUV Agency — the agency of LooterStudio® (LUV OS)",
+    "url": "looterstudio.xyz/luv",
+    "href": "https://looterstudio.xyz/luv/",
+    "desc": "LUV Agency. We build internet businesses and brands: websites, software, ads, branding, social. Runs as a Windows XP desktop.",
     "cat": "projects",
-    "tags": ["louv", "windows", "xp", "os", "desktop", "simulator", "apps"],
+    "tags": [
+      "luv",
+      "agency",
+      "websites",
+      "software",
+      "ads",
+      "branding",
+      "social",
+      "xp",
+      "desktop"
+    ],
     "date": "2026-09-18"
   },
   {
@@ -166,7 +284,14 @@
     "href": "https://looterio.looterstudio.xyz",
     "desc": "Search engine for the LooterStudio universe. Projects, market listings, forum posts, ideas. Everything loot, indexed. The native browser of LOUV.",
     "cat": "web",
-    "tags": ["looterio", "search", "engine", "ecosystem", "browser", "louv"],
+    "tags": [
+      "looterio",
+      "search",
+      "engine",
+      "ecosystem",
+      "browser",
+      "louv"
+    ],
     "date": "2026-09-18"
   }
 ]
