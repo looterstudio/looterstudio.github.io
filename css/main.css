@@ -657,14 +657,13 @@ body.is-gated .xp__min { visibility: hidden; }
 .target--louvre .target__box { inset: 8% 18%; }
 
 
-/* ═══ LOOTERIO: Dotti's ASCII sign, floating beside LOOTCHAN, horizontal and legible ═══ */
+/* ═══ LOOTERIO beside LOOTCHAN: the ASCII callout, then the engine's own logo ═══ */
 .forum { position: relative; }
 .ltr-float { position: absolute; left: calc(50% + 450px + 24px); top: 50%; transform: translateY(-50%); width: 340px; display: block; text-decoration: none; animation: ltrHover 5s ease-in-out infinite; }
-.ltr-outer { display: block; position: relative; width: 340px; height: 92px; overflow: hidden; }
-#ltr-pre { position: absolute; top: 0; left: 0; margin: 0; padding: 0; white-space: pre; line-height: 1em; font-family: 'Courier New', 'Lucida Console', monospace; font-size: 7px; font-weight: 700; color: var(--red, #b8111d); pointer-events: none; user-select: none; }
-.ltr-arrow { margin: 0 0 0 10px; font: 700 11px/1.15 var(--mono); color: var(--red, #b8111d); white-space: pre; animation: ltrBlink 1.1s steps(1) infinite; }
+.ltr-arrow { margin: 0 0 4px 12px; font: 700 11px/1.15 var(--mono); color: var(--red, #b8111d); white-space: pre; animation: ltrBlink 1.1s steps(1) infinite; }
 @keyframes ltrBlink { 50% { color: rgba(184,17,29,.45); } }
-.ltr-float:hover #ltr-pre { opacity: .75; }
+.ltr-logo { display: block; max-width: 100%; height: auto; filter: drop-shadow(0 6px 10px rgba(0,0,0,.12)); }
+.ltr-float:hover .ltr-logo { filter: drop-shadow(0 10px 16px rgba(0,0,0,.2)); }
 @keyframes ltrHover { 0%, 100% { margin-top: 0; } 50% { margin-top: -6px; } }
-@media (max-width: 1460px) { .ltr-float { left: auto; right: 6px; width: 300px; } .ltr-outer { width: 300px; height: 80px; } }
-@media (max-width: 1100px) { .ltr-float { position: relative; left: auto; right: auto; top: auto; transform: none; width: 320px; max-width: 92vw; margin: 18px auto 0; animation: none; } .ltr-outer { width: 100%; height: 84px; } }
+@media (max-width: 1460px) { .ltr-float { left: auto; right: 6px; width: 300px; } }
+@media (max-width: 1100px) { .ltr-float { position: relative; left: auto; right: auto; top: auto; transform: none; width: 320px; max-width: 92vw; margin: 18px auto 0; animation: none; } .ltr-logo { margin: 0 auto; } }
