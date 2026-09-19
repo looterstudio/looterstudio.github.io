@@ -657,17 +657,14 @@ body.is-gated .xp__min { visibility: hidden; }
 .target--louvre .target__box { inset: 8% 18%; }
 
 
-/* ═══ LOOTERIO: a small search box floating beside LOOTCHAN. Google, 2001, in miniature. ═══ */
+/* ═══ LOOTERIO: Dotti's ASCII sign, floating beside LOOTCHAN, horizontal and legible ═══ */
 .forum { position: relative; }
-.ltr-float { position: absolute; left: calc(50% + 450px + 28px); top: 50%; transform: translateY(-50%); width: 280px; background: #fff; border: 1px solid #c9c9c9; box-shadow: 0 1px 0 #fff inset, 4px 6px 0 rgba(0,0,0,.08); padding: 14px 14px 10px; font-family: Arial, Helvetica, sans-serif; animation: ltrHover 5s ease-in-out infinite; }
-.ltr-logo { display: block; margin: 0 auto 10px; max-width: 100%; }
-.ltr-logo span:nth-child(1) { color: #3369e8; } .ltr-logo span:nth-child(2) { color: #d50f25; } .ltr-logo span:nth-child(3) { color: #eeb211; } .ltr-logo span:nth-child(4) { color: #3369e8; } .ltr-logo span:nth-child(5) { color: #009925; } .ltr-logo span:nth-child(6) { color: #d50f25; } .ltr-logo span:nth-child(7) { color: #3369e8; } .ltr-logo span:nth-child(8) { color: #eeb211; }
-.ltr-row { display: flex; gap: 4px; }
-.ltr-row input { flex: 1; min-width: 0; font: 12px Arial, Helvetica, sans-serif; padding: 5px 6px; border: 1px solid #7f9db9; background: #fff; color: #000; cursor: text; }
-.ltr-row button { font: 11px Arial, Helvetica, sans-serif; padding: 4px 8px; border: 1px solid #999; background: linear-gradient(#fff, #ececec); color: #000; cursor: pointer; }
-.ltr-row button:hover { background: linear-gradient(#fff, #ddd); }
-.ltr-foot { margin-top: 8px; text-align: center; font-size: 10px; color: #666; }
-.ltr-foot a { color: #1a0dab; }
+.ltr-float { position: absolute; left: calc(50% + 450px + 24px); top: 50%; transform: translateY(-50%); width: 340px; display: block; text-decoration: none; animation: ltrHover 5s ease-in-out infinite; }
+.ltr-outer { display: block; position: relative; width: 340px; height: 92px; overflow: hidden; }
+#ltr-pre { position: absolute; top: 0; left: 0; margin: 0; padding: 0; white-space: pre; line-height: 1em; font-family: 'Courier New', 'Lucida Console', monospace; font-size: 7px; font-weight: 700; color: var(--red, #b8111d); pointer-events: none; user-select: none; }
+.ltr-arrow { margin: 0 0 2px 6px; font: 700 11px/1.15 var(--mono); color: var(--red, #b8111d); white-space: pre; }
+.ltr-arrow::first-line { font-style: italic; letter-spacing: .04em; }
+.ltr-float:hover #ltr-pre { opacity: .75; }
 @keyframes ltrHover { 0%, 100% { margin-top: 0; } 50% { margin-top: -6px; } }
-@media (max-width: 1440px) { .ltr-float { left: auto; right: 8px; } }
-@media (max-width: 1100px) { .ltr-float { position: relative; left: auto; right: auto; top: auto; transform: none; margin: 18px auto 0; animation: none; } }
+@media (max-width: 1460px) { .ltr-float { left: auto; right: 6px; width: 300px; } .ltr-outer { width: 300px; height: 80px; } }
+@media (max-width: 1100px) { .ltr-float { position: relative; left: auto; right: auto; top: auto; transform: none; width: 320px; max-width: 92vw; margin: 18px auto 0; animation: none; } .ltr-outer { width: 100%; height: 84px; } }
