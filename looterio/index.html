@@ -125,7 +125,7 @@ a:hover{text-decoration:underline}
 
 <div class="h-footer" id="hFooter">
   <a href="https://looterstudio.xyz" target="_blank">©2026 LooterStudio®</a>
-  &nbsp;·&nbsp; Indexing <b>4,093+</b> loot entries
+  &nbsp;·&nbsp; Indexing <b>the whole web</b>, loot first
   &nbsp;·&nbsp; <a href="https://brier.world" target="_blank">brier.world</a>
   &nbsp;·&nbsp; <a href="https://looterstudio.xyz/#loot" target="_blank">lootchan</a>
   &nbsp;·&nbsp; <a href="#">About LOOTERIO</a>
@@ -254,7 +254,8 @@ function renderData(data){
       html+='<div class="result-title"><a href="'+(item.href||'#')+'" target="_blank" rel="noopener">'+esc(item.title)+'</a><span class="r-cat">'+esc(item.cat)+'</span></div>';
       html+='<div class="result-url">'+esc(item.url)+'</div>';
       html+='<div class="result-desc">'+esc(item.desc)+'</div>';
-      html+='<div class="result-actions"><a href="#">Cached</a> &mdash; <a href="#">Similar pages</a></div>';
+      var host=(item.url||'').split('/')[0];
+      html+='<div class="result-actions"><a href="'+(item.href||'#')+'" target="_blank" rel="noopener">Cached</a> &mdash; <a href="#" onclick="quickSearch(\'site:'+esc(host)+'\');return false">Similar pages</a></div>';
       html+='</div>';
     });
   }

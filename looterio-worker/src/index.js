@@ -37,6 +37,45 @@ function searchEntries(entries, query, cat) {
     .map(({ _score, ...item }) => item);
 }
 
+/* ── The web. Google Programmable Search when keys exist; DuckDuckGo's html
+   endpoint otherwise. Loot entries always come first. ── */
+function decodeEntities(s) {
+  return s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/<[^>]+>/g, '');
+}
+async function searchGoogle(env, q, start) {
+  const u = new URL('https://www.googleapis.com/customsearch/v1');
+  u.searchParams.set('key', env.GOOGLE_CSE_KEY); u.searchParams.set('cx', env.GOOGLE_CSE_CX);
+  u.searchParams.set('q', q); u.searchParams.set('num', '10'); u.searchParams.set('start', String(start));
+  const r = await fetch(u.toString(), { cf: { cacheTtl: 3600 } });
+  if (!r.ok) throw new Error('google ' + r.status);
+  const j = await r.json();
+  const items = (j.items || []).map((it) => ({
+    id: 'web:' + it.link, cat: 'web', title: it.title, url: it.displayLink || it.link.replace(/^https?:\/\//, ''), href: it.link, desc: it.snippet || '', tags: [], source: 'google',
+  }));
+  return { items, total: Number(j.searchInformation?.totalResults || items.length) };
+}
+async function searchDuck(q, page) {
+  const body = new URLSearchParams({ q, kl: 'wt-wt' });
+  if (page > 1) body.set('s', String((page - 1) * 10));
+  const r = await fetch('https://html.duckduckgo.com/html/', { method: 'POST', body, headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36', 'Accept-Language': 'en-US,en;q=0.9' } });
+  if (!r.ok) throw new Error('ddg ' + r.status);
+  const html = await r.text();
+  const items = [];
+  const re = /<a[^>]+class="result__a"[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<a[^>]+class="result__snippet"[^>]*>([\s\S]*?)<\/a>/g;
+  let m;
+  while ((m = re.exec(html)) && items.length < 10) {
+    let href = decodeEntities(m[1]);
+    const ud = href.match(/[?&]uddg=([^&]+)/); if (ud) href = decodeURIComponent(ud[1]);
+    if (!/^https?:/.test(href)) continue;
+    items.push({ id: 'web:' + href, cat: 'web', title: decodeEntities(m[2]).trim(), url: href.replace(/^https?:\/\//, '').replace(/\/$/, ''), href, desc: decodeEntities(m[3]).trim(), tags: [], source: 'duckduckgo' });
+  }
+  return { items, total: items.length ? 1000 : 0 };
+}
+async function searchWeb(env, q, page) {
+  if (env.GOOGLE_CSE_KEY && env.GOOGLE_CSE_CX) { try { return await searchGoogle(env, q, (page - 1) * 10 + 1); } catch (e) {} }
+  try { return await searchDuck(q, page); } catch (e) { return { items: [], total: 0, error: String(e.message || e) }; }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -55,14 +94,19 @@ export default {
 
       const raw     = await env.LOOTERIO_IDX.get('entries');
       const entries = raw ? JSON.parse(raw) : [];
-      const results = q ? searchEntries(entries, q, cat) : [];
-      const total   = results.length;
-      const start   = (page - 1) * perPage;
+      const loot    = q ? searchEntries(entries, q, cat) : [];
+      // Loot entries first (only on page 1), then the web. The web only joins
+      // on the "all"/"web" tabs; the other tabs are our own index.
+      const wantWeb = q && (cat === 'all' || cat === 'web');
+      const web     = wantWeb ? await searchWeb(env, q, page) : { items: [], total: 0 };
+      const results = page === 1 ? [...loot, ...web.items] : web.items;
+      const total   = loot.length + (web.total || 0);
 
       return json({
-        q, cat, page, total, perPage,
+        q, cat, page, total, perPage: results.length || perPage,
         elapsed: ((Date.now() - t0) / 1000).toFixed(2),
-        results: results.slice(start, start + perPage),
+        source: web.items.length ? web.items[0].source : 'loot',
+        results,
       });
     }
 
