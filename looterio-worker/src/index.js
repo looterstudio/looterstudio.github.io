@@ -71,9 +71,31 @@ async function searchDuck(q, page) {
   }
   return { items, total: items.length ? 1000 : 0 };
 }
+/* Our own engine: a SearXNG on the LooterStudio server, behind a token. It asks
+   Google, Bing, Brave, DuckDuckGo and friends at once and merges the answers. */
+async function searchOwn(env, q, page) {
+  const u = new URL(env.SEARX_URL + '/search');
+  u.searchParams.set('q', q); u.searchParams.set('format', 'json'); u.searchParams.set('pageno', String(page)); u.searchParams.set('language', 'en');
+  const r = await fetch(u.toString(), { headers: { 'X-Looterio': env.SEARX_TOKEN }, signal: AbortSignal.timeout(9000) });
+  if (!r.ok) throw new Error('searx ' + r.status);
+  const j = await r.json();
+  const seen = new Set();
+  const items = [];
+  for (const it of j.results || []) {
+    if (!it.url || seen.has(it.url)) continue;
+    seen.add(it.url);
+    items.push({ id: 'web:' + it.url, cat: 'web', title: it.title || it.url, url: it.url.replace(/^https?:\/\//, '').replace(/\/$/, ''), href: it.url, desc: it.content || '', tags: [], source: 'looterio' });
+    if (items.length >= 10) break;
+  }
+  return { items, total: items.length ? 1000 : 0 };
+}
 async function searchWeb(env, q, page) {
+  if (env.SEARX_URL && env.SEARX_TOKEN) { try { const r = await searchOwn(env, q, page); if (r.items.length) return r; } catch (e) { return { items: [], total: 0, error: 'own: ' + String(e.message || e) }; } }
   if (env.GOOGLE_CSE_KEY && env.GOOGLE_CSE_CX) { try { return await searchGoogle(env, q, (page - 1) * 10 + 1); } catch (e) {} }
   try { return await searchDuck(q, page); } catch (e) { return { items: [], total: 0, error: String(e.message || e) }; }
+}
+async function debugDuck(q) {
+  try { const r = await searchDuck(q, 1); return { ok: true, n: r.items.length }; } catch (e) { return { ok: false, error: String(e.message || e) }; }
 }
 
 export default {

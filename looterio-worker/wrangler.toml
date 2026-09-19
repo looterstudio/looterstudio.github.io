@@ -8,3 +8,6 @@ id = "2410dc0975554a3b89af1a9fd1e60359"
 preview_id = "2410dc0975554a3b89af1a9fd1e60359"
 
 # Set secret via: wrangler secret put LOOTERIO_SECRET
+
+[vars]
+SEARX_URL = "http://95-217-184-46.sslip.io:2052"
