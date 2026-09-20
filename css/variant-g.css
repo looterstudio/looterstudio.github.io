@@ -14,11 +14,12 @@ body.v-g .market::before, body.v-g .forum::before, body.v-g #brier::before, body
 body.v-g .market::before { content: '01 · Anonymous market'; }
 body.v-g .forum::before { content: '02 · Lootchan'; }
 body.v-g #brier::before { content: '03 · Venture · Brier'; }
-body.v-g #louvre::before { content: '05 · Works · LUV Agency'; }
+body.v-g #snowball::before { content: '05 · Snowball · we scale companies'; }
+body.v-g #louvre::before { content: '06 · LUV Agency · OnlyFans management'; }
 body.v-g #stat::before { content: '04 · Venture · stat'; }
 body.v-g .outro::before { content: '06 · Creed'; }
 
-body.v-g .market::after, body.v-g .forum::after, body.v-g #louvre::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { content: 'LooterStudio® · Buenos Aires'; position: absolute; top: 10px; right: 0; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #777; }
+body.v-g .market::after, body.v-g .forum::after, body.v-g #louvre::after, body.v-g #snowball::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { content: 'LooterStudio® · Buenos Aires'; position: absolute; top: 10px; right: 0; font: 400 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: #777; }
 /* type: bigger hero, tighter store */
 body.v-g .hero__word { font-size: clamp(60px, 14vw, 220px); }
 body.v-g .sr__brand > div b { font-size: 48px; }
@@ -27,4 +28,4 @@ body.v-g .callout__title, body.v-g .callout h2 { font-size: clamp(14px, 1.4vw, 1
 body.v-g .creed { border-top: 0; margin-top: 0; }
 body.v-g .creed__text { font-size: clamp(26px, 3.6vw, 54px); max-width: 24ch; }
 @media (max-width: 1240px) { body.v-g .idx { display: none; } }
-@media (max-width: 900px) { body.v-g .market::after, body.v-g .forum::after, body.v-g #louvre::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { display: none; } }
+@media (max-width: 900px) { body.v-g .market::after, body.v-g .forum::after, body.v-g #louvre::after, body.v-g #snowball::after, body.v-g #brier::after, body.v-g #stat::after, body.v-g .outro::after { display: none; } }
