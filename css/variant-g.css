@@ -15,7 +15,7 @@ body.v-g .market::before { content: '01 · Anonymous market'; }
 body.v-g .forum::before { content: '02 · Lootchan'; }
 body.v-g #brier::before { content: '03 · Venture · Brier'; }
 body.v-g #snowball::before { content: '05 · Snowball · we scale companies'; }
-body.v-g #louvre::before { content: '06 · LUV Agency · OnlyFans management'; }
+body.v-g #louvre::before { content: '06 · LUV Agency · OF management'; }
 body.v-g #stat::before { content: '04 · Venture · stat'; }
 body.v-g .outro::before { content: '06 · Creed'; }
 
