@@ -368,53 +368,21 @@ function alienBlock(tile) {
   rain(); tick();
 }
 
-/* Keyed 360: the logo video has a black background; on paper we decode it once,
-   drop everything near black, and blit the result to every .k360 slot. One
-   decoder means phones (which refuse to play three videos at once) still spin. */
+/* Keyed 360: the spinning logo is a pre-keyed animated WebP with alpha (20 fps,
+   made from loot-360.mp4 by tools/make-360.sh). One <img> per slot: the browser
+   composites it on the GPU, no per-frame JavaScript, no video decoder, no lag.
+   The <video> tags in the HTML are only the fallback for browsers without WebP. */
 function keyVideos() {
-  const slots = [...document.querySelectorAll('video.k360')];
-  if (!slots.length) return;
-  const video = slots[0];
-  const S = 288, off = document.createElement('canvas'); off.width = S; off.height = S;
-  const octx = off.getContext('2d', { willReadFrequently: true });
-  const outs = slots.map(v => {
-    const c = document.createElement('canvas');
-    c.className = v.className.replace('k360', 'k360-out');
-    c.width = S; c.height = S;
-    v.insertAdjacentElement('afterend', c);
-    if (v !== video) v.remove();
-    return c;
-  });
-  Object.assign(video.style, { position: 'fixed', left: '0', top: '0', width: '2px', height: '2px', opacity: '0.01', pointerEvents: 'none' });
-  document.body.appendChild(video);
-  const seen = new Set();
-  const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
-  let n = 0;
-  const tick = () => {
-    n++;
-    if (n % (window.LOOT_LITE ? 12 : 3) === 0 && seen.size && video.readyState >= 2 && !video.paused) {
-      octx.drawImage(video, 176, 114, 382, 382, 0, 0, S, S);
-      const f = octx.getImageData(0, 0, S, S), d = f.data;
-      for (let i = 0; i < d.length; i += 4) {
-        const m = Math.max(d[i], d[i + 1], d[i + 2]);
-        d[i + 3] = m < 22 ? 0 : m < 70 ? Math.round((m - 22) * 5.3) : 255;
-      }
-      octx.putImageData(f, 0, 0);
-      outs.forEach(c => { if (!seen.has(c)) return; const x = c.getContext('2d'); x.clearRect(0, 0, S, S); x.drawImage(off, 0, 0); });
-    }
-    requestAnimationFrame(tick);
+  const src = (window.LOOT_ASSETS || '') + 'assets/loot-360-alpha.webp';
+  const toImage = (v) => {
+    const img = document.createElement('img');
+    img.src = src; img.alt = ''; img.decoding = 'async'; img.loading = 'eager';
+    img.className = v.className.replace('k360', 'k360-out');
+    v.replaceWith(img);
+    return img;
   };
-  outs.forEach((c) => io.observe(c));
-  window.keyed360 = { attach(el) {
-    const c = document.createElement('canvas'); c.className = 'k360-out'; c.width = S; c.height = S;
-    el.replaceWith(c); outs.push(c); io.observe(c);
-  } };
-  const kick = () => video.play().catch(() => {});
-  kick();
-  ['touchstart', 'click', 'visibilitychange', 'pageshow'].forEach(e => document.addEventListener(e, kick, { passive: true }));
-  // a phone that refuses to decode at all gets the still image instead of a blank
-  setTimeout(() => { if (video.readyState < 2) outs.forEach(c => { const img = document.createElement('img'); img.src = (window.LOOT_ASSETS || '') + 'assets/loot-360-alpha.webp'; img.alt = ''; img.className = c.className; c.replaceWith(img); }); }, 4000);
-  tick();
+  document.querySelectorAll('video.k360').forEach(toImage);
+  window.keyed360 = { attach: toImage };
 }
 
 /* Verified human: a fingerprint drawn from arcs, unique per visit */
