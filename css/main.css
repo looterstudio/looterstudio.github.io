@@ -119,6 +119,8 @@ body.is-shake .main { animation: shake .18s steps(2); }
 /* ─── Colourways (auto-rotating) ─── */
 :root { --logo-filter: brightness(1.35) contrast(1.05); }
 .trio__logo { object-fit: cover; mix-blend-mode: screen; filter: var(--logo-filter); transition: filter 1.6s ease; }
+/* GPU-promote all 360 logos (video fallback and animated WebP replacement) */
+.hero__360, .sr__360, .outro__360, .k360, .k360-out { will-change: transform; transform: translateZ(0); backface-visibility: hidden; }
 /* colourways */
 body[data-variant="chrome"] { --logo-filter: grayscale(1) contrast(1.7) brightness(1.75) sepia(.25) hue-rotate(185deg) saturate(1.5); }
 
