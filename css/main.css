@@ -485,7 +485,7 @@ body.deny-flash::before { content: ''; position: fixed; inset: 0; z-index: 65; b
 .tile--logo { outline: 1px solid var(--brier); }
 .tile--logo video { mix-blend-mode: screen; }
 .tile--tung { background: #111; }
-.tile--tung img { width: 100%; height: 100%; object-fit: cover; }
+.tile--tung img { width: 100%; height: 100%; object-fit: contain; }
 .tile--tung span { color: #888; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; }
 .tile--cult { background: #000; }
 .tile--cult span { width: 0; height: 0; border-left: 46px solid transparent; border-right: 46px solid transparent; border-bottom: 80px solid #e4c96a; position: relative; }
