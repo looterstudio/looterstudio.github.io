@@ -28,6 +28,6 @@ body.v-h .callout__title, body.v-h .callout h2 { font-family: Georgia, serif; le
 /* creed as an editorial */
 body.v-h .creed { border-top: 3px double #111; }
 body.v-h .creed__text { font-size: clamp(24px, 3.2vw, 46px); }
-body.v-h .creed__seal { filter: invert(1) contrast(1.2) grayscale(1) url(#ink); }
+body.v-h .creed__seal { filter: contrast(1.2) url(#ink); }
 body.v-h .motto { border-top: 1px solid #111; }
 @media (max-width: 720px) { body.v-h .mast__row { flex-direction: column; gap: 4px; align-items: center; text-align: center; } body.v-h .mast__row span:first-child, body.v-h .mast__row span:last-child { display: none; } }
