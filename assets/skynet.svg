@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <pattern id="g" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#1a0004" stroke-width="1"/></pattern>
+    <radialGradient id="eye" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".18" stop-color="#ff3b4e"/>
+      <stop offset=".55" stop-color="#b8111d"/>
+      <stop offset="1" stop-color="#b8111d" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1" fill="#000" opacity=".35"/></pattern>
+  </defs>
+  <rect width="600" height="600" fill="#000"/>
+  <rect width="600" height="600" fill="url(#g)"/>
+  <g fill="none" stroke="#b8111d" stroke-width="1.5" opacity=".9">
+    <circle cx="300" cy="262" r="150" stroke-dasharray="4 10"/>
+    <circle cx="300" cy="262" r="112"/>
+    <path d="M300 92v40M300 392v40M130 262h40M430 262h40"/>
+  </g>
+  <circle cx="300" cy="262" r="96" fill="url(#eye)"/>
+  <circle cx="300" cy="262" r="16" fill="#fff"/>
+  <text x="300" y="500" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="78" letter-spacing="-3" fill="#f4f1ea">SKYNET</text>
+  <text x="300" y="540" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="15" letter-spacing="6" fill="#b8111d">AI INFLUENCER MANAGEMENT</text>
+  <rect width="600" height="600" fill="url(#scan)"/>
+</svg>
