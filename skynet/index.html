@@ -37,6 +37,9 @@
     .hero h1::before { color: var(--hot); transform: translate(4px, 0); clip-path: inset(0 0 58% 0); animation: glitch 3.2s steps(1) infinite; }
     .hero h1::after { color: var(--cyan); transform: translate(-4px, 0); clip-path: inset(62% 0 0 0); animation: glitch 2.6s steps(1) infinite reverse; }
     @keyframes glitch { 0%, 86%, 100% { transform: translate(0, 0); opacity: 0; } 88% { transform: translate(6px, -2px); opacity: 1; } 92% { transform: translate(-5px, 2px); opacity: 1; } 96% { transform: translate(3px, 0); opacity: 1; } }
+    .hero__row { display: flex; align-items: center; justify-content: center; gap: clamp(4px, 1vw, 16px); }
+    .spin360 { display: block; mix-blend-mode: screen; object-fit: contain; pointer-events: none; }
+    .hero__360 { width: clamp(90px, 15vw, 210px); height: clamp(90px, 15vw, 210px); flex: none; margin-left: -1vw; }
     .hero p { margin-top: 18px; font-size: 11px; letter-spacing: .34em; text-transform: uppercase; color: var(--hot); }
 
     .ticker { overflow: hidden; border-top: 1px solid var(--red); border-bottom: 1px solid var(--red); background: #120003; color: var(--hot); font: 700 10px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; white-space: nowrap; }
@@ -130,6 +133,8 @@
     .foot__seal { display: grid; justify-items: center; gap: 14px; text-decoration: none; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); }
     .foot__seal img { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 0 24px rgba(0,255,65,.18)); animation: sealfloat 6s ease-in-out infinite; }
     .foot__seal:hover { color: var(--bone); }
+    .foot__marks { display: flex; align-items: center; gap: 6px; }
+    .foot__360 { width: 150px; height: 150px; }
     @keyframes sealfloat { 50% { transform: translateY(-6px) rotate(-4deg); } }
 
     @media (max-width: 900px) {
@@ -154,7 +159,10 @@
     </nav>
 
     <header class="hero">
-      <h1 data-text="SKYNET">SKYNET</h1>
+      <div class="hero__row">
+        <h1 data-text="SKYNET">SKYNET</h1>
+        <video class="spin360 hero__360" src="../assets/loot-360.mp4" poster="../assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture aria-hidden="true"></video>
+      </div>
       <p>AI influencers · built on demand</p>
     </header>
   </div>
@@ -253,7 +261,7 @@
 
     <footer class="foot">
       <a class="foot__seal" href="../" aria-label="LooterStudio">
-        <img src="../assets/watermark.png" alt="">
+        <span class="foot__marks"><video class="spin360 foot__360" src="../assets/loot-360.mp4" poster="../assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture aria-hidden="true"></video><img src="../assets/watermark.png" alt=""></span>
         <span>a LooterStudio<sup>®</sup> division</span>
       </a>
     </footer>
