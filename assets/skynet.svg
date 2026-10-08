@@ -18,7 +18,6 @@
   </g>
   <circle cx="300" cy="262" r="96" fill="url(#eye)"/>
   <circle cx="300" cy="262" r="16" fill="#fff"/>
-  <text x="300" y="500" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="78" letter-spacing="-3" fill="#f4f1ea">SKYNET</text>
-  <text x="300" y="540" text-anchor="middle" font-family="JetBrains Mono, ui-monospace, monospace" font-size="15" letter-spacing="6" fill="#b8111d">AI INFLUENCER MANAGEMENT</text>
+  <text x="300" y="520" text-anchor="middle" font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="92" letter-spacing="-3" fill="#f4f1ea">SKYNET</text>
   <rect width="600" height="600" fill="url(#scan)"/>
 </svg>
