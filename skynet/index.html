@@ -285,10 +285,11 @@
               <span class="case__front"><span class="cover cover--burn"><b>BURNING…</b><em>vol. 3</em><small>do not eject</small></span></span>
               <span class="case__spine"><i>ZYZZ · VOL 3</i></span>
             </div>
-            <div class="case case--x" data-name="Unit 002" data-meta="classified">
-              <span class="case__front"><span class="cover cover--x"><b>???</b><small>unit 002</small></span></span>
-              <span class="case__spine"><i>UNIT 002</i></span>
-            </div>
+            <button class="case" type="button" data-ig="DePuETVB1qk" data-title="NEEGY_DISC_01.exe" data-name="Lil Neegy · idgaf" data-meta="vol. 1 · instagram · unit 002">
+              <span class="case__cd" data-label="idgaf"></span>
+              <span class="case__front"><span class="cover cover--sky"><b>LIL NEEGY</b><em>idgaf</em><small>vol. 1 · skynet</small></span></span>
+              <span class="case__spine"><i>NEEGY · VOL 1</i></span>
+            </button>
             <div class="case case--x" data-name="Unit 002" data-meta="classified">
               <span class="case__front"><span class="cover cover--x"><b>▒▒▒</b><small>unit 002</small></span></span>
               <span class="case__spine"><i>UNIT 002</i></span>
@@ -436,7 +437,7 @@
       var capPlay = document.getElementById('capPlay');
       var player = document.getElementById('player');
       var cases = document.querySelectorAll('.case');
-      var discs = document.querySelectorAll('.case[data-video]');
+      var discs = document.querySelectorAll('.case[data-video], .case[data-ig]');
       var current = null;
 
       function caption(c) {
@@ -444,17 +445,23 @@
         capArt.innerHTML = cover ? cover.outerHTML : '';
         capName.textContent = c.getAttribute('data-name');
         capMeta.textContent = c.getAttribute('data-meta');
-        capPlay.style.visibility = c.hasAttribute('data-video') ? 'visible' : 'hidden';
+        capPlay.style.visibility = (c.hasAttribute('data-video') || c.hasAttribute('data-ig')) ? 'visible' : 'hidden';
       }
       function load(c, play) {
         var id = c.getAttribute('data-video');
+        var ig = c.getAttribute('data-ig');
         current = c;
         discs.forEach(function (x) { x.classList.toggle('is-on', x === c); x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
         caption(c);
         title.textContent = c.getAttribute('data-title');
         label.textContent = c.getAttribute('data-name');
-        open.href = 'https://www.tiktok.com/@zyzzbrah6969/video/' + id;
-        screen.innerHTML = '<iframe src="https://www.tiktok.com/player/v1/' + id + '?autoplay=' + (play ? 1 : 0) + '&loop=1&music_info=0&description=0&rel=0" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="ZYZZ on TikTok"></iframe>';
+        if (ig) {
+          open.href = 'https://www.instagram.com/reel/' + ig + '/';
+          screen.innerHTML = '<iframe src="https://www.instagram.com/p/' + ig + '/embed" allowtransparency="true" frameborder="0" scrolling="no" allow="encrypted-media" title="' + label.textContent + '"></iframe>';
+        } else {
+          open.href = 'https://www.tiktok.com/@zyzzbrah6969/video/' + id;
+          screen.innerHTML = '<iframe src="https://www.tiktok.com/player/v1/' + id + '?autoplay=' + (play ? 1 : 0) + '&loop=1&music_info=0&description=0&rel=0" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen title="ZYZZ on TikTok"></iframe>';
+        }
       }
       discs.forEach(function (c) {
         c.addEventListener('click', function () {
