@@ -674,3 +674,19 @@ body.is-gated .xp__min { visibility: hidden; }
 /* Watermark */
 .watermark { display: block; margin: 0 auto 20px; width: 120px; height: auto; opacity: 1; filter: drop-shadow(0 4px 12px rgba(0,255,0,0.15)); }
 
+
+/* ═══ SKYNET: a disc spinning in the dark, the word under it. Used by the division and the market tile ═══ */
+.sky { position: relative; width: 100%; aspect-ratio: 1; container-type: inline-size; overflow: hidden; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, #3a0008 0, #120003 34%, #000 66%); }
+.sky::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(0,0,0,.35) 0 1px, transparent 1px 3px); }
+.sky__cd { position: relative; width: 62%; aspect-ratio: 1; margin-top: -16%; border-radius: 50%; background:
+    radial-gradient(circle, #000 0 6%, #cfcfcf 6.5% 7.5%, rgba(255,255,255,.4) 8% 17%, transparent 17.5%),
+    conic-gradient(from 20deg, #e8e8e8, #b9f3ff, #f6c4ff, #fff7b0, #c7ffd4, #e8e8e8, #ffd1e0, #b9d7ff, #e8e8e8);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.5), 0 0 40px rgba(255,0,60,.35), 0 12px 30px rgba(0,0,0,.8); animation: skyspin 7s linear infinite; }
+.sky__cd b { position: absolute; left: 50%; top: 21%; transform: translateX(-50%) rotate(-6deg); font: 400 7.5cqw/1 'Permanent Marker', cursive !important; color: #111; white-space: nowrap; }
+.sky__word { position: absolute; left: 0; right: 0; bottom: 6%; text-align: center; font: 900 17cqw/1 Arial, Helvetica, sans-serif !important; letter-spacing: -.07em; color: #f4f1ea; text-shadow: .6cqw 0 #ff003c, -.6cqw 0 #00e5ff; }
+.sky__live { position: absolute; right: 4%; top: 4%; font: 700 3.2cqw/1 'JetBrains Mono', monospace !important; font-style: normal; letter-spacing: .14em; color: #fff; background: #ff003c; padding: 1.2cqw 1.6cqw; animation: skyblink 1.4s ease-in-out infinite; }
+@keyframes skyspin { to { transform: rotate(360deg); } }
+@keyframes skyblink { 50% { opacity: .45; } }
+.target__img--sky { display: block; width: 62%; cursor: pointer; }
+.tile--skynet { padding: 0; place-items: stretch; }
+@media (prefers-reduced-motion: reduce) { .sky__cd, .sky__live { animation: none; } }

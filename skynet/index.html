@@ -124,9 +124,13 @@
     .mailto a#mailLink:hover { color: var(--hot); }
     .mailto__btn { font: 700 11px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; text-decoration: none; color: #fff; background: var(--red); padding: 12px 16px; }
     .mailto__btn:hover { background: var(--bone); color: var(--red); }
-    .foot { padding: 22px 0 40px; border-top: 1px solid var(--line); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--dim); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .foot a { text-decoration: none; }
-    .foot a:hover { color: var(--bone); }
+    .bar__seal img { display: block; width: 44px; height: 44px; object-fit: contain; opacity: .9; transition: transform .6s, opacity .2s; }
+    .bar__seal:hover img { opacity: 1; transform: rotate(-18deg); }
+    .foot { padding: 7vh 0 9vh; border-top: 1px solid var(--line); display: grid; place-items: center; }
+    .foot__seal { display: grid; justify-items: center; gap: 14px; text-decoration: none; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); }
+    .foot__seal img { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 0 24px rgba(0,255,65,.18)); animation: sealfloat 6s ease-in-out infinite; }
+    .foot__seal:hover { color: var(--bone); }
+    @keyframes sealfloat { 50% { transform: translateY(-6px) rotate(-4deg); } }
 
     @media (max-width: 900px) {
       .deck { grid-template-columns: 1fr; gap: 28px; }
@@ -146,7 +150,7 @@
   <div class="wrap">
     <nav class="bar">
       <a href="../">← LooterStudio<sup>®</sup></a>
-      <span><i class="pulse" aria-hidden="true"></i>network online</span>
+      <a class="bar__seal" href="../" aria-label="LooterStudio"><img src="../assets/watermark.png" alt=""></a>
     </nav>
 
     <header class="hero">
@@ -248,8 +252,10 @@
     </section>
 
     <footer class="foot">
-      <span>SKYNET · a LooterStudio® division</span>
-      <a href="../">always early, never wrong</a>
+      <a class="foot__seal" href="../" aria-label="LooterStudio">
+        <img src="../assets/watermark.png" alt="">
+        <span>a LooterStudio<sup>®</sup> division</span>
+      </a>
     </footer>
   </main>
 

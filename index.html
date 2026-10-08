@@ -22,9 +22,9 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202609270001">
-  <link rel="stylesheet" href="css/variant-d.css?v=202610080001">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=202610080002">
+  <link rel="stylesheet" href="css/variant-d.css?v=202610080002">
   <link rel="preload" href="assets/loot-360-alpha.webp" as="image" type="image/webp">
 </head>
 <body class="v-d is-gated">
@@ -94,6 +94,7 @@
         <aside class="sr__cats">
           <div class="sr__cats-title">Shop by Category</div>
           <ul id="srCats">
+            <li><a data-cat="influencers">AI Influencers <i>1</i></a></li>
             <li><a data-cat="software">Software <i>4,093</i></a>
               <ul>
                 <li><a data-cat="bots">Bots <i>999</i></a></li>
@@ -198,7 +199,7 @@
     <!-- ═══════════ 04 · SKYNET ═══════════ -->
     <section class="division" id="skynet">
       <div class="target target--skynet reveal">
-        <img src="assets/skynet.svg?v=2" alt="SKYNET" class="target__img">
+        <a href="skynet/" class="target__img target__img--sky" aria-label="SKYNET"><div class="sky"><span class="sky__cd"><b>ZYZZ.EXE</b></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div></a>
         <div class="target__box"><a class="target__tag" href="skynet/">SKYNET</a><i>1.00</i><b class="target__lead"></b></div>
       </div>
       <aside class="callout reveal">
@@ -236,7 +237,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202609290001" defer></script>
+  <script src="js/main.js?v=202610080002" defer></script>
   <script src="js/globe.js?v=202609190009" defer></script>
   <script>window.GLOBE_THEME = "ink";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="js/pay.js?v=202609111415"></script>

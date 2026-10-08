@@ -211,6 +211,7 @@ function errorCascade(n, text) {
    ANONYMOUS MARKET (Silk Road)
    ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
+  { id: 'skynet', cat: ['influencers', 'software', 'models', 'custom'], tile: 'skynet', html: '<div class="sky"><span class="sky__cd"><b>ZYZZ.EXE</b></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div>', title: 'ZYZZ.EXE · AI influencer, posts 24/7, never skips leg day [SKYNET]', priceLabel: 'BUILT ON DEMAND', note: 'skynet', link: 'skynet/' },
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world', link: 'https://brier.world' },
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS · SEASON 0', link: '#stat' },
   { id: 'snowball', cat: ['software', 'custom', 'capital'], tile: 'snowball', img: 'assets/snowball-tile.png', title: 'Snowball. we scale companies', priceLabel: '฿?', note: 'scale', link: 'https://looterstudio.xyz/luv/' },
@@ -244,7 +245,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER</div><img class="seizure__seal" src="${AS}assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® · warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.video ? `<video src="${AS}${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${AS}${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER</div><img class="seizure__seal" src="${AS}assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® · warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.html ? p.html : p.video ? `<video src="${AS}${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${AS}${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
@@ -280,7 +281,7 @@ function initMarket() {
     if (e.target.closest('.sr__offer')) return;
     if (p.buy) { runBuy(card.querySelector('.sr__buy')); return; }
     if (p.offer) { window.open(p.offer, '_blank', 'noopener'); return; }
-    if (p.link) { if (p.link.startsWith('#')) { location.hash = p.link; } else { window.open(p.link, '_blank', 'noopener'); } return; }
+    if (p.link) { if (p.link.startsWith('#')) { location.hash = p.link; } else if (!/^https?:/.test(p.link)) { location.href = p.link; } else { window.open(p.link, '_blank', 'noopener'); } return; }
     if (p.seized) { flashMsg('SEIZED. DO NOT ASK.', 'is-error'); errorCascade(2, 'EVIDENCE.'); return; }
     if (p.tile === 'riddle' || p.tile === 'alien') { flashMsg('??????????', 'is-error'); return; }
     if (p.price === 0) {
