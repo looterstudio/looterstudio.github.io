@@ -14,14 +14,14 @@ window.LOOT_THREADS = [
   {
     no: '0002', date: '2026-10-01', min: 2,
     href: 'f/the-internet-is-not-media.html',
-    thumb: 'assets/vibration.jpg',
+    thumb: 'assets/realm-thumb.jpg',
     subject: 'The Internet is Not Media: It is a Different Realm',
     teaser: 'The internet is not media; it is a different realm entirely. We must start posting from a completely different point of view of the world. The act of posting is basically an act of sorcery.',
   },
   {
     no: '0001', date: '2026-09-09', min: 6,
     href: 'f/the-barrier-just-fell.html',
-    thumb: 'assets/idea.jpg',
+    thumb: 'assets/salvator-thumb.jpg',
     subject: 'The barrier just fell',
     teaser: 'Every time in history a barrier to knowledge falls, the people who built their whole identity around that barrier get exposed. This time the barrier falling is the cost of learning itself.',
   },
