@@ -1,0 +1,25 @@
+# One-off: move the market worker into the lootstudioscorp account.
+# Creates the LOOT KV namespace if missing and prints its id, plus the live numbers to carry over.
+name: Worker migrate
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - name: KV namespace
+        run: |
+          npx --yes wrangler@3 kv namespace list > ns.json || echo '[]' > ns.json
+          cat ns.json
+          if ! grep -q '"title": *"loot-market-LOOT"\|"title": *"LOOT"' ns.json; then
+            npx --yes wrangler@3 kv namespace create LOOT || true
+            npx --yes wrangler@3 kv namespace list
+          fi
+      - name: Live numbers on the old worker
+        run: |
+          for id in 0001 0002 0003; do curl -sS -m 15 https://loot-market.looterstudio.workers.dev/likes/$id; echo; done
+          curl -sS -m 15 https://loot-market.looterstudio.workers.dev/stats; echo
