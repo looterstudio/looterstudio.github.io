@@ -25,7 +25,7 @@
   win.innerHTML = `
     <div class="rec__bar"><span>LOOT_RECOMMENDS.exe</span><button type="button" class="rec__x" aria-label="Close">✕</button></div>
     <div class="rec__body">
-      <img class="rec__q" src="assets/qmark.webp" alt="">
+      <img class="rec__q" src="assets/hand.webp" alt="">
       <div class="rec__txt"><small class="rec__tag"></small><b class="rec__title"></b><p class="rec__text"></p></div>
     </div>
     <div class="rec__actions"><button type="button" class="rec__btn rec__again">Another ?</button><a class="rec__btn rec__go"></a></div>`;

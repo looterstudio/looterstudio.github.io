@@ -145,6 +145,18 @@ function initXP() {
     setTimeout(() => { xp.classList.remove('is-error', 'is-ok'); XP.paused = false; if (after) after(); }, ms);
   };
 
+  /* weather: a full-screen loop over everything for a few seconds (DENY → rain) */
+  const weather = (kind, ms) => {
+    if (REDUCED) return;
+    document.querySelectorAll('.weather').forEach((w) => w.remove());
+    const w = document.createElement('div');
+    w.className = 'weather weather--' + kind;
+    w.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(w);
+    requestAnimationFrame(() => w.classList.add('is-on'));
+    setTimeout(() => { w.classList.remove('is-on'); setTimeout(() => w.remove(), 600); }, ms);
+  };
+
   /* DENY → wrong decision + error cascade */
   const deny = () => {
     XP.denies++;
@@ -156,6 +168,7 @@ function initXP() {
     const text = DENIALS[Math.min(XP.denies - 1, DENIALS.length - 1)];
     hold(text, 'is-error', 2600);
     errorCascade(XP.denies >= 3 ? 8 : 5, text);
+    weather('rain', 4200);
   };
 
   /* ACCEPT → access granted + target mode */
@@ -229,8 +242,8 @@ const PRODUCTS = [
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®', note: 'soon' },
-  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
-  { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? ??????????', priceLabel: '??????' },
+  { id: 'cards',  cat: ['objects', 'art'],     tile: 'deck', img: 'assets/cards.webp', title: 'Dark Magician Girl deck. Sealed. 1st edition energy', priceLabel: '2,000 ATK', note: 'objects' },
+  { id: 'vr',     cat: ['software', 'ideas'],  tile: 'vr', img: 'assets/vr.webp', title: 'Virtual Reality. You are already in it', priceLabel: '฿0.00', note: 'free' },
 ];
 
 function initMarket() {

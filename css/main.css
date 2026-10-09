@@ -775,8 +775,9 @@ canvas.k360-stars { display: block; }
 @keyframes recpop { from { transform: scale(.92) translateY(-6px); opacity: 0; } to { transform: none; opacity: 1; } }
 .rec__bar { display: flex; justify-content: space-between; align-items: center; padding: 5px 6px 5px 10px; font-size: 12px; font-weight: 700; color: #fff; background: #7a7a7a; border-radius: 7px 7px 0 0; }
 .rec__x { width: 21px; height: 21px; border: 1px solid #fff; border-radius: 3px; background: linear-gradient(180deg, #e46a5a, #c74534); color: #fff; font-size: 11px; line-height: 1; cursor: none; }
-.rec__body { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; align-items: start; padding: 16px 14px 8px; }
-.rec__q { width: 64px; height: 64px; object-fit: contain; }
+.rec__body { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; align-items: start; padding: 16px 14px 8px; }
+.rec__q { width: 76px; height: 82px; object-fit: contain; animation: offer 2.4s ease-in-out infinite; }
+@keyframes offer { 50% { transform: translateY(-4px) rotate(-3deg); } }
 .rec__txt { display: grid; gap: 6px; }
 .rec__tag { font-size: 9px; letter-spacing: .22em; color: #b8111d; font-weight: 700; }
 .rec__title { font: 900 20px/1.1 Arial, Helvetica, sans-serif !important; letter-spacing: -.02em; }
@@ -790,3 +791,17 @@ canvas.k360-stars { display: block; }
   .qmark { right: auto; left: 10px; top: 8px; width: 60px; height: 60px; }
   .rec { right: auto; left: 16px; top: 76px; }
 }
+
+/* ═══ weather: DENY makes it rain over everything for a few seconds ═══ */
+.weather { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: 0; transition: opacity .5s; background-repeat: repeat; }
+.weather.is-on { opacity: 1; }
+.weather--rain { background-image: url(../assets/rain.webp); background-size: 512px auto; }
+@media (max-width: 720px) { .weather--rain { background-size: 300px auto; } }
+
+/* market: the deck turns slowly, VR floats */
+.tile--deck, .tile--vr { perspective: 600px; }
+.tile--deck img { width: 104%; max-width: none; animation: deckturn 5s ease-in-out infinite; }
+@keyframes deckturn { 0%, 100% { transform: rotateY(-28deg) rotateZ(-4deg); } 50% { transform: rotateY(28deg) rotateZ(4deg) translateY(-4px); } }
+.tile--vr img { width: 86%; animation: vrfloat 3.2s ease-in-out infinite; }
+@keyframes vrfloat { 0%, 100% { transform: translateY(0) rotate(-2deg) scale(1); } 50% { transform: translateY(-8px) rotate(2deg) scale(1.04); } }
+@media (prefers-reduced-motion: reduce) { .tile--deck img, .tile--vr img { animation: none; } }
