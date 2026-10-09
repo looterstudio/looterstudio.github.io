@@ -80,7 +80,7 @@
   let ring = null, rctx = null;
   if (LOOT) {
     ring = document.createElement('canvas');
-    ring.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+    ring.style.cssText = 'position:absolute;left:-50%;top:-50%;width:200%;height:200%;pointer-events:none';
     canvas.style.position = 'absolute'; canvas.style.inset = '0';
     dvd.appendChild(ring);
     rctx = ring.getContext('2d');
@@ -290,22 +290,25 @@
   // the ring: tilted orbit, front stars big and solid, back stars small and hidden by the planet
   function drawRing(now) {
     if (!rctx || !SPRITE.complete || !SPRITE.naturalWidth) return;
-    const rw = Math.round(W * dpr), rh = Math.round(H * dpr);
+    const RW = W * 2, RH = H * 2, rd = Math.min(devicePixelRatio || 1, 2, 1800 / Math.max(RW, RH, 1));
+    const rw = Math.round(RW * rd), rh = Math.round(RH * rd);
     if (ring.width !== rw || ring.height !== rh) { ring.width = rw; ring.height = rh; }
-    rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    rctx.clearRect(0, 0, W, H);
+    rctx.setTransform(rd, 0, 0, rd, 0, 0);
+    rctx.clearRect(0, 0, RW, RH);
     rctx.imageSmoothingQuality = 'high';
-    const cx = W / 2, cy = H / 2, sec = now / 1000;
+    const cx = RW / 2, cy = RH / 2, sec = now / 1000;
     const tilt = -0.42, cT = Math.cos(tilt), sT = Math.sin(tilt);
+    // wide orbit, but never wider than the screen (on phones the planet is 120vw)
+    const RX = Math.min(R * 1.62, innerWidth * 0.5), RY = RX * 0.284, K = RX / (R * 1.62);
     const pts = RING.map((st) => {
       const a = st.a + (REDUCED ? 0 : sec * 0.16);
-      const ex = Math.cos(a) * R * 1.34, ey = Math.sin(a) * R * 0.36;
+      const ex = Math.cos(a) * RX, ey = Math.sin(a) * RY;
       return { st, z: Math.sin(a), px: cx + ex * cT - ey * sT, py: cy + ex * sT + ey * cT };
     }).sort((p, q) => p.z - q.z);
     pts.forEach(({ st, z, px, py }) => {
       if (z < 0 && Math.hypot(px - cx, py - cy) < R * 0.98) return;
       const near = (z + 1) / 2;
-      const size = R * 0.3 * st.s * (0.55 + 0.45 * near);
+      const size = R * 0.44 * Math.max(K, 0.7) * st.s * (0.55 + 0.45 * near);
       // sway: a smooth sine through the 24 frames, blended between neighbours
       const pos = (Math.sin(sec * st.spin + st.a * 3) * 0.5 + 0.5) * (SPR_N - 1);
       const f0 = Math.floor(pos), f1 = Math.min(SPR_N - 1, f0 + 1), k = pos - f0;
