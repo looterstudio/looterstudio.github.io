@@ -814,3 +814,11 @@ canvas.k360-stars { display: block; }
 .seals { display: inline-flex; align-items: center; gap: 12px; }
 .seals img, .seals canvas { width: 58px; height: 58px; object-fit: contain; display: block; }
 .seals .seals__grin { width: 80px; }
+/* home: 'just loot it', then the four marks, big and centred, then the line */
+.ft__base { flex-direction: column; justify-content: center; text-align: center; gap: 18px; padding-top: 28px; }
+.ft__base b { font-size: clamp(30px, 4vw, 48px); }
+.ft__base span { margin-left: 0 !important; }
+.seals--big { gap: clamp(14px, 3vw, 40px); flex-wrap: wrap; justify-content: center; }
+.seals--big img, .seals--big canvas { width: clamp(70px, 11vw, 140px); height: clamp(70px, 11vw, 140px); }
+.seals--big .seals__grin { width: clamp(100px, 15vw, 190px); }
+@media (max-width: 520px) { .seals--big { flex-wrap: nowrap; gap: 10px; } .seals--big img, .seals--big canvas { width: 58px; height: 58px; } .seals--big .seals__grin { width: 84px; } }
