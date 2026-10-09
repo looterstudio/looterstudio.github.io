@@ -810,3 +810,7 @@ canvas.k360-stars { display: block; }
 @keyframes vrfloat { 0%, 100% { transform: translateY(0) rotate(-2deg) scale(1); } 50% { transform: translateY(-8px) rotate(2deg) scale(1.04); } }
 @media (prefers-reduced-motion: reduce) { .tile--deck img, .tile--vr img { animation: none; } }
 
+/* the seals: the grin, the planet, the 360 stars, the arc */
+.seals { display: inline-flex; align-items: center; gap: 12px; }
+.seals img, .seals canvas { width: 58px; height: 58px; object-fit: contain; display: block; }
+.seals .seals__grin { width: 80px; }

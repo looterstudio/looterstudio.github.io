@@ -197,7 +197,9 @@
     .foot__seal { display: grid; justify-items: center; gap: 14px; text-decoration: none; font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--dim); }
     .foot__seal img { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 0 24px rgba(0,255,65,.18)); }
     .foot__seal:hover { color: var(--bone); }
-    .foot__marks { display: flex; align-items: center; gap: 6px; }
+    .foot__marks { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .foot__seal .foot__marks img { width: 96px; height: 96px; }
+    .foot__seal .foot__marks .foot__grin { width: 120px; }
     .foot__360 { width: 150px; height: 150px; }
 
     @media (max-width: 1000px) {
@@ -307,7 +309,7 @@
 
   <footer class="foot">
     <a class="foot__seal" href="../" aria-label="LooterStudio">
-      <span class="foot__marks"><img class="spin360 foot__360" src="../assets/loot-360-alpha.webp" alt="" aria-hidden="true"><img src="../assets/grin.png" alt=""></span>
+      <span class="foot__marks"><img class="foot__grin" src="../assets/grin.png" alt=""><img src="../assets/watermark.png" alt=""><img class="spin360 foot__360" src="../assets/loot-360-alpha.webp" alt="" aria-hidden="true"><img src="../assets/arc.png" alt=""></span>
       <span>a LooterStudio<sup>®</sup> division</span>
     </a>
   </footer>

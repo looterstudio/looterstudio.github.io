@@ -63,3 +63,6 @@ a:hover { color: #dd0000; }
 @media (max-width: 600px) { .post__fig { float: none; width: 70%; margin: .6em auto 1em; } }
 .board__banner { display: block; width: 150px; height: auto; margin: 10px auto 6px; }
 .board__seal--grin { width: 120px !important; height: auto !important; }
+.seals { display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; }
+.seals img, .seals canvas { width: 84px; height: 84px; object-fit: contain; display: block; }
+.seals .seals__grin { width: 120px; }
