@@ -211,7 +211,7 @@ function errorCascade(n, text) {
    ANONYMOUS MARKET (Silk Road)
    ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
-  { id: 'skynet', cat: ['influencers', 'software', 'models', 'custom'], tile: 'skynet', html: '<div class="sky"><span class="sky__cd"><b>ZYZZ.EXE</b></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div>', title: 'ZYZZ.EXE · AI influencer, posts 24/7, never skips leg day [SKYNET]', priceLabel: 'BUILT ON DEMAND', note: 'skynet', link: 'skynet/' },
+  { id: 'skynet', cat: ['influencers', 'software', 'models', 'custom'], tile: 'skynet', html: '<div class="sky"><span class="sky__cd"></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div>', title: 'SKYNET · AI influencers. Five units, posting 24/7', priceLabel: '5 UNITS', note: 'skynet', link: 'skynet/' },
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world', link: 'https://brier.world' },
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS · SEASON 0', link: '#stat' },
   { id: 'snowball', cat: ['software', 'custom', 'capital'], tile: 'snowball', img: 'assets/snowball-tile.png', title: 'Snowball. we scale companies', priceLabel: '฿?', note: 'scale', link: 'https://looterstudio.xyz/luv/' },
