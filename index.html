@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202610090001">
-  <link rel="stylesheet" href="css/variant-d.css?v=202610090001">
+  <link rel="stylesheet" href="css/main.css?v=202610090003">
+  <link rel="stylesheet" href="css/variant-d.css?v=202610090003">
   <link rel="preload" href="assets/loot-360-alpha.webp" as="image" type="image/webp">
 </head>
 <body class="v-d is-gated">
@@ -207,26 +207,41 @@
     <!-- ═══════════ OUTRO ═══════════ -->
     <section class="outro">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/><feTurbulence type="fractalNoise" baseFrequency=".08" numOctaves="3" seed="3" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.3 -.2" result="m"/><feComposite in="d" in2="m" operator="out"/></filter></svg>
-      <div class="creed reveal">
-        <img class="creed__seal" src="assets/watermark.png" alt="">
-        <div>
-          <p class="creed__text"><b>LooterStudio</b> is a delusional mindset. Not for everyone. Never for losers.</p>
+      <div class="ft reveal">
+        <div class="ft__brand">
+          <div class="outro__brand">
+            <video class="outro__360 k360" src="assets/loot-360.mp4" autoplay loop muted playsinline disablepictureinpicture></video>
+            <span class="outro__word">LooterStudio<sup>®</sup></span>
+          </div>
+          <p class="ft__creed"><b>LooterStudio</b> is a delusional mindset. Not for everyone. Never for losers.</p>
         </div>
+        <nav class="ft__dir" aria-label="Everything LooterStudio">
+          <div>
+            <h3>Companies</h3>
+            <a href="https://brier.world" target="_blank" rel="noopener">Brier. <i>protocol ↗</i></a>
+            <a href="#stat">stat <i>app · season 0</i></a>
+            <a href="https://looterstudio.xyz/luv/" target="_blank" rel="noopener">Snowball <i>service ↗</i></a>
+            <a href="skynet/">SKYNET <i>ai influencers →</i></a>
+          </div>
+          <div>
+            <h3>Studio</h3>
+            <a href="#market">Anonymous market <i>shop</i></a>
+            <a href="#forum">lootchan · /loot/ <i>forum</i></a>
+            <a href="looterio/" target="_blank" rel="noopener">LOOTERIO <i>search ↗</i></a>
+            <a href="#holdings">Holdings <i>all companies</i></a>
+          </div>
+          <div>
+            <h3>Contact</h3>
+            <a href="https://x.com/loot16z" target="_blank" rel="noopener">X <i>@loot16z ↗</i></a>
+            <a href="mailto:lootstudioscorp@gmail.com">Email <i>lootstudioscorp@gmail.com</i></a>
+            <a href="skynet/#order">Order an AI influencer <i>skynet →</i></a>
+          </div>
+        </nav>
       </div>
-      <div class="outro__row reveal">
-        <div class="outro__brand">
-          <video class="outro__360 k360" src="assets/loot-360.mp4" autoplay loop muted playsinline disablepictureinpicture></video>
-          <span class="outro__word">LooterStudio<sup>®</sup></span>
-        </div>
-        <ul class="tags">
-          <li class="tags__root">anonymous market <i>3,402</i></li>
-          <li>an independent studio <i>1,275</i></li>
-          <li>we are iqmaxxers <i>875</i></li>
-        </ul>
-      </div>
-      <div class="motto reveal">
-        <img src="assets/watermark.png" alt="" class="watermark">
+      <div class="ft__base">
+        <img src="assets/watermark.png" alt="" class="ft__seal">
         <b>just loot it</b>
+        <span>LooterStudio® · Buenos Aires · always early, never wrong</span>
       </div>
     </section>
 

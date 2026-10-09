@@ -692,7 +692,7 @@ body.is-gated .xp__min { visibility: hidden; }
 @media (prefers-reduced-motion: reduce) { .sky__cd, .sky__live { animation: none; } }
 
 /* ═══ HOLDINGS: every company in one register. Logo, what it is, where to enter. ═══ */
-.holdings { max-width: 1180px; margin: 14vh auto 0; padding: 0 24px; }
+.holdings { max-width: 1180px; margin: 9vh auto 0; padding: 0 24px; }
 .holdings__head { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; border-bottom: 2px solid var(--bone); padding-bottom: 12px; }
 .holdings__head h2 { font: 900 clamp(44px, 7vw, 96px)/.9 var(--brand); letter-spacing: -.06em; }
 .holdings__cols { display: grid; grid-template-columns: 48px 132px minmax(0, 1fr) 120px 150px; gap: 24px; padding: 10px 0; border-bottom: 1px solid var(--dim); font: 400 9px/1 var(--mono); letter-spacing: .26em; text-transform: uppercase; color: var(--dim); }
@@ -730,3 +730,23 @@ a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
   .hold__go { grid-area: go; justify-self: start; padding: 9px 12px; font-size: 10px !important; }
   .hold__box { inset: -6px; }
 }
+
+/* ═══ FOOTER: the brand on the left, every link on the right, one line under it ═══ */
+.ft { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); gap: 56px; align-items: start; padding: 6vh 0 4vh; border-top: 2px solid var(--bone); }
+.ft__creed { margin-top: 14px; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: clamp(18px, 1.9vw, 26px); line-height: 1.2; max-width: 24ch; }
+.ft__creed b { font-style: normal; font-family: var(--brand); font-weight: 900; letter-spacing: -.03em; }
+.ft__dir { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.ft__dir h3 { font: 700 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: var(--red); padding-bottom: 10px; margin-bottom: 4px; border-bottom: 1px solid currentColor; }
+.ft__dir a { display: grid; gap: 2px; padding: 9px 0; border-bottom: 1px solid rgba(127,127,127,.25); text-decoration: none; font: 900 17px/1.1 var(--brand); letter-spacing: -.02em; transition: color .2s, padding .2s; }
+.ft__dir a i { font: 400 9px/1.2 var(--mono); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); word-break: break-all; }
+.ft__dir a:hover { color: var(--red); padding-left: 6px; }
+.ft__base { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 18px 0 0; border-top: 1px solid rgba(127,127,127,.3); }
+.ft__seal { width: 46px; height: 46px; object-fit: contain; }
+.ft__base b { font: 900 22px/1 var(--brand); letter-spacing: -.04em; }
+.ft__base span { margin-left: auto; font: 400 9px/1.4 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--dim); }
+@media (max-width: 900px) {
+  .ft { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .ft__dir { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; }
+  .ft__base span { margin-left: 0; width: 100%; }
+}
+@media (max-width: 340px) { .ft__dir { grid-template-columns: minmax(0, 1fr); } }

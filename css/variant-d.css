@@ -145,3 +145,15 @@ body.v-d .hold__main small { color: #444; font-family: Georgia, 'Times New Roman
 body.v-d .hold__line { color: #111; }
 body.v-d .hold__go { color: #111; }
 body.v-d .hold__go--soon { color: #777; }
+/* footer on paper: tighter, no more empty screens between sections */
+body.v-d .outro { margin-top: 10vh; padding: 0 24px 6vh; max-width: 1180px; margin-left: auto; margin-right: auto; }
+body.v-d .ft { border-color: #111; }
+body.v-d .ft__creed { color: #111; }
+body.v-d .ft__dir a { color: #111; }
+body.v-d .ft__dir a:hover { color: #b8111d; }
+body.v-d .ft__dir a i { color: #666; }
+body.v-d .ft__base b { color: #111; }
+body.v-d .ft__base span { color: #666; }
+body.v-d .ft .outro__360 { width: 110px; height: 110px; margin: -22px 0 -22px -14px; }
+body.v-d .ft .outro__word { font-size: clamp(36px, 4vw, 56px); }
+@media (max-width: 720px) { body.v-d .ft .outro__brand { flex-direction: row; align-items: center; } body.v-d .ft .outro__360 { width: 80px; height: 80px; margin: -14px 0 -14px -10px; } body.v-d .ft .outro__word { font-size: 10vw; } }
