@@ -753,3 +753,6 @@ a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
 /* market: the logo tile shows the real mark, whole and white on black */
 .tile--logo { outline: 1px solid #222; background: #000; }
 .tile--logo img, .tile--logo video { width: 82% !important; height: 82% !important; max-width: none; object-fit: contain !important; transform: none !important; filter: none !important; mix-blend-mode: normal !important; }
+/* the 360 mark, drawn: canvases take the slot of the old keyed video */
+canvas.k360-stars { display: block; }
+.tile--logo canvas.k360-stars { width: 86% !important; height: 86% !important; }
