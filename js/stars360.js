@@ -17,13 +17,15 @@
   const slots = [];
   const take = (el) => {
     if (el.dataset.stars) return;
+    if (el.tagName === 'CANVAS') { el.dataset.stars = '1'; slots.push({ c: el, ctx: el.getContext('2d'), w: 0 }); return; }
     const c = document.createElement('canvas');
     c.className = (el.className || '').replace('k360-out', 'k360').replace('k360', 'k360-stars');
     c.setAttribute('aria-hidden', 'true');
+    c.dataset.stars = '1';
     el.replaceWith(c);
     slots.push({ c, ctx: c.getContext('2d'), w: 0 });
   };
-  const scan = () => document.querySelectorAll('video.k360, img.k360-out, .tile--logo video, .tile--logo img').forEach(take);
+  const scan = () => document.querySelectorAll('canvas.k360-stars, video.k360, img.k360-out, .tile--logo video, .tile--logo img').forEach(take);
 
   const size = (s) => {
     const r = s.c.getBoundingClientRect();

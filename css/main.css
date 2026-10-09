@@ -775,9 +775,13 @@ canvas.k360-stars { display: block; }
 @keyframes recpop { from { transform: scale(.92) translateY(-6px); opacity: 0; } to { transform: none; opacity: 1; } }
 .rec__bar { display: flex; justify-content: space-between; align-items: center; padding: 5px 6px 5px 10px; font-size: 12px; font-weight: 700; color: #fff; background: #7a7a7a; border-radius: 7px 7px 0 0; }
 .rec__x { width: 21px; height: 21px; border: 1px solid #fff; border-radius: 3px; background: linear-gradient(180deg, #e46a5a, #c74534); color: #fff; font-size: 11px; line-height: 1; cursor: none; }
-.rec__body { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; align-items: start; padding: 16px 14px 8px; }
-.rec__q { width: 76px; height: 82px; object-fit: contain; animation: offer 2.4s ease-in-out infinite; }
-@keyframes offer { 50% { transform: translateY(-4px) rotate(-3deg); } }
+.rec__media { position: relative; height: 170px; overflow: hidden; border-bottom: 1px solid #b9b5a6; }
+.rec__media img { position: absolute; inset: 0; width: 100%; height: 100%; padding: 16px; box-sizing: border-box; object-fit: contain; display: block; }
+.rec__media--paper { background: radial-gradient(circle at 50% 45%, #fff 0, #f4f1ea 60%, #e4dfd2 100%); }
+.rec__media--dark { background: radial-gradient(circle at 50% 40%, #2a0006 0, #0b0002 55%, #000 100%); }
+.rec__media--cover img { padding: 0; object-fit: cover; }
+.rec__media--pixel img { image-rendering: pixelated; padding: 10px; }
+.rec__body { padding: 14px 14px 6px; }
 .rec__txt { display: grid; gap: 6px; }
 .rec__tag { font-size: 9px; letter-spacing: .22em; color: #b8111d; font-weight: 700; }
 .rec__title { font: 900 20px/1.1 Arial, Helvetica, sans-serif !important; letter-spacing: -.02em; }

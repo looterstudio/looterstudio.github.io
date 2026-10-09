@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202610090014">
+  <link rel="stylesheet" href="css/main.css?v=202610090016">
   <link rel="stylesheet" href="css/variant-d.css?v=202610090006">
   <link rel="preload" href="assets/loot-360-alpha.webp" as="image" type="image/webp">
 </head>
@@ -68,7 +68,7 @@
     <div>
       <div class="hero__row">
         <div class="hero__word">LooterStudio<sup>®</sup></div>
-        <video class="hero__360 k360" src="assets/loot-360.mp4" poster="assets/loot-360-poster.jpg" autoplay loop muted playsinline disablepictureinpicture></video>
+        <canvas class="hero__360 k360-stars" aria-hidden="true"></canvas>
       </div>
     </div>
     <span class="hero__down">SCROLL</span>
@@ -79,7 +79,7 @@
     <section class="market sr" id="market">
       <header class="sr__head reveal">
         <div class="sr__brand">
-          <video class="sr__360 k360" src="assets/loot-360.mp4" autoplay loop muted playsinline disablepictureinpicture></video>
+          <canvas class="sr__360 k360-stars" aria-hidden="true"></canvas>
           <div><b>LooterStudio<sup>®</sup></b><i>always early, never wrong</i></div>
         </div>
         <div class="sr__account">
@@ -213,7 +213,7 @@
       <div class="ft reveal">
         <div class="ft__brand">
           <div class="outro__brand">
-            <video class="outro__360 k360" src="assets/loot-360.mp4" autoplay loop muted playsinline disablepictureinpicture></video>
+            <canvas class="outro__360 k360-stars" aria-hidden="true"></canvas>
             <span class="outro__word">LooterStudio<sup>®</sup></span>
           </div>
           <p class="ft__creed"><b>LooterStudio</b> is a delusional mindset. Not for everyone. Never for losers.</p>
@@ -244,9 +244,9 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202610090005" defer></script>
-  <script src="js/stars360.js?v=2" defer></script>
-  <script src="js/recommend.js?v=2" defer></script>
+  <script src="js/main.js?v=202610090006" defer></script>
+  <script src="js/stars360.js?v=3" defer></script>
+  <script src="js/recommend.js?v=3" defer></script>
   <script src="js/globe.js?v=202610090004" defer></script>
   <script>window.GLOBE_THEME = "loot";window.GLOBE_DETAIL = "atlas";window.LOOT_ASSETS = "";window.LOOT_WORKER = "https://loot-market.looterstudio.workers.dev";</script>
   <script type="module" src="js/pay.js?v=202609111415"></script>

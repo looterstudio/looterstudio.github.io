@@ -228,9 +228,8 @@ const PRODUCTS = [
   { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'SOCIALFI AGENTIC PLATFORM!! agents trade, capital follows [GOD SOURCE]', price: 1.84, note: 'brier.world', link: 'https://brier.world' },
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS · SEASON 0', link: '#stat' },
   { id: 'snowball', cat: ['software', 'custom', 'capital'], tile: 'snowball', img: 'assets/snowball-tile.png', title: 'Snowball. we scale companies', priceLabel: '฿?', note: 'scale', link: 'https://looterstudio.xyz/luv/' },
-  { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', priceLabel: '5,000,000,000 USDC' },
+  { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', html: '<canvas class="k360-stars"></canvas>', title: 'LooterStudio® logo. 1 of 1. The whole thing', priceLabel: '5,000,000,000 USDC' },
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'tung tung tung sahur · 1/1 · <b class="verified">LooterStudio verified ✓</b>', priceLabel: '100,000 USDC', offer: 'https://www.tensor.trade/item/Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7', mint: 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7' },
-  { id: 'stack',  cat: ['capital', 'objects'],  tile: 'clip', video: 'assets/money.mp4', webm: 'assets/money.webm', poster: 'assets/money-poster.jpg', title: 'A stack. 100 × $100, still spinning', priceLabel: '10,000 USDC', note: 'cash' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
@@ -242,8 +241,9 @@ const PRODUCTS = [
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®', note: 'soon' },
-  { id: 'cards',  cat: ['objects', 'art'],     tile: 'deck', img: 'assets/cards.webp', title: 'Dark Magician Girl deck. Sealed. 1st edition energy', priceLabel: '2,000 ATK', note: 'objects' },
-  { id: 'vr',     cat: ['software', 'ideas'],  tile: 'vr', img: 'assets/vr.webp', title: 'Virtual Reality. You are already in it', priceLabel: '฿0.00', note: 'free' },
+  { id: 'obj',    cat: ['objects', 'art'],     tile: 'alien', text: '', title: '??????????', priceLabel: '?' },
+  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
+  { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? ??????????', priceLabel: '??????' },
 ];
 
 function initMarket() {
