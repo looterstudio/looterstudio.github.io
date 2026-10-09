@@ -17,3 +17,9 @@ jobs:
           npx --yes wrangler@3 kv namespace list || true
           echo "--- loot-market deployments"
           npx --yes wrangler@3 deployments list --name loot-market || true
+          echo "--- is the live worker answering?"
+          curl -sS -m 15 -i https://loot-market.looterstudio.workers.dev/likes/0001 | head -20 || true
+          echo
+          echo "--- workers.dev subdomain of this account"
+          ACC=$(npx --yes wrangler@3 whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1)
+          curl -sS -m 15 -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$ACC/workers/subdomain" || true
