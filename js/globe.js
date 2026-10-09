@@ -13,10 +13,12 @@
   if (!dvd || !canvas || typeof d3 === 'undefined') return;
 
   // Theme: 'screen' (red on black, the original) or 'ink' (drawn on paper: no black disc, lines only).
+  // 'loot' is the logo: a green wireframe planet on paper, ringed by our stars instead of comets.
   const THEME = window.GLOBE_THEME || 'screen';
-  const INK = THEME === 'ink' || THEME === 'ink-black';
-  const RED = THEME === 'ink-black' ? '#111111' : (INK ? '#b8111d' : '#ff2a3c');
-  const rgb = THEME === 'ink-black' ? '17,17,17' : (INK ? '184,17,29' : '255,42,60');
+  const LOOT = THEME === 'loot';
+  const INK = THEME === 'ink' || THEME === 'ink-black' || LOOT;
+  const RED = LOOT ? '#10a83a' : THEME === 'ink-black' ? '#111111' : (INK ? '#b8111d' : '#ff2a3c');
+  const rgb = LOOT ? '16,168,58' : THEME === 'ink-black' ? '17,17,17' : (INK ? '184,17,29' : '255,42,60');
   const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // On paper the globe is pinned to the centre by CSS: no DVD drift, and no bounce flash either.
   const PINNED = window.GLOBE_PINNED != null ? !!window.GLOBE_PINNED : INK;
@@ -69,7 +71,25 @@
     speed: (0.9 + Math.random() * 0.9) * (Math.random() < 0.5 ? 1 : -1), alt: 1.12 + Math.random() * 0.3, ecc: 0.75 + Math.random() * 0.25,
     tail: [], life: 0, span: 900 + Math.random() * 900,
   });
-  const SHOOTERS = Array.from({ length: 4 }, mkShooter);
+  const SHOOTERS = LOOT ? [] : Array.from({ length: 4 }, mkShooter);
+  // the logo's ring: stars on a tilted orbit, big in front, small behind, hidden by the planet
+  const RING = LOOT ? Array.from({ length: 16 }, (_, i) => ({ a: (i / 16) * Math.PI * 2, s: 0.75 + ((i * 7) % 5) / 10, spin: (i % 2 ? 1 : -1) * (0.4 + (i % 3) * 0.2) })) : [];
+  const star = (px, py, r, rotA, depth) => {
+    ctx.save(); ctx.translate(px, py); ctx.rotate(rotA);
+    ctx.beginPath();
+    for (let k = 0; k < 10; k++) {
+      const rr = k % 2 ? r * 0.45 : r, ang = -Math.PI / 2 + k * Math.PI / 5;
+      k ? ctx.lineTo(Math.cos(ang) * rr, Math.sin(ang) * rr) : ctx.moveTo(Math.cos(ang) * rr, Math.sin(ang) * rr);
+    }
+    ctx.closePath();
+    // extruded edge first, then the face, like the 3D stars of the logo
+    ctx.save(); ctx.translate(r * 0.12, r * 0.16); ctx.fillStyle = `rgba(120,120,120,${0.55 * depth})`; ctx.fill(); ctx.restore();
+    const g = ctx.createLinearGradient(-r, -r, r, r);
+    g.addColorStop(0, `rgba(255,255,255,${depth})`); g.addColorStop(1, `rgba(205,205,205,${depth})`);
+    ctx.fillStyle = g; ctx.fill();
+    ctx.lineWidth = 0.8; ctx.strokeStyle = `rgba(60,60,60,${0.45 * depth})`; ctx.stroke();
+    ctx.restore();
+  };
   const SATS = Array.from({ length: 0 }, () => ({
     incl: (Math.random() * 160 - 80) * Math.PI / 180,
     phase: Math.random() * Math.PI * 2,
@@ -149,7 +169,7 @@
     ctx.lineWidth = INK ? 1.4 : 1; ctx.strokeStyle = `rgba(${rgb},${0.8 + glow * 0.2})`; ctx.stroke();
 
     ctx.beginPath(); path(graticule);
-    ctx.lineWidth = 0.4; ctx.strokeStyle = `rgba(${rgb},${INK ? 0.22 : 0.18})`; ctx.stroke();
+    ctx.lineWidth = LOOT ? 0.7 : 0.4; ctx.strokeStyle = `rgba(${rgb},${LOOT ? 0.42 : INK ? 0.22 : 0.18})`; ctx.stroke();
 
     if (land) {
       ctx.beginPath(); path(land);
@@ -223,6 +243,21 @@
       ctx.fillStyle = INK ? (front ? 'rgba(17,17,17,0.85)' : 'rgba(17,17,17,0.25)') : (front ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.3)');
       ctx.beginPath(); ctx.arc(px, py, front ? 1.4 : 0.8, 0, Math.PI * 2); ctx.fill();
     });
+
+    // our stars, orbiting
+    if (RING.length) {
+      const tilt = -0.42, cT = Math.cos(tilt), sT = Math.sin(tilt);
+      const pts = RING.map((st) => {
+        const a = st.a + t * 0.0045;
+        const ex = Math.cos(a) * R * 1.34, ey = Math.sin(a) * R * 0.36, z = Math.sin(a);
+        return { st, z, px: cx + ex * cT - ey * sT, py: cy + ex * sT + ey * cT };
+      }).sort((p, q) => p.z - q.z);
+      pts.forEach(({ st, z, px, py }) => {
+        if (z < 0 && Math.hypot(px - cx, py - cy) < R) return;
+        const depth = 0.55 + 0.45 * (z + 1) / 2;
+        star(px, py, R * 0.1 * st.s * (0.6 + 0.4 * (z + 1) / 2), t * 0.01 * st.spin, depth);
+      });
+    }
 
     // shooting stars
     SHOOTERS.forEach((sh, k) => {

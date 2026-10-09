@@ -750,3 +750,6 @@ a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
   .ft__base span { margin-left: 0; width: 100%; }
 }
 @media (max-width: 340px) { .ft__dir { grid-template-columns: minmax(0, 1fr); } }
+/* market: the logo tile shows the real mark, whole and white on black */
+.tile--logo { outline: 1px solid #222; background: #000; }
+.tile--logo img, .tile--logo video { width: 82% !important; height: 82% !important; max-width: none; object-fit: contain !important; transform: none !important; filter: none !important; mix-blend-mode: normal !important; }
