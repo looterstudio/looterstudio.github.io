@@ -1,25 +1,23 @@
-# One-off: move the market worker into the lootstudioscorp account.
-# Creates the LOOT KV namespace if missing and prints its id, plus the live numbers to carry over.
+# One-off: carry the live numbers from the old worker into the new LOOT namespace
+# (lootstudioscorp account). Safe to re-run: it only writes likes and the ideas list.
 name: Worker migrate
 
 on:
   workflow_dispatch:
 
 jobs:
-  prepare:
+  seed:
     runs-on: ubuntu-latest
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
-      - name: KV namespace
+      - uses: actions/checkout@v4
+      - name: Seed KV
+        working-directory: worker
         run: |
-          npx --yes wrangler@3 kv namespace list > ns.json || echo '[]' > ns.json
-          cat ns.json
-          if ! grep -q '"title": *"loot-market-LOOT"\|"title": *"LOOT"' ns.json; then
-            npx --yes wrangler@3 kv namespace create LOOT || true
-            npx --yes wrangler@3 kv namespace list
-          fi
-      - name: Live numbers on the old worker
-        run: |
-          for id in 0001 0002 0003; do curl -sS -m 15 https://loot-market.looterstudio.workers.dev/likes/$id; echo; done
-          curl -sS -m 15 https://loot-market.looterstudio.workers.dev/stats; echo
+          for id in 0001 0002 0003; do
+            n=$(curl -sS -m 15 https://loot-market.looterstudio.workers.dev/likes/$id | python3 -c "import sys,json; print(json.load(sys.stdin)['likes'])")
+            echo "likes:$id = $n"
+            npx --yes wrangler@3 kv key put --binding LOOT "likes:$id" "$n" --remote
+          done
+          npx --yes wrangler@3 kv key put --binding LOOT ideas --path ideas.json --remote

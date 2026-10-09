@@ -1,5 +1,6 @@
 name = "loot-market"
 main = "src/index.js"
+account_id = "fa13ade67afbe9a6aceaa06051f0572b"
 compatibility_date = "2026-09-01"
 
 [vars]
@@ -13,4 +14,4 @@ ALLOWED_ORIGIN = "https://looterstudio.xyz"
 
 [[kv_namespaces]]
 binding = "LOOT"
-id = "0d24634cd4754a19aee4338a492ed334"
+id = "1c3350b92cd04eefbd21d6bdf6ae6ea2"

@@ -25,4 +25,4 @@ jobs:
       - name: Check /visits answers
         run: |
           sleep 5
-          curl -sS -X GET https://loot-market.looterstudio.workers.dev/visits
+          curl -sS -X GET https://loot-market.lootstudioscorp.workers.dev/visits
