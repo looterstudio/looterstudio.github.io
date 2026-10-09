@@ -75,8 +75,8 @@
   // the logo's ring: stars on a tilted orbit, big in front, small behind, hidden by the planet
   // the stars sway on their own canvas, redrawn every frame (the globe redraws every 2nd-4th):
   // a pre-rendered 3D sway (tools/make-star-sprite.py), 24 frames from -40° to +40°, blended
-  const SPRITE = LOOT ? Object.assign(new Image(), { src: (window.LOOT_ASSETS || '') + 'assets/star-sway.png?v=1', decoding: 'async' }) : null;
-  const SPR_N = 24, SPR_S = 128;
+  const SPRITE = LOOT ? Object.assign(new Image(), { src: (window.LOOT_ASSETS || '') + 'assets/star-sway.png?v=2', decoding: 'async' }) : null;
+  const SPR_N = 48, SPR_S = 128;
   let ring = null, rctx = null;
   if (LOOT) {
     ring = document.createElement('canvas');
@@ -306,16 +306,18 @@
       return { st, z: Math.sin(a), px: cx + ex * cT - ey * sT, py: cy + ex * sT + ey * cT };
     }).sort((p, q) => p.z - q.z);
     pts.forEach(({ st, z, px, py }) => {
-      if (z < 0 && Math.hypot(px - cx, py - cy) < R * 0.98) return;
+      // behind the planet the star fades out over its rim instead of popping off
+      const inside = (R * 1.02 - Math.hypot(px - cx, py - cy)) / (R * 0.18);
+      const hide = z < 0 ? Math.min(1, Math.max(0, inside)) * Math.min(1, -z * 4) : 0;
+      if (hide >= 0.99) return;
       const near = (z + 1) / 2;
       const size = R * 0.44 * Math.max(K, 0.7) * st.s * (0.55 + 0.45 * near);
       // sway: a smooth sine through the 24 frames, blended between neighbours
       const pos = (Math.sin(sec * st.spin + st.a * 3) * 0.5 + 0.5) * (SPR_N - 1);
-      const f0 = Math.floor(pos), f1 = Math.min(SPR_N - 1, f0 + 1), k = pos - f0;
-      const x = px - size / 2, y = py - size / 2, alpha = 0.6 + 0.4 * near;
-      rctx.globalAlpha = alpha * (1 - k);
-      rctx.drawImage(SPRITE, f0 * SPR_S, 0, SPR_S, SPR_S, x, y, size, size);
-      if (k > 0.01) { rctx.globalAlpha = alpha * k; rctx.drawImage(SPRITE, f1 * SPR_S, 0, SPR_S, SPR_S, x, y, size, size); }
+      const f = Math.round(pos);
+      const x = px - size / 2, y = py - size / 2;
+      rctx.globalAlpha = (0.7 + 0.3 * near) * (1 - hide);
+      rctx.drawImage(SPRITE, f * SPR_S, 0, SPR_S, SPR_S, x, y, size, size);
     });
     rctx.globalAlpha = 1;
   }

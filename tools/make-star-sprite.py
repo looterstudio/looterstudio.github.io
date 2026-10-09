@@ -1,7 +1,6 @@
 """Render the LooterStudio star as 3D extruded sprite sheets. White face, grey shaded sides,
 soft contact shadow; drawn 4x and downsampled for clean edges. Frames sit side by side.
-  assets/star-turn.png   36 frames, a full turn (the 360 mark)
-  assets/star-sway.png   24 frames, -40..+40 degrees (the planet's ring: never edge-on)
+  assets/star-sway.png   48 frames, -55..+55 degrees: never edge-on, so a star never vanishes or blinks
 Usage: python3 tools/make-star-sprite.py"""
 import math, sys
 from PIL import Image, ImageDraw, ImageFilter
@@ -80,5 +79,4 @@ def render(name, angles):
     sheet.save(name, optimize=True)
     print(name, sheet.size)
 
-render('assets/star-turn.png', [2 * math.pi * f / 36 for f in range(36)])
-render('assets/star-sway.png', [math.radians(-40 + 80 * f / 23) for f in range(24)])
+render('assets/star-sway.png', [math.radians(-55 + 110 * f / 47) for f in range(48)])

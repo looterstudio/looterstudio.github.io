@@ -4,8 +4,8 @@
    vertical axis like loot-360.mp4, each one a frame of the pre-rendered 3D star (star-sprite.png).
    Clean edges on paper, no black fringe. Replaces every .k360 / .k360-out on the page. */
 (() => {
-  const BASE = (window.LOOT_ASSETS || '') + 'assets/star-turn.png?v=1';
-  const N = 36, FS = 128;
+  const BASE = (window.LOOT_ASSETS || '') + 'assets/star-sway.png?v=2';
+  const N = 48, FS = 128;
   // the mark, read off loot-360-poster.jpg (720px frame): x, y, size
   const MARK = [[282, 195, 92], [392, 212, 104], [470, 310, 140], [243, 293, 84], [266, 378, 60], [326, 437, 50]];
   const CX = 356, CY = 316, SPAN = 300;
@@ -43,26 +43,25 @@
     ctx.clearRect(0, 0, w, h);
     ctx.imageSmoothingQuality = 'high';
     const k = Math.min(w, h) / SPAN / 1.25;
-    const ca = Math.cos(a), sa = Math.sin(a);
+    // the mark swings ±69° and back: it never turns side-on, so it never thins out or flips
+    const sw = Math.sin(a) * 1.2, ca = Math.cos(sw), sa = Math.sin(sw);
     MARK.map(([x, y, sz]) => {
       const dx = x - CX, X = dx * ca, Z = dx * sa;
       return { X, Y: y - CY, Z, sz };
     }).sort((p, q) => q.Z - p.Z).forEach(({ X, Y, Z, sz }) => {
       const p = 1 / (1 + Z / 900);
       const d = sz * k * p * 1.25;
-      // the star faces the turn with the cluster; neighbouring frames are blended so it turns smoothly
-      const pos = (((a / (Math.PI * 2)) % 1) + 1) % 1 * N;
-      const f0 = Math.floor(pos) % N, f1 = (f0 + 1) % N, m = pos - Math.floor(pos);
+      // each star leans with the turn but never goes edge-on (that is what made it blink):
+      // one solid frame per star, picked from 48, no cross-fade
+      const f = Math.round((Math.sin(a) * 0.5 + 0.5) * (N - 1));
       const x = w / 2 + X * k * p - d / 2, y = h / 2 + Y * k * p - d / 2;
-      ctx.globalAlpha = 1 - m; ctx.drawImage(sprite, f0 * FS, 0, FS, FS, x, y, d, d);
-      if (m > 0.01) { ctx.globalAlpha = m; ctx.drawImage(sprite, f1 * FS, 0, FS, FS, x, y, d, d); }
-      ctx.globalAlpha = 1;
+      ctx.drawImage(sprite, f * FS, 0, FS, FS, x, y, d, d);
     });
   };
 
   let t0 = performance.now();
   const loop = (now) => {
-    const a = REDUCED ? 0.35 : ((now - t0) / 4200) * Math.PI * 2;
+    const a = REDUCED ? 0.35 : ((now - t0) / 6000) * Math.PI * 2;
     slots.forEach((s) => { if (s.c.isConnected) draw(s, a); });
     requestAnimationFrame(loop);
   };
