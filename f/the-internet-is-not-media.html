@@ -71,7 +71,7 @@
   <script>
     /* likes live in the market worker: one per reader per day */
     (function () {
-      var W = 'https://loot-market.looterstudio.workers.dev';
+      var W = 'https://loot-market.lootstudioscorp.workers.dev';
       document.querySelectorAll('[data-like]').forEach(function (b) {
         var id = b.dataset.like, n = b.querySelector('.like__n');
         fetch(W + '/likes/' + id).then(function (r) { return r.json(); }).then(function (j) { if (j.likes != null) n.textContent = j.likes; }).catch(function () {});

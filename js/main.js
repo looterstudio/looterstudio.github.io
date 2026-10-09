@@ -966,7 +966,7 @@ keyVideos();
 /* LOOTCHAN: live like counts on the thread rows */
 /* visitors: counted once a day per reader by the worker, seeded at 300. Hidden until it answers. */
 (() => {
-  const W = window.LOOT_WORKER || 'https://loot-market.looterstudio.workers.dev';
+  const W = window.LOOT_WORKER || 'https://loot-market.lootstudioscorp.workers.dev';
   const show = (n) => {
     if (!Number.isFinite(n)) return;
     const t = n.toLocaleString('en-US');
@@ -979,7 +979,7 @@ keyVideos();
 })();
 
 document.querySelectorAll('[data-likes]').forEach((el) => {
-  fetch(`${window.LOOT_WORKER || 'https://loot-market.looterstudio.workers.dev'}/likes/${el.dataset.likes}`).then((r) => r.json()).then((j) => { if (j.likes != null) el.textContent = `♥ ${j.likes}`; }).catch(() => {});
+  fetch(`${window.LOOT_WORKER || 'https://loot-market.lootstudioscorp.workers.dev'}/likes/${el.dataset.likes}`).then((r) => r.json()).then((j) => { if (j.likes != null) el.textContent = `♥ ${j.likes}`; }).catch(() => {});
 });
 
 /* Lite mode: if this machine cannot hold 60 fps for the first seconds, the page

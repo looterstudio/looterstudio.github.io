@@ -6,7 +6,7 @@
 import { Connection, PublicKey, Transaction, TransactionInstruction } from 'https://esm.sh/@solana/web3.js@1.98.0';
 import { getAssociatedTokenAddress, createTransferCheckedInstruction, TOKEN_PROGRAM_ID } from 'https://esm.sh/@solana/spl-token@0.4.9?deps=@solana/web3.js@1.98.0';
 
-const WORKER = window.LOOT_WORKER || 'https://loot-market.looterstudio.workers.dev';
+const WORKER = window.LOOT_WORKER || 'https://loot-market.lootstudioscorp.workers.dev';
 const RPC = 'https://solana-rpc.publicnode.com';
 const USDC = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
 const MEMO = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
