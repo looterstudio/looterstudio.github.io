@@ -1,10 +1,12 @@
-"""Render the LooterStudio star as a 3D extruded sprite sheet: 24 frames of a full turn.
-White face, grey shaded sides, soft contact shadow; drawn 4x and downsampled for clean edges.
-Usage: python3 tools/make-star-sprite.py  ->  assets/star-sprite.png (frames side by side)"""
-import math
+"""Render the LooterStudio star as 3D extruded sprite sheets. White face, grey shaded sides,
+soft contact shadow; drawn 4x and downsampled for clean edges. Frames sit side by side.
+  assets/star-turn.png   36 frames, a full turn (the 360 mark)
+  assets/star-sway.png   24 frames, -40..+40 degrees (the planet's ring: never edge-on)
+Usage: python3 tools/make-star-sprite.py"""
+import math, sys
 from PIL import Image, ImageDraw, ImageFilter
 
-FRAMES, SIZE, SS = 24, 128, 4
+SIZE, SS = 128, 4
 S = SIZE * SS
 R_OUT, R_IN, DEPTH = 0.40, 0.17, 0.085      # star radii and half-thickness, in units of the frame
 TILT_X = math.radians(18)                   # a little from above, like the logo
@@ -43,35 +45,40 @@ def shade(n, base, lo):
     v = int(lo + (base - lo) * d)
     return (v, v, v, 255)
 
-sheet = Image.new('RGBA', (SIZE * FRAMES, SIZE), (0, 0, 0, 0))
-for f in range(FRAMES):
-    ry = 2 * math.pi * f / FRAMES
-    F = [rot(p, ry) for p in front]; B = [rot(p, ry) for p in back]
-    faces = []
-    for i in range(10):
-        j = (i + 1) % 10
-        quad = [F[i], F[j], B[j], B[i]]
-        n = normal(F[i], B[i], F[j])
-        if n[2] < 0: n = tuple(-c for c in n)
-        faces.append((sum(p[2] for p in quad) / 4, quad, shade(n, 214, 118)))
-    for poly in (F, B):
-        c = (sum(p[0] for p in poly) / 10, sum(p[1] for p in poly) / 10, sum(p[2] for p in poly) / 10)
-        n = normal(c, poly[0], poly[2])
-        if n[2] < 0: n = tuple(-v for v in n)
-        faces.append((c[2] + 0.001, poly, shade(n, 252, 196)))
-    faces.sort(key=lambda t: t[0])
+def render(name, angles):
+    FRAMES = len(angles)
+    sheet = Image.new('RGBA', (SIZE * FRAMES, SIZE), (0, 0, 0, 0))
+    for f in range(FRAMES):
+        ry = angles[f]
+        F = [rot(p, ry) for p in front]; B = [rot(p, ry) for p in back]
+        faces = []
+        for i in range(10):
+            j = (i + 1) % 10
+            quad = [F[i], F[j], B[j], B[i]]
+            n = normal(F[i], B[i], F[j])
+            if n[2] < 0: n = tuple(-c for c in n)
+            faces.append((sum(p[2] for p in quad) / 4, quad, shade(n, 214, 118)))
+        for poly in (F, B):
+            c = (sum(p[0] for p in poly) / 10, sum(p[1] for p in poly) / 10, sum(p[2] for p in poly) / 10)
+            n = normal(c, poly[0], poly[2])
+            if n[2] < 0: n = tuple(-v for v in n)
+            faces.append((c[2] + 0.001, poly, shade(n, 252, 196)))
+        faces.sort(key=lambda t: t[0])
 
-    img = Image.new('RGBA', (S, S), (0, 0, 0, 0))
-    # soft contact shadow under the star
-    sh = Image.new('RGBA', (S, S), (0, 0, 0, 0))
-    ImageDraw.Draw(sh).polygon([proj((p[0], p[1] + 0.05, p[2])) for p in F], fill=(40, 30, 30, 70))
-    img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(S * 0.025)))
-    d = ImageDraw.Draw(img)
-    for _, poly, col in faces:
-        xy = [proj(p) for p in poly]
-        d.polygon(xy, fill=col)
-        d.line(xy + [xy[0]], fill=(70, 70, 70, 120), width=max(1, SS // 2))
-    sheet.alpha_composite(img.resize((SIZE, SIZE), Image.LANCZOS), (f * SIZE, 0))
+        img = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+        # soft contact shadow under the star
+        sh = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+        ImageDraw.Draw(sh).polygon([proj((p[0], p[1] + 0.05, p[2])) for p in F], fill=(40, 30, 30, 70))
+        img.alpha_composite(sh.filter(ImageFilter.GaussianBlur(S * 0.025)))
+        d = ImageDraw.Draw(img)
+        for _, poly, col in faces:
+            xy = [proj(p) for p in poly]
+            d.polygon(xy, fill=col)
+            d.line(xy + [xy[0]], fill=(70, 70, 70, 120), width=max(1, SS // 2))
+        sheet.alpha_composite(img.resize((SIZE, SIZE), Image.LANCZOS), (f * SIZE, 0))
 
-sheet.save('assets/star-sprite.png', optimize=True)
-print('assets/star-sprite.png', sheet.size)
+    sheet.save(name, optimize=True)
+    print(name, sheet.size)
+
+render('assets/star-turn.png', [2 * math.pi * f / 36 for f in range(36)])
+render('assets/star-sway.png', [math.radians(-40 + 80 * f / 23) for f in range(24)])

@@ -73,26 +73,19 @@
   });
   const SHOOTERS = LOOT ? [] : Array.from({ length: 4 }, mkShooter);
   // the logo's ring: stars on a tilted orbit, big in front, small behind, hidden by the planet
-  // the stars are a pre-rendered 3D turn (tools/make-star-sprite.py): 24 frames, 128px each
-  const SPRITE = LOOT ? Object.assign(new Image(), { src: (window.LOOT_ASSETS || '') + 'assets/star-sprite.png?v=1', decoding: 'async' }) : null;
+  // the stars sway on their own canvas, redrawn every frame (the globe redraws every 2nd-4th):
+  // a pre-rendered 3D sway (tools/make-star-sprite.py), 24 frames from -40° to +40°, blended
+  const SPRITE = LOOT ? Object.assign(new Image(), { src: (window.LOOT_ASSETS || '') + 'assets/star-sway.png?v=1', decoding: 'async' }) : null;
   const SPR_N = 24, SPR_S = 128;
-  const RING = LOOT ? Array.from({ length: 14 }, (_, i) => ({ a: (i / 14) * Math.PI * 2, s: 0.75 + ((i * 7) % 5) / 10, spin: (i % 2 ? 1 : -1) * (0.4 + (i % 3) * 0.2) })) : [];
-  const star = (px, py, r, rotA, depth) => {
-    ctx.save(); ctx.translate(px, py); ctx.rotate(rotA);
-    ctx.beginPath();
-    for (let k = 0; k < 10; k++) {
-      const rr = k % 2 ? r * 0.45 : r, ang = -Math.PI / 2 + k * Math.PI / 5;
-      k ? ctx.lineTo(Math.cos(ang) * rr, Math.sin(ang) * rr) : ctx.moveTo(Math.cos(ang) * rr, Math.sin(ang) * rr);
-    }
-    ctx.closePath();
-    // extruded edge first, then the face, like the 3D stars of the logo
-    ctx.save(); ctx.translate(r * 0.12, r * 0.16); ctx.fillStyle = `rgba(120,120,120,${0.55 * depth})`; ctx.fill(); ctx.restore();
-    const g = ctx.createLinearGradient(-r, -r, r, r);
-    g.addColorStop(0, `rgba(255,255,255,${depth})`); g.addColorStop(1, `rgba(205,205,205,${depth})`);
-    ctx.fillStyle = g; ctx.fill();
-    ctx.lineWidth = 0.8; ctx.strokeStyle = `rgba(60,60,60,${0.45 * depth})`; ctx.stroke();
-    ctx.restore();
-  };
+  let ring = null, rctx = null;
+  if (LOOT) {
+    ring = document.createElement('canvas');
+    ring.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+    canvas.style.position = 'absolute'; canvas.style.inset = '0';
+    dvd.appendChild(ring);
+    rctx = ring.getContext('2d');
+  }
+  const RING = LOOT ? Array.from({ length: 14 }, (_, i) => ({ a: (i / 14) * Math.PI * 2, s: 0.75 + ((i * 7) % 5) / 10, spin: 0.7 + (i % 4) * 0.18 })) : [];
   const SATS = Array.from({ length: 0 }, () => ({
     incl: (Math.random() * 160 - 80) * Math.PI / 180,
     phase: Math.random() * Math.PI * 2,
@@ -128,7 +121,7 @@
   function resize() {
     W = dvd.clientWidth; H = dvd.clientHeight;
     // pixel budget: never more than ~1000px of canvas on the long side, whatever the screen
-    dpr = Math.min(devicePixelRatio || 1, 2, (LOOT ? 1600 : 1000) / Math.max(W, H, 1));
+    dpr = Math.min(devicePixelRatio || 1, 2, (LOOT ? 1300 : 1000) / Math.max(W, H, 1));
     canvas.width = W * dpr; canvas.height = H * dpr;
     R = Math.min(W, H) * 0.36;
     projection.translate([W / 2, H / 2]).scale(R);
@@ -248,30 +241,6 @@
       ctx.beginPath(); ctx.arc(px, py, front ? 1.4 : 0.8, 0, Math.PI * 2); ctx.fill();
     });
 
-    // our stars, orbiting
-    if (RING.length) {
-      const tilt = -0.42, cT = Math.cos(tilt), sT = Math.sin(tilt);
-      const pts = RING.map((st) => {
-        const a = st.a + t * 0.0045;
-        const ex = Math.cos(a) * R * 1.34, ey = Math.sin(a) * R * 0.36, z = Math.sin(a);
-        return { st, z, px: cx + ex * cT - ey * sT, py: cy + ex * sT + ey * cT };
-      }).sort((p, q) => p.z - q.z);
-      const ready = SPRITE && SPRITE.complete && SPRITE.naturalWidth;
-      pts.forEach(({ st, z, px, py }) => {
-        if (z < 0 && Math.hypot(px - cx, py - cy) < R * 0.98) return;
-        const near = (z + 1) / 2;                       // 0 behind, 1 in front
-        const size = R * 0.3 * st.s * (0.55 + 0.45 * near);
-        if (ready) {
-          const f = ((Math.floor(t * 0.07 * st.spin + st.a * 7) % SPR_N) + SPR_N) % SPR_N;
-          ctx.globalAlpha = 0.55 + 0.45 * near;
-          ctx.drawImage(SPRITE, f * SPR_S, 0, SPR_S, SPR_S, px - size / 2, py - size / 2, size, size);
-          ctx.globalAlpha = 1;
-        } else {
-          star(px, py, size * 0.4, t * 0.01 * st.spin, 0.55 + 0.45 * near);
-        }
-      });
-    }
-
     // shooting stars
     SHOOTERS.forEach((sh, k) => {
       sh.life++;
@@ -318,6 +287,36 @@
     });
   }
 
+  // the ring: tilted orbit, front stars big and solid, back stars small and hidden by the planet
+  function drawRing(now) {
+    if (!rctx || !SPRITE.complete || !SPRITE.naturalWidth) return;
+    const rw = Math.round(W * dpr), rh = Math.round(H * dpr);
+    if (ring.width !== rw || ring.height !== rh) { ring.width = rw; ring.height = rh; }
+    rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    rctx.clearRect(0, 0, W, H);
+    rctx.imageSmoothingQuality = 'high';
+    const cx = W / 2, cy = H / 2, sec = now / 1000;
+    const tilt = -0.42, cT = Math.cos(tilt), sT = Math.sin(tilt);
+    const pts = RING.map((st) => {
+      const a = st.a + (REDUCED ? 0 : sec * 0.16);
+      const ex = Math.cos(a) * R * 1.34, ey = Math.sin(a) * R * 0.36;
+      return { st, z: Math.sin(a), px: cx + ex * cT - ey * sT, py: cy + ex * sT + ey * cT };
+    }).sort((p, q) => p.z - q.z);
+    pts.forEach(({ st, z, px, py }) => {
+      if (z < 0 && Math.hypot(px - cx, py - cy) < R * 0.98) return;
+      const near = (z + 1) / 2;
+      const size = R * 0.3 * st.s * (0.55 + 0.45 * near);
+      // sway: a smooth sine through the 24 frames, blended between neighbours
+      const pos = (Math.sin(sec * st.spin + st.a * 3) * 0.5 + 0.5) * (SPR_N - 1);
+      const f0 = Math.floor(pos), f1 = Math.min(SPR_N - 1, f0 + 1), k = pos - f0;
+      const x = px - size / 2, y = py - size / 2, alpha = 0.6 + 0.4 * near;
+      rctx.globalAlpha = alpha * (1 - k);
+      rctx.drawImage(SPRITE, f0 * SPR_S, 0, SPR_S, SPR_S, x, y, size, size);
+      if (k > 0.01) { rctx.globalAlpha = alpha * k; rctx.drawImage(SPRITE, f1 * SPR_S, 0, SPR_S, SPR_S, x, y, size, size); }
+    });
+    rctx.globalAlpha = 1;
+  }
+
   function move() {
     if (PINNED) return;
     if (REDUCED) { x = innerWidth - W - 24; y = innerHeight - H - 24; }
@@ -336,8 +335,9 @@
 
   // the globe redraws every 2nd frame; if a draw costs more than 18 ms on this device, every 3rd
   let n = 0, every = 2, cost = 0;
-  function frame() {
+  function frame(now) {
     if (!REDUCED) rot[0] += 0.12;
+    drawRing(now || performance.now());
     t++;
     move();
     n++;

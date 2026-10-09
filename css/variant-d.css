@@ -157,3 +157,11 @@ body.v-d .ft__base span { color: #666; }
 body.v-d .ft .outro__360 { width: 110px; height: 110px; margin: -22px 0 -22px -14px; }
 body.v-d .ft .outro__word { font-size: clamp(36px, 4vw, 56px); }
 @media (max-width: 720px) { body.v-d .ft .outro__brand { flex-direction: row; align-items: center; } body.v-d .ft .outro__360 { width: 80px; height: 80px; margin: -14px 0 -14px -10px; } body.v-d .ft .outro__word { font-size: 10vw; } }
+/* market, symmetric: a card never grows past its column, titles take three lines, prices line up */
+body.v-d .sr__p { min-width: 0; align-content: start; }
+body.v-d .sr__p .tile { width: 100%; }
+body.v-d .sr__p-title { overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; min-height: calc(1.35em * 3); }
+body.v-d .sr__p-price { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* company logos sit at the same optical size */
+body.v-d .tile--brier img { width: 66%; }
+body.v-d .tile--stat img { width: 58%; }

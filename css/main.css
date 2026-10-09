@@ -735,7 +735,7 @@ a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
 .ft { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); gap: 56px; align-items: start; padding: 6vh 0 4vh; border-top: 2px solid var(--bone); }
 .ft__creed { margin-top: 14px; font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: clamp(18px, 1.9vw, 26px); line-height: 1.2; max-width: 24ch; }
 .ft__creed b { font-style: normal; font-family: var(--brand); font-weight: 900; letter-spacing: -.03em; }
-.ft__dir { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.ft__dir { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
 .ft__dir h3 { font: 700 10px/1 var(--mono); letter-spacing: .28em; text-transform: uppercase; color: var(--red); padding-bottom: 10px; margin-bottom: 4px; border-bottom: 1px solid currentColor; }
 .ft__dir a { display: grid; gap: 2px; padding: 9px 0; border-bottom: 1px solid rgba(127,127,127,.25); text-decoration: none; font: 900 17px/1.1 var(--brand); letter-spacing: -.02em; transition: color .2s, padding .2s; }
 .ft__dir a i { font: 400 9px/1.2 var(--mono); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); word-break: break-all; }
