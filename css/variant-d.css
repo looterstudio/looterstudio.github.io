@@ -182,3 +182,7 @@ body.v-d .cat__teaser b { color: #0f0c5d; }
 body.v-d .cat__more { font-size: 11px; color: #34345c; text-decoration: underline; }
 body.v-d .cat__t:hover .cat__more { color: #dd0000; }
 @media (max-width: 520px) { body.v-d .cat { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 8px; } body.v-d .cat__img { width: 100%; height: auto; aspect-ratio: 1; } }
+/* smoke the smarties: a small still roll under the board title */
+body.v-d .chan__smarties { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; }
+body.v-d .chan__smarties img { width: 74px; height: auto; transform: rotate(-8deg); }
+body.v-d .chan__smarties span { font: 400 12px/1 'Permanent Marker', cursive !important; color: #af0a0f; }
