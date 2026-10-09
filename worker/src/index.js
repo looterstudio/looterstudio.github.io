@@ -1,6 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
    LooterStudio® anonymous market — pay-to-reveal worker
    GET  /stats                → counters
+   GET  /visits               → visitor count (seeded at 300)
+   POST /visits               → counts this reader once a day, returns the count
+   GET|POST /likes/0001       → lootchan likes, one per reader per day
    POST /claim {sig, kind}    → verifies a USDC payment on Solana and
                                 reveals idea #n or beer certificate #n
    Ideas live in KV under "ideas" (JSON array of strings).
@@ -120,6 +123,23 @@ async function like(env, request, id) {
   return { id, likes: count + 1, liked: true };
 }
 
+/* Visitors: one per reader per day (hashed IP), counted on top of a seed of 300. */
+const VISIT_SEED = 300;
+async function visits(env) {
+  const stored = await env.LOOT.get('visits');
+  return stored === null ? VISIT_SEED : Number(stored);
+}
+async function visit(env, request) {
+  const ip = request.headers.get('CF-Connecting-IP') || '0';
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`visit:${ip}:${new Date().toISOString().slice(0, 10)}`));
+  const key = `seen:${[...new Uint8Array(buf)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('')}`;
+  const count = await visits(env);
+  if (await env.LOOT.get(key)) return { visitors: count };
+  await env.LOOT.put(key, '1', { expirationTtl: 86400 });
+  await env.LOOT.put('visits', String(count + 1));
+  return { visitors: count + 1 };
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -127,6 +147,8 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { headers: cors(env) });
     try {
       if (url.pathname === '/stats') return json(env, await stats(env));
+      if (url.pathname === '/visits' && request.method === 'GET') return json(env, { visitors: await visits(env) });
+      if (url.pathname === '/visits' && request.method === 'POST') return json(env, await visit(env, request));
       const m = url.pathname.match(/^\/likes\/(\d{4})$/);
       if (m && request.method === 'GET') return json(env, { id: m[1], likes: await likes(env, m[1]) });
       if (m && request.method === 'POST') { const out = await like(env, request, m[1]); return json(env, out, out.error ? 400 : 200); }

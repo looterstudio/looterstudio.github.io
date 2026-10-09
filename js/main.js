@@ -964,6 +964,20 @@ document.addEventListener('DOMContentLoaded', () => {
 keyVideos();
 
 /* LOOTCHAN: live like counts on the thread rows */
+/* visitors: counted once a day per reader by the worker, seeded at 300. Hidden until it answers. */
+(() => {
+  const W = window.LOOT_WORKER || 'https://loot-market.looterstudio.workers.dev';
+  const show = (n) => {
+    if (!Number.isFinite(n)) return;
+    const t = n.toLocaleString('en-US');
+    [['srVisitors', '.sr__visitors'], ['ftVisitors', '.ft__visitors']].forEach(([id, wrap]) => {
+      const el = document.getElementById(id), w = document.querySelector(wrap);
+      if (el && w) { el.textContent = t; w.hidden = false; }
+    });
+  };
+  fetch(`${W}/visits`, { method: 'POST' }).then((r) => r.json()).then((j) => show(j.visitors)).catch(() => {});
+})();
+
 document.querySelectorAll('[data-likes]').forEach((el) => {
   fetch(`${window.LOOT_WORKER || 'https://loot-market.looterstudio.workers.dev'}/likes/${el.dataset.likes}`).then((r) => r.json()).then((j) => { if (j.likes != null) el.textContent = `♥ ${j.likes}`; }).catch(() => {});
 });

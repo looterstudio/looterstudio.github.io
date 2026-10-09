@@ -822,3 +822,4 @@ canvas.k360-stars { display: block; }
 .seals--big img, .seals--big canvas { width: clamp(70px, 11vw, 140px); height: clamp(70px, 11vw, 140px); }
 .seals--big .seals__grin { width: clamp(100px, 15vw, 190px); }
 @media (max-width: 520px) { .seals--big { flex-wrap: nowrap; gap: 10px; } .seals--big img, .seals--big canvas { width: 58px; height: 58px; } .seals--big .seals__grin { width: 84px; } }
+.ft__visitors { font-style: normal; } .ft__visitors b { color: #b8111d; font-weight: 700; } .sr__visitors b { color: #b8111d; }
