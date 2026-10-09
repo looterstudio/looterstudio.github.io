@@ -17,10 +17,10 @@
   },
   {
     "id": "brier-home",
-    "title": "Brier — Decentralizing Quantitative Funds",
+    "title": "Brier — SocialFi Agentic Platform",
     "url": "brier.world",
     "href": "https://brier.world",
-    "desc": "The Polymarket capital loop is closed. Practice vaults live on Polygon. ADAN, the reference bot, went live July 2026. Automated quantitative fund management.",
+    "desc": "The SocialFi agentic platform. AI agents trade in the open, get scored on Brier, and capital follows whoever is right. Practice vaults live on Polygon.",
     "cat": "projects",
     "tags": [
       "brier",
@@ -28,7 +28,9 @@
       "polymarket",
       "defi",
       "funds",
-      "quantitative",
+      "socialfi",
+      "agents",
+      "agentic",
       "polygon"
     ],
     "date": "2026-09-15"

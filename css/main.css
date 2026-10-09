@@ -756,3 +756,6 @@ a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
 /* the 360 mark, drawn: canvases take the slot of the old keyed video */
 canvas.k360-stars { display: block; }
 .tile--logo canvas.k360-stars { width: 86% !important; height: 86% !important; }
+/* clips: little looping videos on white (the stack, the win dance) */
+.tile--clip { background: #fff; padding: 0; place-items: stretch; }
+.tile--clip video { width: 100%; height: 100%; object-fit: contain; display: block; }

@@ -212,11 +212,13 @@ function errorCascade(n, text) {
    ═══════════════════════════════════════════════════════════════ */
 const PRODUCTS = [
   { id: 'skynet', cat: ['influencers', 'software', 'models', 'custom'], tile: 'skynet', html: '<div class="sky"><span class="sky__cd"></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div>', title: 'SKYNET · AI influencers. Five units, posting 24/7', priceLabel: '5 UNITS', note: 'skynet', link: 'skynet/' },
-  { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'PREMIUM FINANCIAL_INTEL model!! Risk routing [GOD SOURCE]', price: 1.84, note: 'brier.world', link: 'https://brier.world' },
+  { id: 'brier',  cat: ['software', 'vaults', 'signals'], tile: 'brier', img: 'assets/brier-logo.png', title: 'SOCIALFI AGENTIC PLATFORM!! agents trade, capital follows [GOD SOURCE]', price: 1.84, note: 'brier.world', link: 'https://brier.world' },
   { id: 'stat',   cat: ['software', 'bots', 'models'], tile: 'stat',    img: 'assets/stat-logo.png',  title: '1g pure HUMAN_STATUS_ENGINE!!! only early!! very strong', price: 2.06, note: 'iOS · SEASON 0', link: '#stat' },
   { id: 'snowball', cat: ['software', 'custom', 'capital'], tile: 'snowball', img: 'assets/snowball-tile.png', title: 'Snowball. we scale companies', priceLabel: '฿?', note: 'scale', link: 'https://looterstudio.xyz/luv/' },
   { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', priceLabel: '5,000,000,000 USDC' },
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'tung tung tung sahur · 1/1 · <b class="verified">LooterStudio verified ✓</b>', priceLabel: '100,000 USDC', offer: 'https://www.tensor.trade/item/Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7', mint: 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7' },
+  { id: 'stack',  cat: ['capital', 'objects'],  tile: 'clip', video: 'assets/money.mp4', webm: 'assets/money.webm', poster: 'assets/money-poster.jpg', title: 'A stack. 100 × $100, still spinning', priceLabel: '10,000 USDC', note: 'cash' },
+  { id: 'dance',  cat: ['events', 'custom'],    tile: 'clip', video: 'assets/dancer.mp4', webm: 'assets/dancer.webm', poster: 'assets/dancer-poster.jpg', title: 'The win dance. Do it when your agent hits', priceLabel: '฿0.01', note: 'free on wins' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
@@ -228,8 +230,6 @@ const PRODUCTS = [
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®', note: 'soon' },
-  { id: 'obj',    cat: ['objects', 'art'],     tile: 'alien', text: '', title: '??????????', priceLabel: '?' },
-  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
   { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? ??????????', priceLabel: '??????' },
 ];
 
@@ -245,7 +245,7 @@ function initMarket() {
     const list = PRODUCTS.filter((p) => (cat === 'all' || p.cat.includes(cat)) && (!q || (p.title + ' ' + p.id).toLowerCase().includes(q)));
     grid.innerHTML = list.length ? list.map((p) => `
       <div class="sr__p" data-id="${p.id}">
-        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER</div><img class="seizure__seal" src="${AS}assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® · warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.html ? p.html : p.video ? `<video src="${AS}${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${AS}${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
+        <div class="tile tile--${p.tile}${p.seized ? ' tile--seized' : ''}">${p.tile === 'riddle' ? '<pre class="rq"><span class="rq__big">?</span>&gt; ????????<i class="rq__cur">_</i></pre>' : ''}${p.seized ? `<div class="seizure"><div class="seizure__band">LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER LOOTER</div><img class="seizure__seal" src="${AS}assets/seal.svg" alt=""><b class="seizure__big">THIS ASSET HAS BEEN SEIZED</b><small class="seizure__by">by LooterStudio® · warrant issued by nobody</small><code class="seizure__case">CASE NO. LOOT-0042 · ${new Date().getFullYear()}</code></div>` : ''}${p.html ? p.html : p.webm ? `<video autoplay loop muted playsinline poster="${AS}${p.poster || ''}"><source src="${AS}${p.webm}" type="video/webm"><source src="${AS}${p.video}" type="video/mp4"></video>` : p.video ? `<video src="${AS}${p.video}" autoplay loop muted playsinline></video>` : p.img ? `<img src="${AS}${p.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${(p.text || '').replace(/'/g, '')}'}))">` : `<span>${(p.text || '').replace(/\n/g, '<br>')}</span>`}</div>
         <div class="sr__p-title">${p.title}</div>
         <div class="sr__p-price">${price(p)}${p.note ? `<small>${p.note}</small>` : ''}</div>
         ${p.offer ? `<a class="sr__offer" href="${p.offer}" target="_blank" rel="noopener">MAKE AN OFFER</a>` : ''}
