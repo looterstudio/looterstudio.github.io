@@ -741,7 +741,7 @@ a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
 .ft__dir a i { font: 400 9px/1.2 var(--mono); font-style: normal; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); word-break: break-all; }
 .ft__dir a:hover { color: var(--red); padding-left: 6px; }
 .ft__base { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 18px 0 0; border-top: 1px solid rgba(127,127,127,.3); }
-.ft__seal { width: 46px; height: 46px; object-fit: contain; }
+.ft__seal { width: 64px; height: 38px; object-fit: contain; }
 .ft__base b { font: 900 22px/1 var(--brand); letter-spacing: -.04em; }
 .ft__base span { margin-left: auto; font: 400 9px/1.4 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--dim); }
 @media (max-width: 900px) {

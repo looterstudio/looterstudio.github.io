@@ -61,4 +61,5 @@ a:hover { color: #dd0000; }
 .post__fig figcaption { font-family: var(--ui); font-size: 12px; color: #789922; margin-top: 4px; }
 .post__h { clear: both; }
 @media (max-width: 600px) { .post__fig { float: none; width: 70%; margin: .6em auto 1em; } }
-.board__banner { display: block; width: 300px; height: 100px; margin: 10px auto 6px; border: 1px solid #d9bfb7; }
+.board__banner { display: block; width: 150px; height: auto; margin: 10px auto 6px; }
+.board__seal--grin { width: 120px !important; height: auto !important; }
