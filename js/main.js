@@ -185,6 +185,12 @@ function initXP() {
     });
   };
 
+  /* and now and then it just rains, by itself: first after ~25s, then every 50-110s, only while you're looking */
+  if (!REDUCED) {
+    const drizzle = () => { if (!document.hidden) weather('rain', 3800); setTimeout(drizzle, 50000 + Math.random() * 60000); };
+    setTimeout(drizzle, 20000 + Math.random() * 10000);
+  }
+
   $('xpAccept')?.addEventListener('click', accept);
   $('xpDeny')?.addEventListener('click', deny);
   /* Three closes in a row: it minimizes for a minute so the page below can be read. It always comes back. */

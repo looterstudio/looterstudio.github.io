@@ -165,3 +165,20 @@ body.v-d .sr__p-price { white-space: nowrap; overflow: hidden; text-overflow: el
 /* company logos sit at the same optical size */
 body.v-d .tile--brier img { width: 66%; }
 body.v-d .tile--stat img { width: 58%; }
+/* lootchan catalog: one card per thread, the way the board is browsed */
+body.v-d .cat__bar { font-size: 12px; color: #34345c; margin: 4px 0 10px; text-align: center; }
+body.v-d .cat__bar a { color: #34345c; text-decoration: underline; }
+body.v-d .cat__bar b { color: #800000; }
+body.v-d .cat { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px 14px; padding: 6px 4px 4px; }
+body.v-d .cat__t { display: grid; justify-items: center; align-content: start; gap: 6px; text-align: center; text-decoration: none; color: #3b0000; padding: 8px 6px 10px; border: 1px solid transparent; transition: background .2s, border-color .2s; }
+body.v-d .cat__t:hover { background: #f0e0d6; border-color: #d9bfb7; }
+body.v-d .cat__img { position: relative; display: block; width: 150px; height: 150px; box-shadow: 0 0 0 1px #d9bfb7, 0 6px 16px -8px rgba(0,0,0,.5); }
+body.v-d .cat__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+body.v-d .cat__new { position: absolute; left: -6px; top: -6px; font: 700 9px/1 Arial, sans-serif; font-style: normal; letter-spacing: .08em; color: #fff; background: #dd0000; padding: 3px 5px; }
+body.v-d .cat__meta { font: 11px/1.3 Arial, Helvetica, sans-serif; color: #707070; }
+body.v-d .cat__likes { color: #dd0000; }
+body.v-d .cat__teaser { font: 13px/1.35 Arial, Helvetica, sans-serif; color: #3b0000; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 5; overflow: hidden; max-width: 30ch; }
+body.v-d .cat__teaser b { color: #0f0c5d; }
+body.v-d .cat__more { font-size: 11px; color: #34345c; text-decoration: underline; }
+body.v-d .cat__t:hover .cat__more { color: #dd0000; }
+@media (max-width: 520px) { body.v-d .cat { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 8px; } body.v-d .cat__img { width: 100%; height: auto; aspect-ratio: 1; } }

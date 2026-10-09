@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202610090016">
-  <link rel="stylesheet" href="css/variant-d.css?v=202610090006">
+  <link rel="stylesheet" href="css/main.css?v=202610090018">
+  <link rel="stylesheet" href="css/variant-d.css?v=202610090007">
   <link rel="preload" href="assets/loot-360-alpha.webp" as="image" type="image/webp">
 </head>
 <body class="v-d is-gated">
@@ -62,6 +62,12 @@
 
   <!-- the win dance: a small dancer in the corner (keyed, transparent) -->
   <img class="dancer" src="assets/dancer.webp" alt="" aria-hidden="true">
+  <!-- smoke the smarties: top left on computers -->
+  <div class="smarties" aria-hidden="true">
+    <img src="assets/smarties.webp" alt="">
+    <i class="smarties__puff"></i><i class="smarties__puff"></i><i class="smarties__puff"></i>
+    <b>smoke the smarties</b>
+  </div>
 
   <main class="main" id="top">
   <section class="hero" id="hero">
@@ -145,16 +151,11 @@
           <div class="chan__board">/loot/ - Delusional Mindset</div>
           <div class="chan__sub">The Dread Pirate Looter writes. Replies are on X.</div>
         </div>
-        <a class="chan__thread" href="f/the-internet-is-not-media.html" style="display: block; text-decoration: none; color: inherit;">
-          <div class="chan__info"><span class="chan__subject">The Internet is Not Media: It is a Different Realm</span> <span class="chan__name">Dread Pirate Looter</span><span class="chan__trip">!!LOOT16z</span> <span>10/01/26(Thu)</span> <span>No.0002</span> <span class="chan__likes" data-likes="0002">♥ 0</span></div>
-          <p class="chan__text">The internet is not media; it is a different realm entirely. We must start posting from a completely different point of view of the world. The act of posting is basically an act of sorcery...</p>
-          <div class="chan__more">[ Read thread · 2 min ]</div>
-        </a>
-        <a class="chan__thread" href="f/the-barrier-just-fell.html" style="display: block; text-decoration: none; color: inherit;">
-          <div class="chan__info"><span class="chan__subject">The barrier just fell</span> <span class="chan__name">Dread Pirate Looter</span><span class="chan__trip">!!LOOT16z</span> <span>09/09/26(Tue)</span> <span>No.0001</span> <span class="chan__likes" data-likes="0001">♥ 12</span></div>
-          <p class="chan__text">Every time in history a barrier to knowledge falls, the people who built their whole identity around that barrier get exposed. The printing press ended the monopoly scribes had over books. The steam engine ended the need for manual, local labor. Each time, the people who spent their whole life mastering the old way were the last ones to see it coming. And we are at that exact moment again. But this time the barrier falling is not distance or access to information. <b>It is the cost of learning itself.</b></p>
-          <div class="chan__more">[ Read thread · 6 min ]</div>
-        </a>
+        <div class="cat__bar">[<b>Catalog</b>] [<a href="https://x.com/loot16z" target="_blank" rel="noopener">Reply on X</a>] <span id="lootCount"></span> · newest first</div>
+        <div class="cat" id="lootCatalog">
+          <a class="cat__t" href="f/the-internet-is-not-media.html"><span class="cat__teaser"><b>The Internet is Not Media</b></span></a>
+          <a class="cat__t" href="f/the-barrier-just-fell.html"><span class="cat__teaser"><b>The barrier just fell</b></span></a>
+        </div>
       </div>
       <a class="ltr-float" href="looterio/" target="_blank" rel="noopener" aria-label="LOOTERIO, the search engine">
 <pre class="ltr-arrow" aria-hidden="true">  ╭─────────────────────────╮
@@ -244,7 +245,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js" defer></script>
-  <script src="js/main.js?v=202610090006" defer></script>
+  <script src="js/lootchan.js?v=1" defer></script>
+  <script src="js/main.js?v=202610090007" defer></script>
   <script src="js/stars360.js?v=3" defer></script>
   <script src="js/recommend.js?v=3" defer></script>
   <script src="js/globe.js?v=202610090004" defer></script>
