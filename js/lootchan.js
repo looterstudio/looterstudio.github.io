@@ -5,6 +5,13 @@
    at the TOP of THREADS. Newest first. `no` is the thread number (also the likes key). */
 window.LOOT_THREADS = [
   {
+    no: '0003', date: '2026-10-09', min: 5,
+    href: 'f/what-loot-believes.html',
+    thumb: 'assets/lord-of-the-loot-thumb.jpg',
+    subject: 'What Loot Believes',
+    teaser: 'Always early, never wrong. The barrier just fell. Just loot it. The eye sees all. Delusional mindset. Legacy. Six things Loot believes, by the Lord of the Loot.',
+  },
+  {
     no: '0002', date: '2026-10-01', min: 2,
     href: 'f/the-internet-is-not-media.html',
     thumb: 'assets/vibration.jpg',
