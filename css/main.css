@@ -690,3 +690,43 @@ body.is-gated .xp__min { visibility: hidden; }
 .target__img--sky { display: block; width: 62%; cursor: pointer; }
 .tile--skynet { padding: 0; place-items: stretch; }
 @media (prefers-reduced-motion: reduce) { .sky__cd, .sky__live { animation: none; } }
+
+/* ═══ HOLDINGS: every company in one register. Logo, what it is, where to enter. ═══ */
+.holdings { max-width: 1180px; margin: 14vh auto 0; padding: 0 24px; }
+.holdings__head { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; flex-wrap: wrap; border-bottom: 2px solid var(--bone); padding-bottom: 12px; }
+.holdings__head h2 { font: 900 clamp(44px, 7vw, 96px)/.9 var(--brand); letter-spacing: -.06em; }
+.holdings__cols { display: grid; grid-template-columns: 48px 132px minmax(0, 1fr) 120px 150px; gap: 24px; padding: 10px 0; border-bottom: 1px solid var(--dim); font: 400 9px/1 var(--mono); letter-spacing: .26em; text-transform: uppercase; color: var(--dim); }
+.hold { position: relative; display: grid; grid-template-columns: 48px 132px minmax(0, 1fr) 120px 150px; gap: 24px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--dim); text-decoration: none; color: inherit; transition: background .25s; }
+a.hold { cursor: pointer; }
+.hold__no { font: 400 11px/1 var(--mono); letter-spacing: .2em; color: var(--dim); align-self: start; padding-top: 6px; }
+.hold__tile { position: relative; width: 132px; aspect-ratio: 1; background: #000; display: grid; place-items: center; }
+.hold__tile > img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.hold__tile--px > img { image-rendering: pixelated; object-fit: cover; }
+.hold__box { position: absolute; inset: -9px; border: 2px solid var(--red); opacity: 0; transform: scale(1.08); transition: opacity .2s, transform .3s cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.hold__box b { position: absolute; right: 4px; bottom: -16px; font: 400 9px/1 var(--mono); letter-spacing: .1em; color: var(--red); }
+.hold__main { display: grid; gap: 6px; min-width: 0; }
+.hold__name { font: 900 clamp(30px, 3.6vw, 48px)/.9 var(--brand) !important; letter-spacing: -.05em; transition: color .2s; }
+.hold__name--syne { font-family: 'Syne', var(--brand) !important; font-weight: 800 !important; font-size: clamp(22px, 2.6vw, 36px) !important; letter-spacing: -.04em; }
+.hold__line { font: 400 10px/1.3 var(--mono) !important; letter-spacing: .26em; text-transform: uppercase; }
+.hold__main small { font-size: 15px; line-height: 1.45; color: var(--ghost); max-width: 52ch; }
+.hold__type { font: 400 10px/1 var(--mono) !important; letter-spacing: .22em; text-transform: uppercase; color: var(--ghost); }
+.hold__go { justify-self: end; font: 700 11px/1 var(--mono) !important; letter-spacing: .2em; text-transform: uppercase; border: 1px solid currentColor; padding: 11px 14px; white-space: nowrap; transition: background .2s, color .2s; }
+.hold__go i { font-style: normal; display: inline-block; transition: transform .25s; }
+.hold__go--soon { border-style: dashed; color: var(--dim); }
+.hold:hover .hold__box, .hold:focus-visible .hold__box { opacity: 1; transform: none; }
+a.hold:hover .hold__name { color: var(--red); }
+a.hold:hover .hold__go { background: var(--red); border-color: var(--red); color: #fff; }
+a.hold:hover .hold__go i { transform: translate(3px, -1px); }
+a.hold:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+@media (max-width: 860px) {
+  .holdings { margin-top: 10vh; padding: 0 16px; }
+  .holdings__cols { display: none; }
+  .hold { grid-template-columns: 92px minmax(0, 1fr); grid-template-areas: "tile main" "tile go"; gap: 10px 18px; align-items: start; }
+  .hold__no { display: none; }
+  .hold__tile { grid-area: tile; width: 92px; }
+  .hold__main { grid-area: main; }
+  .hold__main small { font-size: 13px; }
+  .hold__type { display: none; }
+  .hold__go { grid-area: go; justify-self: start; padding: 9px 12px; font-size: 10px !important; }
+  .hold__box { inset: -6px; }
+}

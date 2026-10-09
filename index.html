@@ -23,8 +23,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@800&family=Lobster+Two:wght@700&family=Permanent+Marker&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=202610080002">
-  <link rel="stylesheet" href="css/variant-d.css?v=202610080002">
+  <link rel="stylesheet" href="css/main.css?v=202610090001">
+  <link rel="stylesheet" href="css/variant-d.css?v=202610090001">
   <link rel="preload" href="assets/loot-360-alpha.webp" as="image" type="image/webp">
 </head>
 <body class="v-d is-gated">
@@ -163,48 +163,45 @@
       </a>
     </section>
 
-    <!-- ═══════════ 01 · BRIER ═══════════ -->
-    <section class="division" id="brier">
-      <div class="target target--brier reveal">
-        <img src="assets/brier-logo.png" alt="Brier." class="target__img">
-        <div class="target__box"><a class="target__tag" href="https://brier.world" target="_blank" rel="noopener">brier.world</a><i>0.97</i><b class="target__lead"></b></div>
-      </div>
-      <aside class="callout reveal">
-        <span class="callout__status">THE HYBRID SOCIAL TERMINAL.</span>
-      </aside>
-    </section>
+    <!-- ═══════════ HOLDINGS: the companies, one register ═══════════ -->
+    <section class="holdings" id="holdings">
+      <header class="holdings__head reveal">
+        <h2>Holdings</h2>
+        <p class="filing">LooterStudio® · 04 companies · Buenos Aires · always early, never wrong</p>
+      </header>
+      <div class="holdings__cols" aria-hidden="true"><span>No.</span><span></span><span>Company</span><span>Type</span><span>Enter</span></div>
 
-    <!-- ═══════════ 02 · STAT ═══════════ -->
-    <section class="division division--flip" id="stat">
-      <div class="target target--stat reveal">
-        <img src="assets/stat-logo.png" alt="stat" class="target__img">
-        <div class="target__box"><span class="target__tag">stat</span><i>0.98</i><b class="target__lead"></b></div>
-      </div>
-      <aside class="callout reveal">
-        <span class="callout__status">HUMAN STATUS COMPETITION</span>
-      </aside>
-    </section>
+      <a class="hold reveal" id="brier" href="https://brier.world" target="_blank" rel="noopener">
+        <span class="hold__no">01</span>
+        <span class="hold__tile"><img src="assets/brier-logo.png" alt=""><i class="hold__box"><b>0.97</b></i></span>
+        <span class="hold__main"><b class="hold__name">Brier.</b><span class="hold__line">The hybrid social terminal.</span><small>AI trading agents scored on Brier. Capital follows whoever is right.</small></span>
+        <span class="hold__type">Protocol</span>
+        <span class="hold__go">brier.world <i>↗</i></span>
+      </a>
 
-    <!-- ═══════════ 03 · SNOWBALL ═══════════ -->
-    <section class="division division--flip" id="snowball">
-      <div class="target target--snowball reveal">
-        <img src="assets/snowball-tile.png" alt="Snowball" class="target__img">
-        <div class="target__box"><a class="target__tag" href="https://looterstudio.xyz/luv/" target="_blank" rel="noopener">SNOWBALL</a><i>0.99</i><b class="target__lead"></b></div>
+      <div class="hold reveal" id="stat">
+        <span class="hold__no">02</span>
+        <span class="hold__tile"><img src="assets/stat-logo.png" alt=""><i class="hold__box"><b>0.98</b></i></span>
+        <span class="hold__main"><b class="hold__name">stat</b><span class="hold__line">Human status competition.</span><small>iOS · Season 0 · Buenos Aires.</small></span>
+        <span class="hold__type">App</span>
+        <span class="hold__go hold__go--soon">Season 0 <i>·</i></span>
       </div>
-      <aside class="callout reveal">
-        <span class="callout__status">WE SCALE COMPANIES</span>
-      </aside>
-    </section>
 
-    <!-- ═══════════ 04 · SKYNET ═══════════ -->
-    <section class="division" id="skynet">
-      <div class="target target--skynet reveal">
-        <a href="skynet/" class="target__img target__img--sky" aria-label="SKYNET"><div class="sky"><span class="sky__cd"><b>ZYZZ.EXE</b></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div></a>
-        <div class="target__box"><a class="target__tag" href="skynet/">SKYNET</a><i>1.00</i><b class="target__lead"></b></div>
-      </div>
-      <aside class="callout reveal">
-        <span class="callout__status">AI INFLUENCERS ON DEMAND</span>
-      </aside>
+      <a class="hold reveal" id="snowball" href="https://looterstudio.xyz/luv/" target="_blank" rel="noopener">
+        <span class="hold__no">03</span>
+        <span class="hold__tile hold__tile--px"><img src="assets/snowball-tile.png" alt=""><i class="hold__box"><b>0.99</b></i></span>
+        <span class="hold__main"><b class="hold__name hold__name--syne">SNOWBALL</b><span class="hold__line">We scale companies.</span><small>The studio, rented out. We take a company and make it bigger.</small></span>
+        <span class="hold__type">Service</span>
+        <span class="hold__go">luv <i>↗</i></span>
+      </a>
+
+      <a class="hold reveal" id="skynet" href="skynet/">
+        <span class="hold__no">04</span>
+        <span class="hold__tile"><div class="sky"><span class="sky__cd"><b>ZYZZ.EXE</b></span><b class="sky__word">SKYNET</b><i class="sky__live">● LIVE</i></div><i class="hold__box"><b>1.00</b></i></span>
+        <span class="hold__main"><b class="hold__name">SKYNET</b><span class="hold__line">AI influencers on demand.</span><small>We build synthetic personalities and run them. Five units, Zyzz first.</small></span>
+        <span class="hold__type">Agency</span>
+        <span class="hold__go">skynet <i>→</i></span>
+      </a>
     </section>
 
     <!-- ═══════════ OUTRO ═══════════ -->
