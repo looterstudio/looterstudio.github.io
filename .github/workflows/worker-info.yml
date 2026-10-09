@@ -18,7 +18,9 @@ jobs:
           echo "--- loot-market deployments"
           npx --yes wrangler@3 deployments list --name loot-market || true
           echo "--- is the live worker answering?"
-          curl -sS -m 15 -i https://loot-market.looterstudio.workers.dev/likes/0001 | head -20 || true
+          for id in 0001 0002 0003; do curl -sS -m 15 https://loot-market.lootstudioscorp.workers.dev/likes/$id; echo; done
+          curl -sS -m 15 https://loot-market.lootstudioscorp.workers.dev/stats; echo
+          curl -sS -m 15 https://loot-market.lootstudioscorp.workers.dev/visits; echo
           echo
           echo "--- workers.dev subdomain of this account"
           ACC=$(npx --yes wrangler@3 whoami 2>/dev/null | grep -oE '[0-9a-f]{32}' | head -1)
