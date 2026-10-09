@@ -759,3 +759,7 @@ canvas.k360-stars { display: block; }
 /* clips: little looping videos on white (the stack, the win dance) */
 .tile--clip { background: #fff; padding: 0; place-items: stretch; }
 .tile--clip video { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* the win dance: a keyed animated WebP, bottom left (top right on phones, where LOOT.exe takes the bottom) */
+.dancer { position: fixed; left: 14px; bottom: 10px; width: 96px; height: 96px; z-index: 40; pointer-events: none; object-fit: contain; filter: drop-shadow(0 2px 3px rgba(0,0,0,.25)); }
+@media (max-width: 720px) { .dancer { width: 64px; height: 64px; left: auto; right: 8px; bottom: auto; top: 8px; } }
+@media (prefers-reduced-motion: reduce) { .dancer { display: none; } }

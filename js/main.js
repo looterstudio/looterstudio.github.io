@@ -218,7 +218,6 @@ const PRODUCTS = [
   { id: 'logo',   cat: ['objects', 'art', 'capital'], tile: 'logo', video: 'assets/loot-360.mp4', title: 'LooterStudio® logo. 1 of 1. The whole thing', priceLabel: '5,000,000,000 USDC' },
   { id: 'tung',   cat: ['art', 'objects'], tile: 'tung', img: 'assets/tung.jpg', text: 'TUNG TUNG TUNG', title: 'tung tung tung sahur · 1/1 · <b class="verified">LooterStudio verified ✓</b>', priceLabel: '100,000 USDC', offer: 'https://www.tensor.trade/item/Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7', mint: 'Brye9AuSmdvkQM4JJLKYLZDVuhz9HpboVTZfUfYZaVD7' },
   { id: 'stack',  cat: ['capital', 'objects'],  tile: 'clip', video: 'assets/money.mp4', webm: 'assets/money.webm', poster: 'assets/money-poster.jpg', title: 'A stack. 100 × $100, still spinning', priceLabel: '10,000 USDC', note: 'cash' },
-  { id: 'dance',  cat: ['events', 'custom'],    tile: 'clip', video: 'assets/dancer.mp4', webm: 'assets/dancer.webm', poster: 'assets/dancer-poster.jpg', title: 'The win dance. Do it when your agent hits', priceLabel: '฿0.01', note: 'free on wins' },
   { id: 'sound',  cat: ['sound', 'art'],       tile: 'sound', img: 'assets/redstar.jpg', title: 'REDSTAR RECORDS', price: 12.00, note: 'soon' },
   { id: 'future', cat: ['capital', 'data', 'ideas'], tile: 'future', img: 'assets/future.jpg', title: 'The future. Pre-order. Ships whenever comes next', price: 188.72 },
   { id: 'source', cat: ['software', 'terminals', 'books'], tile: 'source', text: '', title: 'UNIVERSE SOURCE CODE. leaked. do not run', price: 7.52 },
@@ -230,6 +229,7 @@ const PRODUCTS = [
   { id: 'beer',   cat: ['art', 'custom'],      tile: 'beer',  img: 'assets/beer.jpg', title: 'A cold beer. Good Quality', priceLabel: '1 USDC', buy: 'beer' },
   { id: 'idea',   cat: ['ideas'],              tile: 'idea',  img: 'assets/idea.jpg', title: 'A fucking idea', priceLabel: '9 USDC', buy: 'idea' },
   { id: 'club',   cat: ['events', 'capital'],  tile: 'club',  img: 'assets/voodoo.jpg', seized: true, title: 'VOODOO B.C', priceLabel: 'SEIZED BY LooterStudio®', note: 'soon' },
+  { id: 'event',  cat: ['events', 'custom'],   tile: 'alien', text: '', title: '???????? ??? ????????????', priceLabel: '????????' },
   { id: 'redact', cat: ['custom'], tile: 'alien', text: '', title: '?????????? ??????????', priceLabel: '??????' },
 ];
 
